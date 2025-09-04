@@ -7,13 +7,14 @@ import Image from "next/image";
 export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-8">
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden transition-shadow hover:shadow-lg">
         <div className="relative h-48 w-full md:h-64">
           <Image 
             src="https://picsum.photos/1200/400" 
             alt="Clean water flowing from a community tap" 
             fill
             style={{objectFit: 'cover'}}
+            className="transition-transform group-hover:scale-105"
             data-ai-hint="clean water community"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -30,8 +31,8 @@ export default function DashboardPage() {
       </Card>
 
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Card className="transition-transform hover:scale-105 hover:shadow-md">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Symptom Reports</CardTitle>
             <HeartPulse className="h-4 w-4 text-muted-foreground" />
@@ -41,7 +42,7 @@ export default function DashboardPage() {
             <p className="text-xs text-muted-foreground">+5.2% from last week</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="transition-transform hover:scale-105 hover:shadow-md">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Water Source Reports</CardTitle>
             <Droplet className="h-4 w-4 text-muted-foreground" />
@@ -51,7 +52,7 @@ export default function DashboardPage() {
             <p className="text-xs text-muted-foreground">+2 from yesterday</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="transition-transform hover:scale-105 hover:shadow-md">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Advisories</CardTitle>
             <Siren className="h-4 w-4 text-muted-foreground" />
@@ -61,7 +62,7 @@ export default function DashboardPage() {
             <p className="text-xs text-muted-foreground">Urgent action may be required</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="transition-transform hover:scale-105 hover:shadow-md">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Community Health Score</CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
@@ -74,27 +75,27 @@ export default function DashboardPage() {
       </div>
       
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <Card className="flex flex-col">
+        <Card className="flex flex-col transition-shadow hover:shadow-lg">
             <CardHeader>
                 <CardTitle>Report an Issue</CardTitle>
                 <CardDescription>Help us track community health by reporting symptoms or water source issues.</CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-col gap-4 sm:flex-row">
-                <Button asChild size="lg" className="w-full">
+            <CardContent className="flex flex-grow flex-col gap-4 sm:flex-row">
+                <Button asChild size="lg" className="w-full transition-transform hover:scale-105">
                     <Link href="/report/symptoms"><HeartPulse className="mr-2 h-4 w-4" /> Report Symptoms</Link>
                 </Button>
-                <Button asChild size="lg" variant="secondary" className="w-full">
+                <Button asChild size="lg" variant="secondary" className="w-full transition-transform hover:scale-105">
                     <Link href="/report/water-source"><Droplet className="mr-2 h-4 w-4" /> Report Water Source</Link>
                 </Button>
             </CardContent>
         </Card>
-        <Card className="flex flex-col">
+        <Card className="flex flex-col transition-shadow hover:shadow-lg">
             <CardHeader>
                 <CardTitle>Educational Materials</CardTitle>
                 <CardDescription>Learn about hygiene practices and disease prevention.</CardDescription>
             </CardHeader>
-            <CardContent>
-                <Button asChild size="lg" variant="outline" className="w-full">
+            <CardContent className="flex flex-grow items-center">
+                <Button asChild size="lg" variant="outline" className="w-full transition-transform hover:scale-105">
                     <Link href="/education"> <ListChecks className="mr-2 h-4 w-4" /> View Guides</Link>
                 </Button>
             </CardContent>
