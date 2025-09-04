@@ -51,7 +51,7 @@ const mainNavItems = [
 
 const mobileNavItems = [
   { href: "/", label: "Home", icon: Home, roles: ["guest", "user", "admin"] },
-  { href: "/report/symptoms", label: "Report", icon: HeartPulse, roles: ["user"] },
+  { href: "/report/symptoms", label: "Report", icon: HeartPulse, roles: ["user", "admin"] },
   { href: "/advisories", label: "Advisories", icon: Siren, roles: ["guest", "user", "admin"] },
   { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
   { href: "/settings", label: "You", icon: User, roles: ["user", "admin"] },
@@ -86,18 +86,26 @@ function BottomNavBar() {
   const pathname = usePathname();
   const { role } = useAuth();
   
-  const navItemsToShow = mobileNavItems.filter(item => {
-    if (role === 'guest' && (item.href === '/report/symptoms' || item.href === '/settings')) {
-      return false;
+  const navItemsToShow = mobileNavItems.filter(item => item.roles.includes(role));
+
+  const gridColsClass = () => {
+    switch (navItemsToShow.length) {
+      case 5:
+        return 'grid-cols-5';
+      case 4:
+        return 'grid-cols-4';
+      case 3:
+        return 'grid-cols-3';
+      case 2:
+        return 'grid-cols-2';
+      default:
+        return 'grid-cols-1';
     }
-    return item.roles.includes(role)
-  });
+  }
 
   return (
      <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background md:hidden">
-        <nav className={cn("grid items-center justify-center gap-2 p-2", 
-            `grid-cols-${navItemsToShow.length}`
-          )}>
+        <nav className={cn("grid items-center justify-center gap-2 p-2", gridColsClass())}>
           {navItemsToShow.map((item) => {
               const isActive = (item.href === "/" && pathname === "/") || (item.href !== "/" && pathname.startsWith(item.href));
               return (
