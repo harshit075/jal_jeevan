@@ -1,6 +1,5 @@
 
 
-
 "use client";
 
 import * as React from "react";
@@ -36,6 +35,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "next-themes";
+import { Footer } from "./footer";
 
 const mainNavItems = [
   { href: "/advisories", label: "Advisories", icon: Siren, roles: ["guest", "user", "admin"] },
@@ -251,6 +251,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             {children}
          </div>
         </main>
+        <Footer />
       {<BottomNavBar />}
     </div>
   );
