@@ -18,7 +18,8 @@ import {
   Search,
   LogIn,
   LogOut,
-  UserPlus
+  UserPlus,
+  PlusCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -62,7 +63,7 @@ function MobileNavLink({
       <Link
       href={href}
       className={cn(
-        "flex flex-col items-center justify-center gap-1 p-2 rounded-none w-full",
+        "flex flex-col items-center justify-center gap-1 p-2 rounded-md w-full",
         isActive ? "text-primary bg-primary/10" : "text-muted-foreground hover:bg-primary/5"
       )}
     >
@@ -80,7 +81,7 @@ function BottomNavBar() {
 
   return (
      <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background md:hidden">
-        <nav className="grid grid-cols-4 items-center justify-center gap-0">
+        <nav className="grid grid-cols-4 items-center justify-center gap-2 p-2">
           {navItemsToShow.map((item) => {
               const isActive = (item.href === "/" && pathname === "/") || (item.href !== "/" && pathname.startsWith(item.href));
               return (
@@ -110,7 +111,7 @@ function MainNav({ items, role }: { items: typeof mainNavItems, role: 'admin' | 
           href={item.href}
           className={cn(
             "text-sm font-medium transition-colors hover:text-primary/80",
-            pathname.startsWith(item.href) ? "text-primary" : "text-primary-foreground"
+            pathname.startsWith(item.href) ? "text-primary" : "text-foreground/80"
           )}
         >
           {item.label}
@@ -127,11 +128,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 w-full border-b bg-primary">
+      <header className="sticky top-0 z-50 w-full border-b bg-background">
         <div className="container flex h-16 items-center">
            <Link href="/" className="mr-6 flex items-center space-x-2">
-            <Droplet className="h-6 w-6 text-primary-foreground" />
-            <span className="hidden font-bold sm:inline-block text-primary-foreground font-headline text-lg">Jal Rakshak</span>
+            <Droplet className="h-6 w-6 text-primary" />
+            <span className="hidden font-bold sm:inline-block text-foreground font-headline text-lg">Jal Rakshak</span>
           </Link>
 
           <MainNav items={mainNavItems} role={currentRole} />
@@ -139,13 +140,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex flex-1 items-center justify-end space-x-4">
              {loading ? null : user ? (
               <div className="flex items-center gap-4">
-                <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground">
+                <Button variant="ghost" size="icon" className="text-foreground/80 hover:text-foreground">
                   <Search className="h-5 w-5"/>
                   <span className="sr-only">Search</span>
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-8 w-8 rounded-full text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground">
+                    <Button variant="ghost" className="relative h-8 w-8 rounded-full text-foreground/80 hover:text-foreground">
                        <User className="h-5 w-5" />
                        <span className="sr-only">Toggle user menu</span>
                     </Button>
@@ -171,13 +172,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </div>
             ) : (
               <div className="hidden md:flex items-center space-x-2">
-                 <Button variant="outline" className="text-primary bg-primary-foreground hover:bg-primary-foreground/90" asChild>
-                   <Link href="/signup">Subscribe</Link>
-                 </Button>
-                 <Button variant="ghost" className="text-primary-foreground hover:text-primary-foreground/90" asChild>
+                 <Button variant="ghost" asChild>
                    <Link href="/login">Log In</Link>
                  </Button>
-                  <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground">
+                 <Button asChild>
+                   <Link href="/signup">Sign Up</Link>
+                 </Button>
+                  <Button variant="ghost" size="icon" className="text-foreground/80 hover:text-foreground">
                     <Search className="h-5 w-5"/>
                     <span className="sr-only">Search</span>
                   </Button>
@@ -187,8 +188,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         </div>
       </header>
-       <main className="flex-1 pb-16 md:pb-0">
-          {children}
+       <main className="flex-1 pb-24 md:pb-8 bg-secondary/50">
+         <div className="container py-8">
+            {children}
+         </div>
         </main>
       {currentRole !== 'admin' && <BottomNavBar />}
     </div>
