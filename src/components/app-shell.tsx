@@ -22,7 +22,8 @@ import {
   Shield,
   LogOut,
   UserPlus,
-  PlusCircle
+  PlusCircle,
+  ShoppingCart
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,10 +54,11 @@ const allNavItems = [
   { href: "/report/symptoms", label: "Report Symptoms", icon: HeartPulse, roles: ["user", "admin"] },
   { href: "/report/water-source", label: "Report Water Source", icon: Droplet, roles: ["user", "admin"] },
   { href: "/advisories", label: "Advisories", icon: Siren, roles: ["guest", "user", "admin"] },
-  { href: "/admin", label: "Admin Dashboard", icon: Shield, roles: ["admin"]},
+  { href: "/kit", label: "Get a Kit", icon: ShoppingCart, roles: ["guest", "user", "admin"] },
+  { href: "/admin", label: "Admin", icon: Shield, roles: ["admin"]},
   { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
   { href: "/settings", label: "Settings", icon: Settings, roles: ["user", "admin"] },
-  { href: "/advisories/generate", label: "Generate Advisory", icon: PlusCircle, roles: ["admin"] },
+  { href: "/advisories/generate", label: "Generate Advisory", icon: PlusCircle, roles: ["admin"], hidden: true },
 ];
 
 function NavLink({
@@ -67,18 +69,32 @@ function NavLink({
   isMobile = false,
 }: {
   href: string;
-  label: string;
+  label:string;
   icon: React.ElementType;
   isActive: boolean;
   isMobile?: boolean;
 }) {
+  if (isMobile) {
+    return (
+       <Link
+        href={href}
+        className={cn(
+          "flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors",
+          isActive ? "text-primary" : "text-muted-foreground hover:text-primary/90"
+        )}
+      >
+        <Icon className="h-6 w-6" />
+        <span className="text-xs font-medium">{label}</span>
+      </Link>
+    )
+  }
+
   return (
     <Link
       href={href}
       className={cn(
         "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
-        isActive && "bg-accent text-primary",
-        isMobile && "text-lg"
+        isActive && "bg-accent text-primary"
       )}
     >
       <Icon className="h-5 w-5" />
@@ -87,15 +103,35 @@ function NavLink({
   );
 }
 
+function BottomNavBar({ items }: { items: typeof allNavItems }) {
+  const pathname = usePathname();
+  return (
+     <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur-sm md:hidden">
+        <nav className="grid grid-cols-5 items-center justify-center gap-1 p-1">
+          {items.map((item) => (
+            <NavLink
+              key={item.href}
+              href={item.href}
+              label={item.label}
+              icon={item.icon}
+              isActive={pathname === item.href}
+              isMobile={true}
+            />
+          ))}
+        </nav>
+      </div>
+  )
+}
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user, role, loading, logout } = useAuth();
   
   const currentRole = loading ? "guest" : role;
 
-  const filteredNavItems = allNavItems.filter(item => item.roles.includes(currentRole));
+  const filteredNavItems = allNavItems.filter(item => item.roles.includes(currentRole) && !item.hidden);
 
-  const renderNavItems = (isMobile = false) =>
+  const renderNavItems = () =>
     filteredNavItems.map((item) => (
       <NavLink
         key={item.href}
@@ -103,7 +139,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         label={item.label}
         icon={item.icon}
         isActive={pathname === item.href}
-        isMobile={isMobile}
+        isMobile={false}
       />
     ));
 
@@ -127,38 +163,20 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </div>
+
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="shrink-0 md:hidden"
-              >
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle navigation menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="flex flex-col">
-              <SheetHeader>
-                <SheetTitle>
-                  <Link
-                    href="/"
-                    className="flex items-center gap-2 font-semibold font-headline"
-                  >
-                    <Droplet className="h-6 w-6 text-primary" />
-                    <span>Jal Rakshak</span>
-                  </Link>
-                </SheetTitle>
-              </SheetHeader>
-              <nav className="grid gap-2 text-lg font-medium">
-                {renderNavItems(true)}
-              </nav>
-            </SheetContent>
-          </Sheet>
+        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6 sticky top-0 z-40">
           <div className="w-full flex-1">
-            <OnlineStatus />
+             <Link
+              href="/"
+              className="flex items-center gap-2 font-semibold font-headline md:hidden"
+            >
+              <Droplet className="h-6 w-6 text-primary" />
+              <span>Jal Rakshak</span>
+            </Link>
+             <div className="hidden md:block">
+                <OnlineStatus />
+             </div>
           </div>
 
           {loading ? null : user ? (
@@ -186,19 +204,20 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </DropdownMenu>
           ) : (
             <div className="flex items-center gap-2">
-              <Button asChild variant="outline">
-                <Link href="/login"><LogIn className="mr-2 h-4 w-4" /> Login</Link>
+              <Button asChild variant="outline" size="sm">
+                <Link href="/login">Login</Link>
               </Button>
-              <Button asChild>
-                <Link href="/signup"><UserPlus className="mr-2 h-4 w-4" /> Sign Up</Link>
+              <Button asChild size="sm">
+                <Link href="/signup">Sign Up</Link>
               </Button>
             </div>
           )}
-
         </header>
+
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-background">
           {children}
         </main>
+        {role !== 'admin' && <BottomNavBar items={filteredNavItems} />}
       </div>
     </div>
   );
