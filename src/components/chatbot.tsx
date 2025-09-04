@@ -40,7 +40,6 @@ function ChatMessage({ role, content }: { role: 'user' | 'assistant'; content: s
 export function Chatbot() {
   const [open, setOpen] = useState(false);
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: undefined,
     // @ts-ignore
     action: continueConversation
   });
