@@ -287,9 +287,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             {children}
          </div>
         </main>
-        {user && <Chatbot />}
+        <Chatbot />
         <Footer />
       {<BottomNavBar />}
     </div>
   );
 }
+
+    

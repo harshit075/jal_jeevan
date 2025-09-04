@@ -6,7 +6,7 @@ import { useChat } from 'ai/react';
 import { Button } from './ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Input } from './ui/input';
-import { Bot, Send, X } from 'lucide-react';
+import { LifeBuoy, Send, X } from 'lucide-react';
 import { ScrollArea } from './ui/scroll-area';
 import { continueConversation } from '@/lib/actions';
 import { cn } from '@/lib/utils';
@@ -19,7 +19,7 @@ function ChatMessage({ role, content }: { role: 'user' | 'assistant'; content: s
         <div className={cn("flex items-start gap-3", isUser && "justify-end")}>
             {!isUser && (
                  <Avatar className="h-8 w-8 border">
-                    <AvatarFallback><Bot /></AvatarFallback>
+                    <AvatarFallback><LifeBuoy /></AvatarFallback>
                 </Avatar>
             )}
             <div className={cn(
@@ -40,7 +40,6 @@ function ChatMessage({ role, content }: { role: 'user' | 'assistant'; content: s
 export function Chatbot() {
   const [open, setOpen] = useState(false);
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    // @ts-ignore
     action: continueConversation
   });
 
@@ -49,7 +48,7 @@ export function Chatbot() {
         <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
             <Button size="icon" className="fixed bottom-24 right-4 md:bottom-6 md:right-6 rounded-full w-14 h-14 shadow-lg z-50">
-               {open ? <X /> : <Bot />}
+               {open ? <X /> : <LifeBuoy />}
                 <span className="sr-only">Open Chat</span>
             </Button>
         </PopoverTrigger>
@@ -66,7 +65,7 @@ export function Chatbot() {
                  <div className="space-y-4">
                     {messages.length === 0 && (
                         <div className="text-center text-sm text-muted-foreground p-8">
-                            <Bot className="mx-auto h-12 w-12 mb-4" />
+                            <LifeBuoy className="mx-auto h-12 w-12 mb-4" />
                             <p>Start a conversation by typing a message below.</p>
                         </div>
                     )}
@@ -94,3 +93,5 @@ export function Chatbot() {
     </div>
   );
 }
+
+    
