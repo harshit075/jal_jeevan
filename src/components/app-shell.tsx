@@ -15,11 +15,11 @@ import {
   User,
   Shield,
   ShoppingCart,
-  Search,
   LogOut,
   LogIn,
   UserPlus,
-  Info
+  Info,
+  Phone
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,6 +38,7 @@ const mainNavItems = [
   { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
   { href: "/kit", label: "Get a Kit", icon: ShoppingCart, roles: ["guest", "user", "admin"] },
   { href: "/about", label: "About Us", icon: Info, roles: ["guest", "user", "admin"] },
+  { href: "/contact", label: "Contact", icon: Phone, roles: ["guest", "user", "admin"] },
   { href: "/report/symptoms", label: "Report", icon: HeartPulse, roles: ["user", "admin"] },
   { href: "/admin", label: "Admin", icon: Shield, roles: ["admin"]},
 ];
@@ -144,10 +145,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex flex-1 items-center justify-end space-x-4">
              {loading ? null : user ? (
               <div className="flex items-center gap-4">
-                <Button variant="ghost" size="icon" className="text-foreground/80 hover:text-foreground">
-                  <Search className="h-5 w-5"/>
-                  <span className="sr-only">Search</span>
-                </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-8 w-8 rounded-full text-foreground/80 hover:text-foreground">
@@ -182,10 +179,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                  <Button asChild>
                    <Link href="/signup"><UserPlus className="md:mr-2"/> <span className="hidden md:inline">Sign Up</span></Link>
                  </Button>
-                  <Button variant="ghost" size="icon" className="text-foreground/80 hover:text-foreground hidden md:inline-flex">
-                    <Search className="h-5 w-5"/>
-                    <span className="sr-only">Search</span>
-                  </Button>
               </div>
             )}
           </div>
