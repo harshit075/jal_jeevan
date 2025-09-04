@@ -3,9 +3,51 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
-import { HeartPulse, Droplet, ListChecks, Siren, Shield, BookOpen, ShoppingCart, ArrowRight } from "lucide-react";
+import { HeartPulse, Droplet, ListChecks, Shield, BookOpen, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+
+const mainStory = {
+  title: "Boil Water Advisory: A Community Guide",
+  description: "Recent tests have indicated potential contamination in local water sources. Learn why boiling water is crucial for your health and safety during an advisory.",
+  image: {
+    src: "https://picsum.photos/800/600",
+    alt: "A pot of water boiling on a stove.",
+    hint: "boiling water"
+  },
+  href: "/education"
+};
+
+const topStories = [
+   {
+    title: "How to Report Symptoms Anonymously",
+    image: {
+      src: "https://picsum.photos/400/300",
+      alt: "A person using a smartphone.",
+      hint: "person phone"
+    },
+    href: "/report/symptoms"
+  },
+  {
+    title: "Identifying Unsafe Water Sources",
+     image: {
+      src: "https://picsum.photos/400/300",
+      alt: "A person looking at a river.",
+      hint: "river water"
+    },
+    href: "/report/water-source"
+  },
+  {
+    title: "Your Guide to the Jal Rakshak Kit",
+     image: {
+      src: "https://picsum.photos/400/300",
+      alt: "A first aid and water testing kit.",
+      hint: "medical kit"
+    },
+    href: "/kit"
+  }
+];
+
 
 export default function DashboardPage() {
   const { role } = useAuth();
@@ -50,15 +92,60 @@ export default function DashboardPage() {
 
   // Simplified view for community users
   return (
-    <div className="flex flex-col gap-10">
-      <div className="text-center">
-        <h1 className="font-headline text-4xl font-bold tracking-tight md:text-5xl">Your Health, Our Priority.</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          Jal Rakshak helps communities track water quality and public health. Report issues, stay informed, and help us build a healthier future together.
-        </p>
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <h2 className="text-sm font-bold uppercase text-primary tracking-wider">TODAY'S TOP STORIES</h2>
       </div>
-      
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+
+      {/* Main Story */}
+      <Link href={mainStory.href} className="group block">
+        <Card className="grid md:grid-cols-2 gap-8 items-center border-0 shadow-none">
+          <div className="overflow-hidden">
+            <Image
+              src={mainStory.image.src}
+              alt={mainStory.image.alt}
+              data-ai-hint={mainStory.image.hint}
+              width={800}
+              height={600}
+              className="object-cover transition-transform group-hover:scale-105"
+            />
+          </div>
+          <div>
+            <h1 className="font-headline text-3xl md:text-4xl font-bold text-primary group-hover:underline">{mainStory.title}</h1>
+            <p className="mt-4 text-lg text-muted-foreground">{mainStory.description}</p>
+          </div>
+        </Card>
+      </Link>
+
+      <hr className="my-12" />
+
+      {/* Top Stories Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {topStories.map((story, index) => (
+           <Link key={index} href={story.href} className="group block">
+              <Card className="border-0 shadow-none">
+                <div className="overflow-hidden">
+                    <Image
+                    src={story.image.src}
+                    alt={story.image.alt}
+                    data-ai-hint={story.image.hint}
+                    width={400}
+                    height={300}
+                    className="object-cover transition-transform group-hover:scale-105"
+                    />
+                </div>
+                 <CardHeader className="p-4 pl-0">
+                    <CardTitle className="font-headline text-xl font-bold group-hover:underline">{story.title}</CardTitle>
+                </CardHeader>
+              </Card>
+           </Link>
+        ))}
+      </div>
+
+      <hr className="my-12" />
+
+      {/* Action Cards */}
+       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
          <Card className="group flex flex-col justify-between overflow-hidden transition-shadow hover:shadow-lg">
             <CardHeader>
                <div className="flex items-center gap-4">
@@ -93,23 +180,6 @@ export default function DashboardPage() {
          </Card>
       </div>
 
-       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <Link href="/advisories" className="group block rounded-lg border bg-card p-6 transition-shadow hover:shadow-lg">
-            <Siren className="h-8 w-8 text-primary" />
-            <h3 className="mt-4 text-lg font-semibold">Health Advisories</h3>
-            <p className="mt-1 text-muted-foreground">Stay up-to-date with the latest health and safety alerts in your area.</p>
-          </Link>
-           <Link href="/education" className="group block rounded-lg border bg-card p-6 transition-shadow hover:shadow-lg">
-            <BookOpen className="h-8 w-8 text-primary" />
-            <h3 className="mt-4 text-lg font-semibold">Learn & Prepare</h3>
-            <p className="mt-1 text-muted-foreground">Access guides on hygiene, water safety, and disease prevention.</p>
-          </Link>
-           <Link href="/kit" className="group block rounded-lg border bg-card p-6 transition-shadow hover:shadow-lg">
-            <ShoppingCart className="h-8 w-8 text-primary" />
-            <h3 className="mt-4 text-lg font-semibold">Get a Health Kit</h3>
-            <p className="mt-1 text-muted-foreground">Purchase a kit with tools for water testing and basic first aid.</p>
-          </Link>
-        </div>
     </div>
   );
 }

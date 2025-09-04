@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import * as React from "react";
@@ -9,239 +10,187 @@ import {
   Droplet,
   HeartPulse,
   Home,
-  PanelLeft,
   Settings,
   Siren,
   User,
-  Globe,
-  Sun,
-  Moon,
-  Rss,
-  Menu,
-  LogIn,
   Shield,
+  ShoppingCart,
+  Search,
+  LogIn,
   LogOut,
-  UserPlus,
-  PlusCircle,
-  ShoppingCart
+  UserPlus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { OnlineStatus } from "./online-status";
 import { useAuth } from "@/hooks/use-auth";
 
-const allNavItems = [
-  { href: "/", label: "Home", icon: Home, roles: ["guest", "user", "admin"] },
-  { href: "/report/symptoms", label: "Report Symptoms", icon: HeartPulse, roles: ["user", "admin"], mobileOnly: true },
+const mainNavItems = [
   { href: "/advisories", label: "Advisories", icon: Siren, roles: ["guest", "user", "admin"] },
   { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
   { href: "/kit", label: "Get a Kit", icon: ShoppingCart, roles: ["guest", "user", "admin"] },
+  { href: "/report/symptoms", label: "Report", icon: HeartPulse, roles: ["user", "admin"] },
   { href: "/admin", label: "Admin", icon: Shield, roles: ["admin"]},
-  { href: "/settings", label: "Settings", icon: Settings, roles: ["user", "admin"] },
-  { href: "/advisories/generate", label: "Generate Advisory", icon: PlusCircle, roles: ["admin"], hidden: true },
-  { href: "/report/water-source", label: "Report Water Source", icon: Droplet, roles: ["user", "admin"], hidden: true },
 ];
 
-function NavLink({
+const mobileNavItems = [
+  { href: "/", label: "Home", icon: Home, roles: ["guest", "user", "admin"] },
+  { href: "/report/symptoms", label: "Report", icon: HeartPulse, roles: ["user", "admin"] },
+  { href: "/advisories", label: "Advisories", icon: Siren, roles: ["guest", "user", "admin"] },
+  { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
+];
+
+function MobileNavLink({
   href,
   label,
   icon: Icon,
   isActive,
-  isMobile = false,
 }: {
   href: string;
   label:string;
   icon: React.ElementType;
   isActive: boolean;
-  isMobile?: boolean;
 }) {
-  if (isMobile) {
-    return (
-       <Link
-        href={href}
-        className={cn(
-          "flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors w-full",
-          isActive ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-primary/90"
-        )}
-      >
-        <Icon className="h-6 w-6" />
-        <span className="text-xs font-medium">{label}</span>
-      </Link>
-    )
-  }
-
   return (
-    <Link
+      <Link
       href={href}
       className={cn(
-        "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
-        isActive && "bg-accent text-primary"
+        "flex flex-col items-center justify-center gap-1 p-2 rounded-none w-full",
+        isActive ? "text-primary bg-primary/10" : "text-muted-foreground hover:bg-primary/5"
       )}
     >
-      <Icon className="h-5 w-5" />
-      <span>{label}</span>
+      <Icon className="h-6 w-6" />
+      <span className="text-xs font-medium">{label}</span>
     </Link>
-  );
+  )
 }
 
-function BottomNavBar({ items }: { items: typeof allNavItems }) {
+function BottomNavBar() {
   const pathname = usePathname();
-  const navItemsToShow = items.filter(item => !item.hidden || item.mobileOnly);
+  const { role } = useAuth();
+  
+  const navItemsToShow = mobileNavItems.filter(item => item.roles.includes(role));
 
   return (
-     <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur-sm md:hidden">
-        <nav className="grid grid-cols-4 items-center justify-center gap-1 p-1">
+     <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background md:hidden">
+        <nav className="grid grid-cols-4 items-center justify-center gap-0">
           {navItemsToShow.map((item) => {
-              if (item.label === 'Report Symptoms') {
-                 return (
-                    <Link
-                      key="report"
-                      href="/report/symptoms"
-                       className={cn(
-                        "flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors w-full",
-                        pathname.startsWith('/report') ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-primary/90"
-                      )}
-                    >
-                      <HeartPulse className="h-6 w-6" />
-                      <span className="text-xs font-medium">Report</span>
-                    </Link>
-                 )
-              }
-              if (item.mobileOnly) return null;
-             
+              const isActive = (item.href === "/" && pathname === "/") || (item.href !== "/" && pathname.startsWith(item.href));
               return (
-              <NavLink
-                key={item.href}
-                href={item.href}
-                label={item.label}
-                icon={item.icon}
-                isActive={pathname === item.href}
-                isMobile={true}
-              />
-            )
+                <MobileNavLink
+                  key={item.href}
+                  href={item.href}
+                  label={item.label}
+                  icon={item.icon}
+                  isActive={isActive}
+                />
+              )
           })}
         </nav>
       </div>
   )
 }
 
-export function AppShell({ children }: { children: React.ReactNode }) {
+function MainNav({ items, role }: { items: typeof mainNavItems, role: 'admin' | 'user' | 'guest' }) {
   const pathname = usePathname();
+  const navItemsToShow = items.filter(item => item.roles.includes(role));
+
+  return (
+    <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
+      {navItemsToShow.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className={cn(
+            "text-sm font-medium transition-colors hover:text-primary/80",
+            pathname.startsWith(item.href) ? "text-primary" : "text-primary-foreground"
+          )}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
+
+export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, role, loading, logout } = useAuth();
   
   const currentRole = loading ? "guest" : role;
 
-  const filteredNavItems = allNavItems.filter(item => item.roles.includes(currentRole) && !item.hidden);
-  const mobileNavItems = allNavItems.filter(item => item.roles.includes(currentRole) && !item.hidden && (item.href !== '/report/water-source'));
-
-
-  const renderNavItems = () =>
-    filteredNavItems.map((item) => (
-      <NavLink
-        key={item.href}
-        href={item.href}
-        label={item.label}
-        icon={item.icon}
-        isActive={pathname === item.href}
-        isMobile={false}
-      />
-    ));
-
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
-        <div className="flex h-full max-h-screen flex-col gap-2">
-          <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <Link
-              href="/"
-              className="flex items-center gap-2 font-semibold font-headline"
-            >
-              <Droplet className="h-6 w-6 text-primary" />
-              <span>Jal Rakshak</span>
-            </Link>
-          </div>
-          <div className="flex-1">
-            <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-              {renderNavItems()}
-            </nav>
-          </div>
-        </div>
-      </div>
+    <div className="flex min-h-screen flex-col">
+      <header className="sticky top-0 z-50 w-full border-b bg-primary">
+        <div className="container flex h-16 items-center">
+           <Link href="/" className="mr-6 flex items-center space-x-2">
+            <Droplet className="h-6 w-6 text-primary-foreground" />
+            <span className="hidden font-bold sm:inline-block text-primary-foreground font-headline text-lg">Jal Rakshak</span>
+          </Link>
 
-      <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6 sticky top-0 z-40">
-          <div className="w-full flex-1">
-             <Link
-              href="/"
-              className="flex items-center gap-2 font-semibold font-headline md:hidden"
-            >
-              <Droplet className="h-6 w-6 text-primary" />
-              <span>Jal Rakshak</span>
-            </Link>
-             <div className="hidden md:block">
-                <OnlineStatus />
-             </div>
-          </div>
+          <MainNav items={mainNavItems} role={currentRole} />
 
-          {loading ? null : user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="secondary" size="icon" className="rounded-full">
-                  <User className="h-5 w-5" />
-                  <span className="sr-only">Toggle user menu</span>
+          <div className="flex flex-1 items-center justify-end space-x-4">
+             {loading ? null : user ? (
+              <div className="flex items-center gap-4">
+                <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground">
+                  <Search className="h-5 w-5"/>
+                  <span className="sr-only">Search</span>
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/settings" className="flex items-center w-full">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={logout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <div className="flex items-center gap-2">
-              <Button asChild variant="outline" size="sm">
-                <Link href="/login">Login</Link>
-              </Button>
-              <Button asChild size="sm">
-                <Link href="/signup">Sign Up</Link>
-              </Button>
-            </div>
-          )}
-        </header>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-8 w-8 rounded-full text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground">
+                       <User className="h-5 w-5" />
+                       <span className="sr-only">Toggle user menu</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {role === 'admin' && (
+                       <DropdownMenuItem asChild>
+                          <Link href="/admin"><Shield className="mr-2 h-4 w-4"/>Admin</Link>
+                       </DropdownMenuItem>
+                    )}
+                    <DropdownMenuItem asChild>
+                      <Link href="/settings"><Settings className="mr-2 h-4 w-4"/>Settings</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={logout}>
+                       <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            ) : (
+              <div className="hidden md:flex items-center space-x-2">
+                 <Button variant="outline" className="text-primary bg-primary-foreground hover:bg-primary-foreground/90" asChild>
+                   <Link href="/signup">Subscribe</Link>
+                 </Button>
+                 <Button variant="ghost" className="text-primary-foreground hover:text-primary-foreground/90" asChild>
+                   <Link href="/login">Log In</Link>
+                 </Button>
+                  <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground">
+                    <Search className="h-5 w-5"/>
+                    <span className="sr-only">Search</span>
+                  </Button>
+              </div>
+            )}
+          </div>
 
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-background">
+        </div>
+      </header>
+       <main className="flex-1 pb-16 md:pb-0">
           {children}
         </main>
-        {role !== 'admin' && <BottomNavBar items={mobileNavItems} />}
-      </div>
+      {currentRole !== 'admin' && <BottomNavBar />}
     </div>
   );
 }
