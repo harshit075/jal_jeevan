@@ -14,7 +14,7 @@ export default function KitPage() {
   return (
     <div className="space-y-8">
        <div>
-        <h1 className="font-headline text-3xl font-bold tracking-tight">Jal Rakshak Kit</h1>
+        <h1 className="font-headline text-3xl font-bold tracking-tight">Jal Jeevan Kit</h1>
         <p className="text-muted-foreground">Your complete solution for water safety and community health.</p>
       </div>
 
@@ -23,7 +23,7 @@ export default function KitPage() {
             <div className="relative h-64 md:h-full">
                  <Image
                     src="https://picsum.photos/600/800"
-                    alt="Jal Rakshak Medical and Water Testing Kit"
+                    alt="Jal Jeevan Medical and Water Testing Kit"
                     fill
                     style={{ objectFit: 'cover' }}
                     data-ai-hint="medical kit water testing"

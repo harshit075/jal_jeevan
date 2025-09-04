@@ -5,7 +5,7 @@ import { AppShell } from '@/components/app-shell';
 import { AuthProvider } from '@/hooks/use-auth';
 
 export const metadata: Metadata = {
-  title: 'Jal Rakshak',
+  title: 'Jal Jeevan',
   description: 'Community Health & Water Monitoring',
 };
 

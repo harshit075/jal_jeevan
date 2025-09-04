@@ -23,7 +23,7 @@ export default function ContactPage() {
           <CardContent className="space-y-4">
             <div className="flex items-center gap-4">
               <Mail className="h-5 w-5 text-primary" />
-              <a href="mailto:info@jalrakshak.com" className="hover:underline">info@jalrakshak.com</a>
+              <a href="mailto:info@jaljeevan.com" className="hover:underline">info@jaljeevan.com</a>
             </div>
             <div className="flex items-center gap-4">
               <Phone className="h-5 w-5 text-primary" />
@@ -32,7 +32,7 @@ export default function ContactPage() {
             <div className="flex items-start gap-4">
               <MapPin className="h-5 w-5 text-primary mt-1" />
               <span>
-                Jal Rakshak Headquarters<br />
+                Jal Jeevan Headquarters<br />
                 Guwahati, Assam, India
               </span>
             </div>
