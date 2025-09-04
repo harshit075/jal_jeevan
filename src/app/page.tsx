@@ -18,8 +18,8 @@ const heroStories = [
     description: "Recent tests have indicated potential contamination in local water sources. Learn why boiling water is crucial for your health and safety during an advisory.",
     image: {
       src: "https://picsum.photos/1200/600",
-      alt: "A pot of water boiling on a stove.",
-      hint: "boiling water"
+      alt: "Heavy rain falling on a lush green forest.",
+      hint: "heavy rainfall"
     },
     href: "/education"
   },
@@ -29,8 +29,8 @@ const heroStories = [
     description: "Learn the visual signs of unsafe water to protect yourself and your community from waterborne diseases.",
     image: {
       src: "https://picsum.photos/1200/600",
-      alt: "A person inspecting a water source.",
-      hint: "water inspection"
+      alt: "A person inspecting a stream in a rainy, green landscape.",
+      hint: "rainy landscape"
     },
     href: "/report/water-source"
   },
@@ -40,8 +40,8 @@ const heroStories = [
     description: "Discover the essential tools in your kit for water testing and handling minor medical emergencies.",
     image: {
       src: "https://picsum.photos/1200/600",
-      alt: "The contents of a first aid and water testing kit laid out.",
-      hint: "medical kit"
+      alt: "A first aid kit sitting on a wooden table in a hut with rain visible outside.",
+      hint: "medical kit rain"
     },
     href: "/kit"
   }
@@ -52,8 +52,8 @@ const topStories = [
     title: "How to Report Symptoms Anonymously",
     image: {
       src: "https://picsum.photos/400/300",
-      alt: "A person using a smartphone to report health symptoms in a village in NorthEast India.",
-      hint: "bamboo bridge"
+      alt: "A person using a smartphone in a village during a monsoon.",
+      hint: "monsoon village"
     },
     href: "/report/symptoms"
   },
@@ -61,8 +61,8 @@ const topStories = [
     title: "Identifying Unsafe Water Sources",
      image: {
       src: "https://picsum.photos/400/300",
-      alt: "A woman in traditional attire collecting water from a stream in a lush, green landscape.",
-      hint: "traditional attire"
+      alt: "A woman collecting water from a stream during light rain in a green valley.",
+      hint: "collecting water greenery"
     },
     href: "/report/water-source"
   },
@@ -70,8 +70,8 @@ const topStories = [
     title: "Your Guide to the Jal Rakshak Kit",
      image: {
       src: "https://picsum.photos/400/300",
-      alt: "A display of a first-aid kit with local herbs from NorthEast India.",
-      hint: "hornbill festival"
+      alt: "A display of a first-aid kit with lush green foliage in the background.",
+      hint: "first-aid kit"
     },
     href: "/kit"
   }

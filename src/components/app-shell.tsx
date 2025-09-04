@@ -18,7 +18,8 @@ import {
   Search,
   LogOut,
   LogIn,
-  UserPlus
+  UserPlus,
+  Info
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,6 +37,7 @@ const mainNavItems = [
   { href: "/advisories", label: "Advisories", icon: Siren, roles: ["guest", "user", "admin"] },
   { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
   { href: "/kit", label: "Get a Kit", icon: ShoppingCart, roles: ["guest", "user", "admin"] },
+  { href: "/about", label: "About Us", icon: Info, roles: ["guest", "user", "admin"] },
   { href: "/report/symptoms", label: "Report", icon: HeartPulse, roles: ["user", "admin"] },
   { href: "/admin", label: "Admin", icon: Shield, roles: ["admin"]},
 ];
