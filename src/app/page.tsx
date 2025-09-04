@@ -11,16 +11,41 @@ import { AdvisoryCard } from "@/components/advisory-card";
 import Autoplay from "embla-carousel-autoplay";
 
 
-const mainStory = {
-  title: "Boil Water Advisory: A Community Guide",
-  description: "Recent tests have indicated potential contamination in local water sources. Learn why boiling water is crucial for your health and safety during an advisory.",
-  image: {
-    src: "https://picsum.photos/800/600",
-    alt: "A pot of water boiling on a stove.",
-    hint: "boiling water"
+const heroStories = [
+  {
+    category: "HEALTH EDUCATION",
+    title: "Boil Water Advisory: A Community Guide",
+    description: "Recent tests have indicated potential contamination in local water sources. Learn why boiling water is crucial for your health and safety during an advisory.",
+    image: {
+      src: "https://picsum.photos/1200/600",
+      alt: "A pot of water boiling on a stove.",
+      hint: "boiling water"
+    },
+    href: "/education"
   },
-  href: "/education"
-};
+  {
+    category: "WATER SAFETY",
+    title: "How to Identify Contaminated Water Sources",
+    description: "Learn the visual signs of unsafe water to protect yourself and your community from waterborne diseases.",
+    image: {
+      src: "https://picsum.photos/1200/600",
+      alt: "A person inspecting a water source.",
+      hint: "water inspection"
+    },
+    href: "/report/water-source"
+  },
+    {
+    category: "FIRST AID",
+    title: "Your Guide to the Jal Rakshak Kit",
+    description: "Discover the essential tools in your kit for water testing and handling minor medical emergencies.",
+    image: {
+      src: "https://picsum.photos/1200/600",
+      alt: "The contents of a first aid and water testing kit laid out.",
+      hint: "medical kit"
+    },
+    href: "/kit"
+  }
+];
 
 const topStories = [
    {
@@ -117,6 +142,40 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-12">
+      {/* Hero Carousel */}
+      <Carousel 
+        opts={{ loop: true }}
+        plugins={[ Autoplay({ delay: 5000, stopOnInteraction: false }) ]}
+      >
+        <CarouselContent>
+          {heroStories.map((story, index) => (
+            <CarouselItem key={index}>
+              <Card className="overflow-hidden">
+                <Link href={story.href} className="group block">
+                  <div className="grid md:grid-cols-2 gap-0 items-center">
+                    <div className="relative h-64 md:h-[400px] overflow-hidden">
+                      <Image
+                        src={story.image.src}
+                        alt={story.image.alt}
+                        data-ai-hint={story.image.hint}
+                        fill
+                        className="object-cover transition-transform group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="p-8 md:p-12">
+                      <p className="text-sm font-bold uppercase text-primary tracking-wider mb-2">{story.category}</p>
+                      <h1 className="font-headline text-3xl md:text-4xl font-bold group-hover:text-primary transition-colors">{story.title}</h1>
+                      <p className="mt-4 text-lg text-muted-foreground">{story.description}</p>
+                    </div>
+                  </div>
+                </Link>
+              </Card>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="left-4 hidden md:flex"/>
+        <CarouselNext className="right-4 hidden md:flex"/>
+      </Carousel>
       
       {/* Action Cards */}
        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -190,30 +249,6 @@ export default function DashboardPage() {
       </div>
 
 
-      {/* Main Story */}
-      <Card className="overflow-hidden">
-        <Link href={mainStory.href} className="group block">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="overflow-hidden">
-              <Image
-                src={mainStory.image.src}
-                alt={mainStory.image.alt}
-                data-ai-hint={mainStory.image.hint}
-                width={800}
-                height={600}
-                className="object-cover transition-transform group-hover:scale-105"
-              />
-            </div>
-            <div className="p-8">
-              <p className="text-sm font-bold uppercase text-primary tracking-wider mb-2">HEALTH EDUCATION</p>
-              <h1 className="font-headline text-3xl md:text-4xl font-bold group-hover:text-primary transition-colors">{mainStory.title}</h1>
-              <p className="mt-4 text-lg text-muted-foreground">{mainStory.description}</p>
-            </div>
-          </div>
-        </Link>
-      </Card>
-
-
       {/* Top Stories Grid */}
       <div>
         <h2 className="text-2xl font-bold font-headline mb-6">More Resources</h2>
@@ -243,5 +278,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    
