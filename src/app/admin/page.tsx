@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download, Users, BarChart } from "lucide-react";
+import { Download, Users, BarChart, Siren } from "lucide-react";
 
 const reportData = [
   { village: "Rampur", reports: 42, type: "Water Quality" },
