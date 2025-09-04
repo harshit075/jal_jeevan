@@ -1,6 +1,9 @@
+
+'use client';
 import { AdvisoryCard } from '@/components/advisory-card';
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useAuth } from '@/hooks/use-auth';
 import { PlusCircle, Siren } from 'lucide-react';
 import Link from 'next/link';
 
@@ -27,6 +30,9 @@ const mockAdvisories = [
 
 
 export default function AdvisoriesPage() {
+  const { role } = useAuth();
+  const isAdmin = role === 'admin';
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
@@ -34,9 +40,11 @@ export default function AdvisoriesPage() {
           <h1 className="font-headline text-3xl font-bold tracking-tight">Health Advisories</h1>
           <p className="text-muted-foreground text-lg">Stay informed about active health and water safety advisories in your area.</p>
         </div>
-        <Button asChild className="transition-transform hover:scale-105">
-          <Link href="/advisories/generate"><PlusCircle className="mr-2 h-4 w-4" /> Generate New Advisory</Link>
-        </Button>
+        {isAdmin && (
+          <Button asChild className="transition-transform hover:scale-105">
+            <Link href="/advisories/generate"><PlusCircle className="mr-2 h-4 w-4" /> Generate New Advisory</Link>
+          </Button>
+        )}
       </div>
 
       {mockAdvisories.length > 0 ? (

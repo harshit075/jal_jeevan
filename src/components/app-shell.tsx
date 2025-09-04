@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -20,7 +21,8 @@ import {
   LogIn,
   Shield,
   LogOut,
-  UserPlus
+  UserPlus,
+  PlusCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -46,21 +48,15 @@ import { cn } from "@/lib/utils";
 import { OnlineStatus } from "./online-status";
 import { useAuth } from "@/hooks/use-auth";
 
-const navItems = [
-  { href: "/", label: "Dashboard", icon: Home, roles: ["guest", "user", "admin"] },
-  {
-    label: "Report",
-    icon: HeartPulse,
-    roles: ["user", "admin"],
-    subItems: [
-      { href: "/report/symptoms", label: "Symptoms", icon: HeartPulse, roles: ["user", "admin"] },
-      { href: "/report/water-source", label: "Water Source", icon: Droplet, roles: ["user", "admin"] },
-    ],
-  },
-  { href: "/advisories", label: "Advisories", icon: Siren, roles: ["user", "admin"] },
-  { href: "/admin", label: "Admin", icon: Shield, roles: ["admin"]},
+const allNavItems = [
+  { href: "/", label: "Home", icon: Home, roles: ["guest", "user", "admin"] },
+  { href: "/report/symptoms", label: "Report Symptoms", icon: HeartPulse, roles: ["user", "admin"] },
+  { href: "/report/water-source", label: "Report Water Source", icon: Droplet, roles: ["user", "admin"] },
+  { href: "/advisories", label: "Advisories", icon: Siren, roles: ["guest", "user", "admin"] },
+  { href: "/admin", label: "Admin Dashboard", icon: Shield, roles: ["admin"]},
   { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
   { href: "/settings", label: "Settings", icon: Settings, roles: ["user", "admin"] },
+  { href: "/advisories/generate", label: "Generate Advisory", icon: PlusCircle, roles: ["admin"] },
 ];
 
 function NavLink({
@@ -68,62 +64,26 @@ function NavLink({
   label,
   icon: Icon,
   isActive,
+  isMobile = false,
 }: {
   href: string;
   label: string;
   icon: React.ElementType;
   isActive: boolean;
+  isMobile?: boolean;
 }) {
   return (
     <Link
       href={href}
       className={cn(
         "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
-        isActive && "bg-accent text-primary"
+        isActive && "bg-accent text-primary",
+        isMobile && "text-lg"
       )}
     >
-      <Icon className="h-4 w-4" />
-      {label}
+      <Icon className="h-5 w-5" />
+      <span>{label}</span>
     </Link>
-  );
-}
-
-function NavSubMenu({
-  label,
-  icon: Icon,
-  subItems,
-  pathname,
-}: {
-  label: string;
-  icon: React.ElementType;
-  subItems: { href: string; label: string; icon: React.ElementType, roles: string[] }[];
-  pathname: string;
-}) {
-  const isSubActive = subItems.some((item) => pathname.startsWith(item.href));
-
-  return (
-    <div>
-      <div
-        className={cn(
-          "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground",
-          isSubActive && "text-primary"
-        )}
-      >
-        <Icon className="h-4 w-4" />
-        <span>{label}</span>
-      </div>
-      <div className="ml-4 grid grid-flow-row auto-rows-max text-sm">
-        {subItems.map((item) => (
-          <NavLink
-            key={item.href}
-            href={item.href}
-            label={item.label}
-            icon={item.icon}
-            isActive={pathname === item.href}
-          />
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -133,33 +93,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   
   const currentRole = loading ? "guest" : role;
 
-  const filteredNavItems = navItems.filter(item => item.roles.includes(currentRole));
+  const filteredNavItems = allNavItems.filter(item => item.roles.includes(currentRole));
 
-  const renderNavItems = () =>
-    filteredNavItems.map((item) => {
-      if (item.subItems) {
-        const filteredSubItems = item.subItems.filter(subItem => subItem.roles.includes(currentRole));
-        if (filteredSubItems.length === 0) return null;
-        return (
-          <NavSubMenu
-            key={item.label}
-            label={item.label}
-            icon={item.icon}
-            subItems={filteredSubItems}
-            pathname={pathname}
-          />
-        );
-      }
-      return (
-        <NavLink
-          key={item.href!}
-          href={item.href!}
-          label={item.label}
-          icon={item.icon}
-          isActive={pathname === item.href}
-        />
-      );
-  });
+  const renderNavItems = (isMobile = false) =>
+    filteredNavItems.map((item) => (
+      <NavLink
+        key={item.href}
+        href={item.href}
+        label={item.label}
+        icon={item.icon}
+        isActive={pathname === item.href}
+        isMobile={isMobile}
+      />
+    ));
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -207,7 +153,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </SheetTitle>
               </SheetHeader>
               <nav className="grid gap-2 text-lg font-medium">
-                {renderNavItems()}
+                {renderNavItems(true)}
               </nav>
             </SheetContent>
           </Sheet>
