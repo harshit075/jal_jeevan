@@ -1,4 +1,5 @@
 
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Download, Users, BarChart, Siren } from "lucide-react";
@@ -18,7 +19,7 @@ export default function AdminPage() {
         <p className="text-muted-foreground">Manage reports and monitor community health data.</p>
       </div>
 
-       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <Card className="transition-transform hover:scale-105">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Reports</CardTitle>
@@ -60,7 +61,7 @@ export default function AdminPage() {
         </CardHeader>
         <CardContent>
           {/* For larger screens: Table view */}
-          <div className="hidden md:block">
+          <div className="hidden sm:block">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-border">
                 <thead className="bg-muted/50">
@@ -94,7 +95,7 @@ export default function AdminPage() {
             </div>
           </div>
           {/* For smaller screens: Card view */}
-          <div className="grid grid-cols-1 gap-4 md:hidden">
+          <div className="grid grid-cols-1 gap-4 sm:hidden">
             {reportData.map((item) => (
                <Card key={item.village} className="transition-shadow hover:shadow-md">
                  <CardContent className="flex items-center justify-between p-4">

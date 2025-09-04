@@ -1,4 +1,5 @@
 
+
 'use client';
 import { AdvisoryCard } from '@/components/advisory-card';
 import { Button } from '@/components/ui/button';
@@ -48,7 +49,7 @@ export default function AdvisoriesPage() {
       </div>
 
       {mockAdvisories.length > 0 ? (
-         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {mockAdvisories.map((advisory, index) => (
             <AdvisoryCard key={index} advisory={advisory} />
           ))}

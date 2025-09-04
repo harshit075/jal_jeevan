@@ -1,5 +1,6 @@
 
 
+
 "use client";
 
 import * as React from "react";
@@ -42,7 +43,8 @@ const mainNavItems = [
   { href: "/kit", label: "Get a Kit", icon: ShoppingCart, roles: ["guest", "user", "admin"] },
   { href: "/about", label: "About Us", icon: Info, roles: ["guest", "user", "admin"] },
   { href: "/contact", label: "Contact", icon: Phone, roles: ["guest", "user", "admin"] },
-  { href: "/report/symptoms", label: "Report", icon: HeartPulse, roles: ["user", "admin"] },
+  { href: "/report/symptoms", label: "Report Symptoms", icon: HeartPulse, roles: ["user", "admin"], className: "hidden lg:flex" },
+  { href: "/report/water-source", label: "Report Water", icon: Droplet, roles: ["user", "admin"], className: "hidden lg:flex" },
   { href: "/admin", label: "Admin", icon: Shield, roles: ["admin"]},
 ];
 
@@ -83,12 +85,17 @@ function BottomNavBar() {
   const pathname = usePathname();
   const { role } = useAuth();
   
-  const navItemsToShow = mobileNavItems.filter(item => item.roles.includes(role));
+  const navItemsToShow = mobileNavItems.filter(item => {
+    if (role === 'guest' && (item.href === '/report/symptoms' || item.href === '/settings')) {
+      return false;
+    }
+    return item.roles.includes(role)
+  });
 
   return (
      <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background md:hidden">
         <nav className={cn("grid items-center justify-center gap-2 p-2", 
-            role === "guest" ? "grid-cols-3" : "grid-cols-5"
+            `grid-cols-${navItemsToShow.length}`
           )}>
           {navItemsToShow.map((item) => {
               const isActive = (item.href === "/" && pathname === "/") || (item.href !== "/" && pathname.startsWith(item.href));
@@ -112,14 +119,15 @@ function MainNav({ items, role }: { items: typeof mainNavItems, role: 'admin' | 
   const navItemsToShow = items.filter(item => item.roles.includes(role));
 
   return (
-    <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
+    <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
       {navItemsToShow.map((item) => (
         <Link
           key={item.href}
           href={item.href}
           className={cn(
             "text-sm font-medium transition-colors hover:text-primary/80",
-            pathname.startsWith(item.href) ? "text-primary" : "text-foreground/80"
+            pathname.startsWith(item.href) ? "text-primary" : "text-foreground/80",
+            item.className
           )}
         >
           {item.label}
@@ -180,7 +188,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background">
         <div className="container flex h-16 items-center">
-           <Link href="/" className="mr-6 flex items-center space-x-2">
+           <Link href="/" className="mr-4 flex items-center space-x-2">
             <Logo />
             <span className="hidden font-bold sm:inline-block text-foreground font-headline text-lg">Jal Jeevan</span>
           </Link>
@@ -206,6 +214,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                           <Link href="/admin"><Shield className="mr-2 h-4 w-4"/>Admin</Link>
                        </DropdownMenuItem>
                     )}
+                     <DropdownMenuItem asChild>
+                          <Link href="/report/symptoms"><HeartPulse className="mr-2 h-4 w-4"/>Report Symptoms</Link>
+                       </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/report/water-source"><Droplet className="mr-2 h-4 w-4"/>Report Water Source</Link>
+                       </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link href="/settings"><Settings className="mr-2 h-4 w-4"/>Settings</Link>
                     </DropdownMenuItem>
@@ -218,7 +232,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </DropdownMenu>
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 sm:space-x-2">
                  <ThemeToggle />
                  <Button variant="ghost" asChild>
                    <Link href="/login"><LogIn className="md:mr-2"/> <span className="hidden md:inline">Log In</span></Link>

@@ -1,4 +1,5 @@
 
+
 'use client';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -173,8 +174,8 @@ export default function DashboardPage() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-4 hidden md:flex"/>
-        <CarouselNext className="right-4 hidden md:flex"/>
+        <CarouselPrevious className="left-4 hidden sm:flex"/>
+        <CarouselNext className="right-4 hidden sm:flex"/>
       </Carousel>
       
       {/* Action Cards */}
@@ -236,7 +237,7 @@ export default function DashboardPage() {
         >
           <CarouselContent>
             {mockAdvisories.map((advisory, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+              <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
                 <div className="p-1 h-full">
                   <AdvisoryCard advisory={advisory} />
                 </div>
@@ -252,7 +253,7 @@ export default function DashboardPage() {
       {/* Top Stories Grid */}
       <div>
         <h2 className="text-2xl font-bold font-headline mb-6">More Resources</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {topStories.map((story, index) => (
              <Link key={index} href={story.href} className="group block">
                 <Card className="overflow-hidden transition-shadow hover:shadow-xl h-full flex flex-col">
