@@ -38,6 +38,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "next-themes";
 import { Footer } from "./footer";
 import { useTranslation } from "@/hooks/use-translation";
+import { Chatbot } from "./chatbot";
 
 const mainNavItems = [
   { href: "/advisories", labelKey: "nav_advisories", icon: Siren, roles: ["guest", "user", "admin"] },
@@ -286,6 +287,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             {children}
          </div>
         </main>
+        {user && <Chatbot />}
         <Footer />
       {<BottomNavBar />}
     </div>
