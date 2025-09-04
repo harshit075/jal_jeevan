@@ -51,14 +51,14 @@ import { useAuth } from "@/hooks/use-auth";
 
 const allNavItems = [
   { href: "/", label: "Home", icon: Home, roles: ["guest", "user", "admin"] },
-  { href: "/report/symptoms", label: "Report Symptoms", icon: HeartPulse, roles: ["user", "admin"] },
-  { href: "/report/water-source", label: "Report Water Source", icon: Droplet, roles: ["user", "admin"] },
+  { href: "/report/symptoms", label: "Report Symptoms", icon: HeartPulse, roles: ["user", "admin"], mobileOnly: true },
   { href: "/advisories", label: "Advisories", icon: Siren, roles: ["guest", "user", "admin"] },
+  { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
   { href: "/kit", label: "Get a Kit", icon: ShoppingCart, roles: ["guest", "user", "admin"] },
   { href: "/admin", label: "Admin", icon: Shield, roles: ["admin"]},
-  { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
   { href: "/settings", label: "Settings", icon: Settings, roles: ["user", "admin"] },
   { href: "/advisories/generate", label: "Generate Advisory", icon: PlusCircle, roles: ["admin"], hidden: true },
+  { href: "/report/water-source", label: "Report Water Source", icon: Droplet, roles: ["user", "admin"], hidden: true },
 ];
 
 function NavLink({
@@ -79,8 +79,8 @@ function NavLink({
        <Link
         href={href}
         className={cn(
-          "flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors",
-          isActive ? "text-primary" : "text-muted-foreground hover:text-primary/90"
+          "flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors w-full",
+          isActive ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-primary/90"
         )}
       >
         <Icon className="h-6 w-6" />
@@ -105,19 +105,40 @@ function NavLink({
 
 function BottomNavBar({ items }: { items: typeof allNavItems }) {
   const pathname = usePathname();
+  const navItemsToShow = items.filter(item => !item.hidden || item.mobileOnly);
+
   return (
      <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur-sm md:hidden">
-        <nav className="grid grid-cols-5 items-center justify-center gap-1 p-1">
-          {items.map((item) => (
-            <NavLink
-              key={item.href}
-              href={item.href}
-              label={item.label}
-              icon={item.icon}
-              isActive={pathname === item.href}
-              isMobile={true}
-            />
-          ))}
+        <nav className="grid grid-cols-4 items-center justify-center gap-1 p-1">
+          {navItemsToShow.map((item) => {
+              if (item.label === 'Report Symptoms') {
+                 return (
+                    <Link
+                      key="report"
+                      href="/report/symptoms"
+                       className={cn(
+                        "flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors w-full",
+                        pathname.startsWith('/report') ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-primary/90"
+                      )}
+                    >
+                      <HeartPulse className="h-6 w-6" />
+                      <span className="text-xs font-medium">Report</span>
+                    </Link>
+                 )
+              }
+              if (item.mobileOnly) return null;
+             
+              return (
+              <NavLink
+                key={item.href}
+                href={item.href}
+                label={item.label}
+                icon={item.icon}
+                isActive={pathname === item.href}
+                isMobile={true}
+              />
+            )
+          })}
         </nav>
       </div>
   )
@@ -130,6 +151,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const currentRole = loading ? "guest" : role;
 
   const filteredNavItems = allNavItems.filter(item => item.roles.includes(currentRole) && !item.hidden);
+  const mobileNavItems = allNavItems.filter(item => item.roles.includes(currentRole) && !item.hidden && (item.href !== '/report/water-source'));
+
 
   const renderNavItems = () =>
     filteredNavItems.map((item) => (
@@ -217,7 +240,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-background">
           {children}
         </main>
-        {role !== 'admin' && <BottomNavBar items={filteredNavItems} />}
+        {role !== 'admin' && <BottomNavBar items={mobileNavItems} />}
       </div>
     </div>
   );
