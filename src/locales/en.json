@@ -1,0 +1,43 @@
+
+{
+  "nav_advisories": "Advisories",
+  "nav_education": "Education",
+  "nav_get_kit": "Get a Kit",
+  "nav_about": "About Us",
+  "nav_contact": "Contact",
+  "nav_report_symptoms": "Report Symptoms",
+  "nav_report_water": "Report Water",
+  "nav_admin": "Admin",
+  "nav_settings": "Settings",
+
+  "mobile_nav_home": "Home",
+  "mobile_nav_report": "Report",
+  "mobile_nav_advisories": "Advisories",
+  "mobile_nav_education": "Education",
+  "mobile_nav_you": "You",
+
+  "toggle_language": "Toggle language",
+  "toggle_theme": "Toggle theme",
+  "toggle_user_menu": "Toggle user menu",
+
+  "theme_light": "Light",
+  "theme_dark": "Dark",
+  "theme_system": "System",
+
+  "login": "Log In",
+  "signup": "Sign Up",
+  "logout": "Log out",
+
+  "contact_title": "Contact Us",
+  "contact_description": "Have questions or want to get in touch? Send us a message and we'll get back to you as soon as possible.",
+  "contact_info_title": "Contact Information",
+  "contact_form_title": "Send a Message",
+  "contact_form_description": "Fill out the form below to reach us directly.",
+  "contact_form_name_label": "Full Name",
+  "contact_form_name_placeholder": "Your Name",
+  "contact_form_email_label": "Email Address",
+  "contact_form_email_placeholder": "you@example.com",
+  "contact_form_message_label": "Message",
+  "contact_form_message_placeholder": "Your message...",
+  "contact_form_send_button": "Send Message"
+}

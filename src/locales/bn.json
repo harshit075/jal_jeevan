@@ -1,0 +1,43 @@
+
+{
+  "nav_advisories": "উপদেশ",
+  "nav_education": "শিক্ষা",
+  "nav_get_kit": "একটি কিট পান",
+  "nav_about": "আমাদের সম্পর্কে",
+  "nav_contact": "যোগাযোগ করুন",
+  "nav_report_symptoms": "লক্ষণ রিপোর্ট করুন",
+  "nav_report_water": "জল রিপোর্ট করুন",
+  "nav_admin": "অ্যাডমিন",
+  "nav_settings": "সেটিংস",
+
+  "mobile_nav_home": "হোম",
+  "mobile_nav_report": "রিপোর্ট",
+  "mobile_nav_advisories": "উপদেশ",
+  "mobile_nav_education": "শিক্ষা",
+  "mobile_nav_you": "আপনি",
+  
+  "toggle_language": "ভাষা পরিবর্তন করুন",
+  "toggle_theme": "থিম পরিবর্তন করুন",
+  "toggle_user_menu": "ব্যবহারকারী মেনু টগল করুন",
+
+  "theme_light": "লাইট",
+  "theme_dark": "ডার্ক",
+  "theme_system": "সিস্টেম",
+
+  "login": "লগ ইন করুন",
+  "signup": "সাইন আপ করুন",
+  "logout": "লগ আউট করুন",
+
+  "contact_title": "আমাদের সাথে যোগাযোগ করুন",
+  "contact_description": "প্রশ্ন আছে বা যোগাযোগ করতে চান? আমাদের একটি বার্তা পাঠান এবং আমরা যত তাড়াতাড়ি সম্ভব আপনার কাছে ফিরে আসব।",
+  "contact_info_title": "যোগাযোগের তথ্য",
+  "contact_form_title": "একটি বার্তা পাঠান",
+  "contact_form_description": "সরাসরি আমাদের কাছে পৌঁছানোর জন্য নীচের ফর্মটি পূরণ করুন।",
+  "contact_form_name_label": "পুরো নাম",
+  "contact_form_name_placeholder": "আপনার নাম",
+  "contact_form_email_label": "ইমেল ঠিকানা",
+  "contact_form_email_placeholder": "you@example.com",
+  "contact_form_message_label": "বার্তা",
+  "contact_form_message_placeholder": "আপনার বার্তা...",
+  "contact_form_send_button": "বার্তা পাঠান"
+}

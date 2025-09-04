@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { AppShell } from '@/components/app-shell';
 import { AuthProvider } from '@/hooks/use-auth';
 import { ThemeProvider } from '@/components/theme-provider';
+import { TranslationProvider } from '@/hooks/use-translation';
 
 export const metadata: Metadata = {
   title: 'Jal Jeevan',
@@ -33,7 +34,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <AppShell>{children}</AppShell>
+            <TranslationProvider>
+              <AppShell>{children}</AppShell>
+            </TranslationProvider>
           </AuthProvider>
           <Toaster />
         </ThemeProvider>

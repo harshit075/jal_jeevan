@@ -37,24 +37,25 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "next-themes";
 import { Footer } from "./footer";
+import { useTranslation } from "@/hooks/use-translation";
 
 const mainNavItems = [
-  { href: "/advisories", label: "Advisories", icon: Siren, roles: ["guest", "user", "admin"] },
-  { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
-  { href: "/kit", label: "Get a Kit", icon: ShoppingCart, roles: ["guest", "user", "admin"] },
-  { href: "/about", label: "About Us", icon: Info, roles: ["guest", "user", "admin"] },
-  { href: "/contact", label: "Contact", icon: Phone, roles: ["guest", "user", "admin"] },
-  { href: "/report/symptoms", label: "Report Symptoms", icon: HeartPulse, roles: ["user", "admin"], className: "hidden lg:flex" },
-  { href: "/report/water-source", label: "Report Water", icon: Droplet, roles: ["user", "admin"], className: "hidden lg:flex" },
-  { href: "/admin", label: "Admin", icon: Shield, roles: ["admin"]},
+  { href: "/advisories", labelKey: "nav_advisories", icon: Siren, roles: ["guest", "user", "admin"] },
+  { href: "/education", labelKey: "nav_education", icon: BookOpen, roles: ["guest", "user", "admin"] },
+  { href: "/kit", labelKey: "nav_get_kit", icon: ShoppingCart, roles: ["guest", "user", "admin"] },
+  { href: "/about", labelKey: "nav_about", icon: Info, roles: ["guest", "user", "admin"] },
+  { href: "/contact", labelKey: "nav_contact", icon: Phone, roles: ["guest", "user", "admin"] },
+  { href: "/report/symptoms", labelKey: "nav_report_symptoms", icon: HeartPulse, roles: ["user", "admin"], className: "hidden lg:flex" },
+  { href: "/report/water-source", labelKey: "nav_report_water", icon: Droplet, roles: ["user", "admin"], className: "hidden lg:flex" },
+  { href: "/admin", labelKey: "nav_admin", icon: Shield, roles: ["admin"]},
 ];
 
 const mobileNavItems = [
-  { href: "/", label: "Home", icon: Home, roles: ["guest", "user", "admin"] },
-  { href: "/report/symptoms", label: "Report", icon: HeartPulse, roles: ["user", "admin"] },
-  { href: "/advisories", label: "Advisories", icon: Siren, roles: ["guest", "user", "admin"] },
-  { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
-  { href: "/settings", label: "You", icon: User, roles: ["user", "admin"] },
+  { href: "/", labelKey: "mobile_nav_home", icon: Home, roles: ["guest", "user", "admin"] },
+  { href: "/report/symptoms", labelKey: "mobile_nav_report", icon: HeartPulse, roles: ["user", "admin"] },
+  { href: "/advisories", labelKey: "mobile_nav_advisories", icon: Siren, roles: ["guest", "user", "admin"] },
+  { href: "/education", labelKey: "mobile_nav_education", icon: BookOpen, roles: ["guest", "user", "admin"] },
+  { href: "/settings", labelKey: "mobile_nav_you", icon: User, roles: ["user", "admin"] },
 ];
 
 function MobileNavLink({
@@ -85,6 +86,7 @@ function MobileNavLink({
 function BottomNavBar() {
   const pathname = usePathname();
   const { role } = useAuth();
+  const { t } = useTranslation();
   
   const navItemsToShow = mobileNavItems.filter(item => item.roles.includes(role));
 
@@ -112,7 +114,7 @@ function BottomNavBar() {
                 <MobileNavLink
                   key={item.href}
                   href={item.href}
-                  label={item.label}
+                  label={t(item.labelKey)}
                   icon={item.icon}
                   isActive={isActive}
                 />
@@ -123,8 +125,9 @@ function BottomNavBar() {
   )
 }
 
-function MainNav({ items, role }: { items: typeof mainNavItems, role: 'admin' | 'user' | 'guest' }) {
+function MainNav({ items, role }: { items: (typeof mainNavItems), role: 'admin' | 'user' | 'guest' }) {
   const pathname = usePathname();
+  const { t } = useTranslation();
   const navItemsToShow = items.filter(item => item.roles.includes(role));
 
   return (
@@ -139,7 +142,7 @@ function MainNav({ items, role }: { items: typeof mainNavItems, role: 'admin' | 
             item.className
           )}
         >
-          {item.label}
+          {t(item.labelKey)}
         </Link>
       ))}
     </nav>
@@ -162,18 +165,19 @@ function Logo() {
 }
 
 function LanguageToggle() {
+    const { setLanguage, t } = useTranslation();
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
                     <Languages className="h-[1.2rem] w-[1.2rem]" />
-                    <span className="sr-only">Toggle language</span>
+                    <span className="sr-only">{t('toggle_language')}</span>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuItem>English</DropdownMenuItem>
-                <DropdownMenuItem>हिन्दी (Hindi)</DropdownMenuItem>
-                <DropdownMenuItem>বাংলা (Bengali)</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLanguage('en')}>English</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLanguage('hi')}>हिन्दी (Hindi)</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLanguage('bn')}>বাংলা (Bengali)</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )
@@ -181,6 +185,7 @@ function LanguageToggle() {
 
 function ThemeToggle() {
     const { setTheme } = useTheme();
+    const { t } = useTranslation();
 
     return (
         <DropdownMenu>
@@ -188,18 +193,18 @@ function ThemeToggle() {
                 <Button variant="ghost" size="icon">
                     <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                     <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                    <span className="sr-only">Toggle theme</span>
+                    <span className="sr-only">{t('toggle_theme')}</span>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => setTheme("light")}>
-                    Light
+                    {t('theme_light')}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme("dark")}>
-                    Dark
+                    {t('theme_dark')}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme("system")}>
-                    System
+                    {t('theme_system')}
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
@@ -208,6 +213,7 @@ function ThemeToggle() {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, role, loading, logout } = useAuth();
+  const { t } = useTranslation();
   
   const currentRole = loading ? "guest" : role;
 
@@ -231,7 +237,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-8 w-8 rounded-full text-foreground/80 hover:text-foreground">
                        <User className="h-5 w-5" />
-                       <span className="sr-only">Toggle user menu</span>
+                       <span className="sr-only">{t('toggle_user_menu')}</span>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56">
@@ -239,22 +245,22 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     <DropdownMenuSeparator />
                     {role === 'admin' && (
                        <DropdownMenuItem asChild>
-                          <Link href="/admin"><Shield className="mr-2 h-4 w-4"/>Admin</Link>
+                          <Link href="/admin"><Shield className="mr-2 h-4 w-4"/>{t('nav_admin')}</Link>
                        </DropdownMenuItem>
                     )}
                      <DropdownMenuItem asChild>
-                          <Link href="/report/symptoms"><HeartPulse className="mr-2 h-4 w-4"/>Report Symptoms</Link>
+                          <Link href="/report/symptoms"><HeartPulse className="mr-2 h-4 w-4"/>{t('nav_report_symptoms')}</Link>
                        </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                          <Link href="/report/water-source"><Droplet className="mr-2 h-4 w-4"/>Report Water Source</Link>
+                          <Link href="/report/water-source"><Droplet className="mr-2 h-4 w-4"/>{t('nav_report_water')}</Link>
                        </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/settings"><Settings className="mr-2 h-4 w-4"/>Settings</Link>
+                      <Link href="/settings"><Settings className="mr-2 h-4 w-4"/>{t('nav_settings')}</Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={logout}>
                        <LogOut className="mr-2 h-4 w-4" />
-                      <span>Log out</span>
+                      <span>{t('logout')}</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -264,10 +270,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                  <LanguageToggle />
                  <ThemeToggle />
                  <Button variant="ghost" asChild>
-                   <Link href="/login"><LogIn className="md:mr-2"/> <span className="hidden md:inline">Log In</span></Link>
+                   <Link href="/login"><LogIn className="md:mr-2"/> <span className="hidden md:inline">{t('login')}</span></Link>
                  </Button>
                  <Button asChild>
-                   <Link href="/signup"><UserPlus className="md:mr-2"/> <span className="hidden md:inline">Sign Up</span></Link>
+                   <Link href="/signup"><UserPlus className="md:mr-2"/> <span className="hidden md:inline">{t('signup')}</span></Link>
                  </Button>
               </div>
             )}
