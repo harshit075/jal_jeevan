@@ -19,7 +19,9 @@ import {
   LogIn,
   UserPlus,
   Info,
-  Phone
+  Phone,
+  Moon,
+  Sun
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,6 +34,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
+import { useTheme } from "next-themes";
 
 const mainNavItems = [
   { href: "/advisories", label: "Advisories", icon: Siren, roles: ["guest", "user", "admin"] },
@@ -141,6 +144,33 @@ function Logo() {
   );
 }
 
+function ThemeToggle() {
+    const { setTheme } = useTheme();
+
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                    <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                    <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                    <span className="sr-only">Toggle theme</span>
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                    Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                    Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                    System
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, role, loading, logout } = useAuth();
   
@@ -157,9 +187,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
           <MainNav items={mainNavItems} role={currentRole} />
 
-          <div className="flex flex-1 items-center justify-end space-x-4">
+          <div className="flex flex-1 items-center justify-end space-x-2">
              {loading ? null : user ? (
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-8 w-8 rounded-full text-foreground/80 hover:text-foreground">
@@ -188,6 +219,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </div>
             ) : (
               <div className="flex items-center space-x-2">
+                 <ThemeToggle />
                  <Button variant="ghost" asChild>
                    <Link href="/login"><LogIn className="md:mr-2"/> <span className="hidden md:inline">Log In</span></Link>
                  </Button>
