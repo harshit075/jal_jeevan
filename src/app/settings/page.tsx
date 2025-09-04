@@ -7,14 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
 export default function SettingsPage() {
@@ -25,29 +17,6 @@ export default function SettingsPage() {
         <h1 className="font-headline text-3xl font-bold tracking-tight">Settings</h1>
         <p className="text-muted-foreground">Manage your account and application preferences.</p>
       </div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Display</CardTitle>
-          <CardDescription>
-            Customize the appearance of the application.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="language">Language</Label>
-            <Select defaultValue="en">
-              <SelectTrigger id="language" className="w-full md:w-[300px]">
-                <SelectValue placeholder="Select language" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="en">English</SelectItem>
-                <SelectItem value="hi">हिन्दी (Hindi)</SelectItem>
-                <SelectItem value="bn">বাংলা (Bengali)</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </CardContent>
-      </Card>
       
       <Card>
         <CardHeader>

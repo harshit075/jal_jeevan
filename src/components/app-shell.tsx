@@ -21,7 +21,8 @@ import {
   Info,
   Phone,
   Moon,
-  Sun
+  Sun,
+  Languages,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -152,6 +153,24 @@ function Logo() {
   );
 }
 
+function LanguageToggle() {
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                    <Languages className="h-[1.2rem] w-[1.2rem]" />
+                    <span className="sr-only">Toggle language</span>
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                <DropdownMenuItem>English</DropdownMenuItem>
+                <DropdownMenuItem>हिन्दी (Hindi)</DropdownMenuItem>
+                <DropdownMenuItem>বাংলা (Bengali)</DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
+
 function ThemeToggle() {
     const { setTheme } = useTheme();
 
@@ -197,7 +216,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
           <div className="flex flex-1 items-center justify-end space-x-2">
              {loading ? null : user ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
+                <LanguageToggle />
                 <ThemeToggle />
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -233,6 +253,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </div>
             ) : (
               <div className="flex items-center space-x-1 sm:space-x-2">
+                 <LanguageToggle />
                  <ThemeToggle />
                  <Button variant="ghost" asChild>
                    <Link href="/login"><LogIn className="md:mr-2"/> <span className="hidden md:inline">Log In</span></Link>
