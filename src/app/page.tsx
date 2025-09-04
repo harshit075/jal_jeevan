@@ -3,9 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
-import { HeartPulse, Droplet, ListChecks, Shield, BookOpen, ArrowRight } from "lucide-react";
+import { HeartPulse, Droplet, ArrowRight, BookOpen, Shield, ListChecks, Siren } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { AdvisoryCard } from "@/components/advisory-card";
+import Autoplay from "embla-carousel-autoplay";
+
 
 const mainStory = {
   title: "Boil Water Advisory: A Community Guide",
@@ -45,6 +49,27 @@ const topStories = [
       hint: "medical kit"
     },
     href: "/kit"
+  }
+];
+
+const mockAdvisories = [
+  {
+    advisoryTitle: "Boil Water Advisory for Sector 15",
+    advisorySummary: "Due to potential contamination, all residents in Sector 15 are advised to boil tap water before consumption or use. Water samples have shown elevated levels of E. coli bacteria.",
+    affectedArea: "Sector 15, Township Area",
+    recommendedActions: ["Boil all drinking water for at least 1 minute.", "Use bottled water for drinking, cooking, and brushing teeth.", "Disinfect all food preparation surfaces.", "Report any gastrointestinal symptoms to your local health clinic immediately."]
+  },
+  {
+    advisoryTitle: "Cholera Outbreak Warning in Riverside Communities",
+    advisorySummary: "An increasing number of cholera cases have been reported in communities along the river. The primary source is suspected to be contaminated river water used for drinking and bathing.",
+    affectedArea: "All communities along the Great River bank, from Elm Bridge to Pine Ford.",
+    recommendedActions: ["Drink and use safe water (boiled or treated).", "Wash your hands often with soap and safe water.", "Cook food well, especially seafood, and eat it while it's hot.", "Clean up safely—in the kitchen and when caring for sick family members."]
+  },
+  {
+    advisoryTitle: "Increased Mosquito Activity and Dengue Risk",
+    advisorySummary: "Health officials have noted a significant increase in mosquito populations following recent rains. This raises the risk of dengue fever transmission. Be proactive in eliminating breeding grounds.",
+    affectedArea: "City-wide",
+    recommendedActions: ["Eliminate standing water in and around your home (e.g., in tires, flower pots, and containers).", "Use mosquito repellent containing DEET, especially during dawn and dusk.", "Wear long-sleeved shirts and long pants to cover your skin.", "Keep windows and doors screened or closed to prevent mosquitos from entering."]
   }
 ];
 
@@ -129,6 +154,41 @@ export default function DashboardPage() {
          </Card>
       </div>
 
+       {/* Latest Advisories */}
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold font-headline flex items-center gap-2"><Siren className="text-primary"/> Latest Advisories</h2>
+          <Button variant="link" asChild>
+            <Link href="/advisories">View All <ArrowRight className="ml-1" /></Link>
+          </Button>
+        </div>
+        <Carousel 
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          plugins={[
+            Autoplay({
+              delay: 5000,
+              stopOnInteraction: false,
+            }),
+          ]}
+          className="w-full"
+        >
+          <CarouselContent>
+            {mockAdvisories.map((advisory, index) => (
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                <div className="p-1 h-full">
+                  <AdvisoryCard advisory={advisory} />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden sm:flex" />
+          <CarouselNext className="hidden sm:flex" />
+        </Carousel>
+      </div>
+
 
       {/* Main Story */}
       <Card className="overflow-hidden">
@@ -183,3 +243,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
