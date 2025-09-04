@@ -13,6 +13,17 @@ import Autoplay from "embla-carousel-autoplay";
 
 
 const heroStories = [
+    {
+    category: "FIRST AID",
+    title: "Your Guide to the Jal Jeevan Kit",
+    description: "Discover the essential tools in your kit for water testing and handling minor medical emergencies.",
+    image: {
+      src: "https://picsum.photos/1200/600",
+      alt: "A first aid kit sitting on a wooden table in a hut with rain visible outside.",
+      hint: "medical kit rain"
+    },
+    href: "/kit"
+  },
   {
     category: "HEALTH EDUCATION",
     title: "Boil Water Advisory: A Community Guide",
@@ -34,17 +45,6 @@ const heroStories = [
       hint: "rainy landscape"
     },
     href: "/report/water-source"
-  },
-    {
-    category: "FIRST AID",
-    title: "Your Guide to the Jal Jeevan Kit",
-    description: "Discover the essential tools in your kit for water testing and handling minor medical emergencies.",
-    image: {
-      src: "https://picsum.photos/1200/600",
-      alt: "A first aid kit sitting on a wooden table in a hut with rain visible outside.",
-      hint: "medical kit rain"
-    },
-    href: "/kit"
   }
 ];
 
@@ -54,7 +54,7 @@ const topStories = [
     image: {
       src: "https://picsum.photos/400/300",
       alt: "A person using a smartphone in a village during a monsoon.",
-      hint: "monsoon village"
+      hint: "monsoon village traffic light"
     },
     href: "/report/symptoms"
   },
@@ -63,7 +63,7 @@ const topStories = [
      image: {
       src: "https://picsum.photos/400/300",
       alt: "A woman collecting water from a stream during light rain in a green valley.",
-      hint: "collecting water greenery"
+      hint: "collecting water greenery traffic light"
     },
     href: "/report/water-source"
   },
@@ -72,7 +72,7 @@ const topStories = [
      image: {
       src: "https://picsum.photos/400/300",
       alt: "A display of a first-aid kit with lush green foliage in the background.",
-      hint: "first-aid kit"
+      hint: "first-aid kit traffic light"
     },
     href: "/kit"
   }
@@ -80,6 +80,12 @@ const topStories = [
 
 const mockAdvisories = [
   {
+    advisoryTitle: "Increased Mosquito Activity and Dengue Risk",
+    advisorySummary: "Health officials have noted a significant increase in mosquito populations following recent rains. This raises the risk of dengue fever transmission. Be proactive in eliminating breeding grounds.",
+    affectedArea: "City-wide",
+    recommendedActions: ["Eliminate standing water in and around your home (e.g., in tires, flower pots, and containers).", "Use mosquito repellent containing DEET, especially during dawn and dusk.", "Wear long-sleeved shirts and long pants to cover your skin.", "Keep windows and doors screened or closed to prevent mosquitos from entering."]
+  },
+   {
     advisoryTitle: "Boil Water Advisory for Sector 15",
     advisorySummary: "Due to potential contamination, all residents in Sector 15 are advised to boil tap water before consumption or use. Water samples have shown elevated levels of E. coli bacteria.",
     affectedArea: "Sector 15, Township Area",
@@ -90,13 +96,8 @@ const mockAdvisories = [
     advisorySummary: "An increasing number of cholera cases have been reported in communities along the river. The primary source is suspected to be contaminated river water used for drinking and bathing.",
     affectedArea: "All communities along the Great River bank, from Elm Bridge to Pine Ford.",
     recommendedActions: ["Drink and use safe water (boiled or treated).", "Wash your hands often with soap and safe water.", "Cook food well, especially seafood, and eat it while it's hot.", "Clean up safely—in the kitchen and when caring for sick family members."]
-  },
-  {
-    advisoryTitle: "Increased Mosquito Activity and Dengue Risk",
-    advisorySummary: "Health officials have noted a significant increase in mosquito populations following recent rains. This raises the risk of dengue fever transmission. Be proactive in eliminating breeding grounds.",
-    affectedArea: "City-wide",
-    recommendedActions: ["Eliminate standing water in and around your home (e.g., in tires, flower pots, and containers).", "Use mosquito repellent containing DEET, especially during dawn and dusk.", "Wear long-sleeved shirts and long pants to cover your skin.", "Keep windows and doors screened or closed to prevent mosquitos from entering."]
   }
+ 
 ];
 
 
@@ -146,31 +147,31 @@ export default function DashboardPage() {
       {/* Hero Carousel */}
       <Carousel 
         opts={{ loop: true }}
-        plugins={[ Autoplay({ delay: 5000, stopOnInteraction: false }) ]}
+        plugins={[ Autoplay({ delay: 5000, stopOnInteraction: true }) ]}
+        className="w-full"
       >
         <CarouselContent>
           {heroStories.map((story, index) => (
             <CarouselItem key={index}>
-              <Card className="overflow-hidden">
-                <Link href={story.href} className="group block">
-                  <div className="grid md:grid-cols-2 gap-0 items-center">
-                    <div className="relative h-64 md:h-[400px] overflow-hidden">
-                      <Image
-                        src={story.image.src}
-                        alt={story.image.alt}
-                        data-ai-hint={story.image.hint}
-                        fill
-                        className="object-cover transition-transform group-hover:scale-105"
-                      />
-                    </div>
-                    <div className="p-8 md:p-12">
-                      <p className="text-sm font-bold uppercase text-primary tracking-wider mb-2">{story.category}</p>
-                      <h1 className="font-headline text-3xl md:text-4xl font-bold group-hover:text-primary transition-colors">{story.title}</h1>
-                      <p className="mt-4 text-lg text-muted-foreground">{story.description}</p>
+                <Link href={story.href} className="group block overflow-hidden rounded-lg">
+                  <div className="relative aspect-[16/9] md:aspect-[2/1]">
+                    <Image
+                      src={story.image.src}
+                      alt={story.image.alt}
+                      data-ai-hint={story.image.hint}
+                      fill
+                      className="object-cover transition-transform group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent" />
+                     <div className="absolute inset-0 grid md:grid-cols-2 gap-8 items-end p-8 md:p-12">
+                        <div className="text-white">
+                          <p className="text-sm font-bold uppercase text-primary-foreground/80 tracking-wider mb-2">{story.category}</p>
+                          <h1 className="font-headline text-3xl md:text-4xl font-bold group-hover:text-primary transition-colors">{story.title}</h1>
+                          <p className="mt-4 text-lg text-primary-foreground/90 max-w-lg">{story.description}</p>
+                        </div>
                     </div>
                   </div>
                 </Link>
-              </Card>
             </CarouselItem>
           ))}
         </CarouselContent>
@@ -180,7 +181,7 @@ export default function DashboardPage() {
       
       {/* Action Cards */}
        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-         <Card className="group flex flex-col justify-between overflow-hidden transition-shadow hover:shadow-lg">
+         <Card className="group flex flex-col justify-between overflow-hidden transition-shadow hover:shadow-xl bg-card">
             <CardHeader>
                <div className="flex items-center gap-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
@@ -196,7 +197,7 @@ export default function DashboardPage() {
                  </Button>
             </CardContent>
          </Card>
-          <Card className="group flex flex-col justify-between overflow-hidden transition-shadow hover:shadow-lg">
+          <Card className="group flex flex-col justify-between overflow-hidden transition-shadow hover:shadow-xl bg-card">
             <CardHeader>
                <div className="flex items-center gap-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
@@ -217,36 +218,16 @@ export default function DashboardPage() {
        {/* Latest Advisories */}
       <div>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold font-headline flex items-center gap-2"><Siren className="text-primary"/> Latest Advisories</h2>
+          <h2 className="text-2xl font-bold font-headline flex items-center gap-3"><Siren className="text-primary"/> Latest Advisories</h2>
           <Button variant="link" asChild>
             <Link href="/advisories">View All <ArrowRight className="ml-1" /></Link>
           </Button>
         </div>
-        <Carousel 
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          plugins={[
-            Autoplay({
-              delay: 5000,
-              stopOnInteraction: false,
-            }),
-          ]}
-          className="w-full"
-        >
-          <CarouselContent>
-            {mockAdvisories.map((advisory, index) => (
-              <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
-                <div className="p-1 h-full">
-                  <AdvisoryCard advisory={advisory} />
-                </div>
-              </CarouselItem>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {mockAdvisories.slice(0, 2).map((advisory, index) => (
+              <AdvisoryCard key={index} advisory={advisory} />
             ))}
-          </CarouselContent>
-          <CarouselPrevious className="hidden sm:flex" />
-          <CarouselNext className="hidden sm:flex" />
-        </Carousel>
+        </div>
       </div>
 
 
@@ -256,7 +237,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {topStories.map((story, index) => (
              <Link key={index} href={story.href} className="group block">
-                <Card className="overflow-hidden transition-shadow hover:shadow-xl h-full flex flex-col">
+                <Card className="overflow-hidden transition-shadow hover:shadow-xl h-full flex flex-col bg-card">
                   <div className="relative h-48 overflow-hidden">
                       <Image
                       src={story.image.src}
