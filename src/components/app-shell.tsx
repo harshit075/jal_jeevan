@@ -16,10 +16,9 @@ import {
   Shield,
   ShoppingCart,
   Search,
-  LogIn,
   LogOut,
-  UserPlus,
-  PlusCircle,
+  LogIn,
+  UserPlus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,9 +42,10 @@ const mainNavItems = [
 
 const mobileNavItems = [
   { href: "/", label: "Home", icon: Home, roles: ["guest", "user", "admin"] },
-  { href: "/report/symptoms", label: "Report", icon: HeartPulse, roles: ["user", "admin"] },
+  { href: "/report/symptoms", label: "Report", icon: HeartPulse, roles: ["user"] },
   { href: "/advisories", label: "Advisories", icon: Siren, roles: ["guest", "user", "admin"] },
   { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
+  { href: "/settings", label: "You", icon: User, roles: ["user", "admin"] },
 ];
 
 function MobileNavLink({
@@ -81,7 +81,9 @@ function BottomNavBar() {
 
   return (
      <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background md:hidden">
-        <nav className="grid grid-cols-4 items-center justify-center gap-2 p-2">
+        <nav className={cn("grid items-center justify-center gap-2 p-2", 
+            role === "guest" ? "grid-cols-3" : "grid-cols-5"
+          )}>
           {navItemsToShow.map((item) => {
               const isActive = (item.href === "/" && pathname === "/") || (item.href !== "/" && pathname.startsWith(item.href));
               return (
@@ -171,14 +173,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </DropdownMenu>
               </div>
             ) : (
-              <div className="hidden md:flex items-center space-x-2">
+              <div className="flex items-center space-x-2">
                  <Button variant="ghost" asChild>
-                   <Link href="/login">Log In</Link>
+                   <Link href="/login"><LogIn className="md:mr-2"/> <span className="hidden md:inline">Log In</span></Link>
                  </Button>
                  <Button asChild>
-                   <Link href="/signup">Sign Up</Link>
+                   <Link href="/signup"><UserPlus className="md:mr-2"/> <span className="hidden md:inline">Sign Up</span></Link>
                  </Button>
-                  <Button variant="ghost" size="icon" className="text-foreground/80 hover:text-foreground">
+                  <Button variant="ghost" size="icon" className="text-foreground/80 hover:text-foreground hidden md:inline-flex">
                     <Search className="h-5 w-5"/>
                     <span className="sr-only">Search</span>
                   </Button>
@@ -193,7 +195,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             {children}
          </div>
         </main>
-      {currentRole !== 'admin' && <BottomNavBar />}
+      {<BottomNavBar />}
     </div>
   );
 }
