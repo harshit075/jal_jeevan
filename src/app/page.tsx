@@ -52,8 +52,8 @@ const topStories = [
     title: "How to Report Symptoms Anonymously",
     image: {
       src: "https://picsum.photos/400/300",
-      alt: "A person using a smartphone.",
-      hint: "person phone"
+      alt: "A person using a smartphone to report health symptoms in a village in NorthEast India.",
+      hint: "bamboo bridge"
     },
     href: "/report/symptoms"
   },
@@ -61,8 +61,8 @@ const topStories = [
     title: "Identifying Unsafe Water Sources",
      image: {
       src: "https://picsum.photos/400/300",
-      alt: "A person looking at a river.",
-      hint: "river water"
+      alt: "A woman in traditional attire collecting water from a stream in a lush, green landscape.",
+      hint: "traditional attire"
     },
     href: "/report/water-source"
   },
@@ -70,8 +70,8 @@ const topStories = [
     title: "Your Guide to the Jal Rakshak Kit",
      image: {
       src: "https://picsum.photos/400/300",
-      alt: "A first aid and water testing kit.",
-      hint: "medical kit"
+      alt: "A display of a first-aid kit with local herbs from NorthEast India.",
+      hint: "hornbill festival"
     },
     href: "/kit"
   }
@@ -256,14 +256,13 @@ export default function DashboardPage() {
           {topStories.map((story, index) => (
              <Link key={index} href={story.href} className="group block">
                 <Card className="overflow-hidden transition-shadow hover:shadow-xl h-full flex flex-col">
-                  <div className="overflow-hidden">
+                  <div className="relative h-48 overflow-hidden">
                       <Image
                       src={story.image.src}
                       alt={story.image.alt}
                       data-ai-hint={story.image.hint}
-                      width={400}
-                      height={240}
-                      className="object-cover transition-transform group-hover:scale-105 w-full h-36"
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                   </div>
                    <CardHeader>
