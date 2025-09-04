@@ -17,6 +17,10 @@ import {
   Moon,
   Rss,
   Menu,
+  LogIn,
+  Shield,
+  LogOut,
+  UserPlus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,20 +44,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { OnlineStatus } from "./online-status";
+import { useAuth } from "@/hooks/use-auth";
 
 const navItems = [
-  { href: "/", label: "Dashboard", icon: Home },
+  { href: "/", label: "Dashboard", icon: Home, roles: ["guest", "user", "admin"] },
   {
     label: "Report",
     icon: HeartPulse,
+    roles: ["user", "admin"],
     subItems: [
-      { href: "/report/symptoms", label: "Symptoms", icon: HeartPulse },
-      { href: "/report/water-source", label: "Water Source", icon: Droplet },
+      { href: "/report/symptoms", label: "Symptoms", icon: HeartPulse, roles: ["user", "admin"] },
+      { href: "/report/water-source", label: "Water Source", icon: Droplet, roles: ["user", "admin"] },
     ],
   },
-  { href: "/advisories", label: "Advisories", icon: Siren },
-  { href: "/education", label: "Education", icon: BookOpen },
-  { href: "/settings", label: "Settings", icon: Settings },
+  { href: "/advisories", label: "Advisories", icon: Siren, roles: ["user", "admin"] },
+  { href: "/admin", label: "Admin", icon: Shield, roles: ["admin"]},
+  { href: "/education", label: "Education", icon: BookOpen, roles: ["guest", "user", "admin"] },
+  { href: "/settings", label: "Settings", icon: Settings, roles: ["user", "admin"] },
 ];
 
 function NavLink({
@@ -89,7 +96,7 @@ function NavSubMenu({
 }: {
   label: string;
   icon: React.ElementType;
-  subItems: { href: string; label: string; icon: React.ElementType }[];
+  subItems: { href: string; label: string; icon: React.ElementType, roles: string[] }[];
   pathname: string;
 }) {
   const isSubActive = subItems.some((item) => pathname.startsWith(item.href));
@@ -122,27 +129,37 @@ function NavSubMenu({
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { user, role, loading, logout } = useAuth();
+  
+  const currentRole = loading ? "guest" : role;
+
+  const filteredNavItems = navItems.filter(item => item.roles.includes(currentRole));
 
   const renderNavItems = () =>
-    navItems.map((item) =>
-      item.subItems ? (
-        <NavSubMenu
-          key={item.label}
-          label={item.label}
-          icon={item.icon}
-          subItems={item.subItems}
-          pathname={pathname}
-        />
-      ) : (
+    filteredNavItems.map((item) => {
+      if (item.subItems) {
+        const filteredSubItems = item.subItems.filter(subItem => subItem.roles.includes(currentRole));
+        if (filteredSubItems.length === 0) return null;
+        return (
+          <NavSubMenu
+            key={item.label}
+            label={item.label}
+            icon={item.icon}
+            subItems={filteredSubItems}
+            pathname={pathname}
+          />
+        );
+      }
+      return (
         <NavLink
-          key={item.href}
+          key={item.href!}
           href={item.href!}
           label={item.label}
           icon={item.icon}
           isActive={pathname === item.href}
         />
-      )
-    );
+      );
+  });
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -197,39 +214,41 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="w-full flex-1">
             <OnlineStatus />
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <User className="h-5 w-5" />
-                <span className="sr-only">Toggle user menu</span>
+
+          {loading ? null : user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="secondary" size="icon" className="rounded-full">
+                  <User className="h-5 w-5" />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/settings" className="flex items-center w-full">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={logout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Button asChild variant="outline">
+                <Link href="/login"><LogIn className="mr-2 h-4 w-4" /> Login</Link>
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <Globe className="mr-2 h-4 w-4" />
-                  <span>Language</span>
-                </DropdownMenuSubTrigger>
-                <DropdownMenuPortal>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>English</DropdownMenuItem>
-                    <DropdownMenuItem>हिन्दी (Hindi)</DropdownMenuItem>
-                    <DropdownMenuItem>বাংলা (Bengali)</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuPortal>
-              </DropdownMenuSub>
-              <DropdownMenuItem>
-                <Link href="/settings" className="flex items-center w-full">
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Log out</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              <Button asChild>
+                <Link href="/signup"><UserPlus className="mr-2 h-4 w-4" /> Sign Up</Link>
+              </Button>
+            </div>
+          )}
+
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-background">
           {children}

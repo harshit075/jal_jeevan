@@ -2,30 +2,33 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Activity, Droplet, HeartPulse, ListChecks, Siren } from "lucide-react";
 import Link from "next/link";
-import { AdvisoryCard } from "@/components/advisory-card";
-
-const mockAdvisories = [
-  {
-    advisoryTitle: "Boil Water Advisory for Sector 15",
-    advisorySummary: "Due to potential contamination, all residents in Sector 15 are advised to boil tap water before consumption.",
-    affectedArea: "Sector 15, Township Area",
-    recommendedActions: ["Boil all drinking water for at least 1 minute.", "Use bottled water for drinking, cooking, and brushing teeth.", "Disinfect all food preparation surfaces."]
-  },
-  {
-    advisoryTitle: "Cholera Outbreak Warning",
-    advisorySummary: "Increased cases of cholera have been reported in the riverside communities. Please exercise extreme caution.",
-    affectedArea: "All communities along the river bank",
-    recommendedActions: ["Drink and use safe water.", "Wash your hands often with soap and safe water.", "Cook food well, keep it covered, and eat it hot."]
-  }
-];
+import Image from "next/image";
 
 export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
-        <h1 className="font-headline text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground">Welcome to Jal Rakshak. Here's a summary of the current situation.</p>
-      </div>
+      <Card className="overflow-hidden">
+        <div className="relative h-48 w-full md:h-64">
+          <Image 
+            src="https://picsum.photos/1200/400" 
+            alt="Clean water flowing from a community tap" 
+            fill
+            style={{objectFit: 'cover'}}
+            data-ai-hint="clean water community"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          <div className="absolute bottom-0 p-6">
+            <h1 className="font-headline text-4xl font-bold tracking-tight text-white">Jal Rakshak</h1>
+            <p className="mt-2 text-lg text-white/90">Your Community Health & Water Monitoring Platform</p>
+          </div>
+        </div>
+        <CardContent className="p-6 text-base">
+          <p>
+            Jal Rakshak ("Water Guardian") is a community-powered platform designed to safeguard public health by monitoring water quality and tracking health symptoms. By reporting issues, you help create a safer, healthier environment for everyone.
+          </p>
+        </CardContent>
+      </Card>
+
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         <Card>
@@ -96,15 +99,6 @@ export default function DashboardPage() {
                 </Button>
             </CardContent>
         </Card>
-      </div>
-
-      <div>
-        <h2 className="font-headline text-2xl font-bold tracking-tight mb-4">Recent Advisories</h2>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {mockAdvisories.map((advisory, index) => (
-             <AdvisoryCard key={index} advisory={advisory} />
-          ))}
-        </div>
       </div>
     </div>
   );
