@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, Package, ShoppingCart, TestTube, Thermometer, FirstAidKit, ShieldCheck } from "lucide-react";
+import { Package, ShoppingCart, TestTube, PlusSquare, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 const kits = [
@@ -14,7 +14,7 @@ const kits = [
       { name: "IoT Water Quality Monitor", icon: Package },
       { name: "Manual Water Test Strips", icon: TestTube },
       { name: "Water Purification Tablets", icon: ShieldCheck },
-      { name: "Basic First-Aid Supplies", icon: FirstAidKit },
+      { name: "Basic First-Aid Supplies", icon: PlusSquare },
     ]
   },
   {
@@ -23,7 +23,7 @@ const kits = [
     description: "Essential first-aid and water purification supplies.",
     image: { src: "https://picsum.photos/400/300", hint: "first aid water" },
     contents: [
-      { name: "Basic First-Aid Supplies", icon: FirstAidKit },
+      { name: "Basic First-Aid Supplies", icon: PlusSquare },
       { name: "Water Purification Tablets", icon: ShieldCheck },
     ]
   },
