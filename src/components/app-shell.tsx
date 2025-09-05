@@ -39,6 +39,7 @@ import { useTheme } from "next-themes";
 import { Footer } from "./footer";
 import { useTranslation } from "@/hooks/use-translation";
 import { Chatbot } from "./chatbot";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const mainNavItems = [
   { href: "/education", labelKey: "nav_education", icon: BookOpen, roles: ["guest", "user", "admin"] },
@@ -88,6 +89,11 @@ function BottomNavBar() {
   const pathname = usePathname();
   const { role } = useAuth();
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
+  
+  if (!isMobile) {
+    return null;
+  }
   
   const navItemsToShow = mobileNavItems.filter(item => item.roles.includes(role));
 
@@ -289,7 +295,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </main>
         <Chatbot />
         <Footer />
-      {<BottomNavBar />}
+      <BottomNavBar />
     </div>
   );
 }
