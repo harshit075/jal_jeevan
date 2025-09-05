@@ -1,3 +1,4 @@
+
 import type {NextConfig} from 'next';
 
 require('dotenv').config({ path: './.env.local' });
@@ -39,6 +40,36 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'watershopbd.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'blog.romegamart.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.researchgate.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lunajaiswal.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https' ,
+        hostname: 'media.licdn.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https' ,
+        hostname: 'kj1bcdn.b-cdn.net',
         port: '',
         pathname: '/**',
       }

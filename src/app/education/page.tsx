@@ -94,35 +94,35 @@ const educationalArticles = [
     id: "purification-methods-explained",
     title: "Water Purification: Boiling vs. Tablets",
     category: "Water Safety",
-    image: { src: "https://picsum.photos/400/250?random=2", alt: "A pot of water boiling on a stove" },
+    image: { src: "https://blog.romegamart.com/media/uploads/compressed-image_-_2025-05-08T154428.736.jpg", alt: "A pot of water boiling on a stove" },
     content: "When you can't trust your water source, purification is essential. Boiling is the gold standard for killing bacteria, viruses, and parasites. Bring water to a rolling boil for at least one minute (or three minutes at high altitudes). If you cannot boil water, purification tablets are a reliable alternative. They typically use chlorine or iodine to kill microorganisms. It's crucial to follow the instructions on the package, as the required waiting time (usually 30 minutes) is necessary for the chemicals to work effectively. Both methods are great options included in your Jal Jeevan kit."
   },
   {
     id: "hygiene-and-health",
     title: "The Critical Link Between Hygiene and Health",
     category: "General Health",
-    image: { src: "https://picsum.photos/400/250?random=3", alt: "Hands being washed with soap under running water" },
+    image: { src: "https://www.researchgate.net/publication/364280481/figure/fig1/AS:11431281088823450@1665319526553/Link-between-oral-health-and-general-health.png", alt: "Hands being washed with soap under running water" },
     content: "Good hygiene is one of the most effective ways to prevent the spread of infectious diseases. This goes beyond just handwashing. It includes safe disposal of waste, keeping cooking areas clean, and protecting food from flies and other pests. Simple actions, like covering your mouth when you cough and washing your hands after using the toilet, create a healthier environment for everyone. During monsoon season, when germs can spread more easily, maintaining high standards of personal and community hygiene is more important than ever."
   },
    {
     id: "safe-food-handling",
     title: "Safe Food Handling in Monsoon Season",
     category: "Food Safety",
-    image: { src: "https://picsum.photos/400/250?random=4", alt: "Fresh vegetables being washed in a clean kitchen sink" },
+    image: { src: "https://lunajaiswal.com/wp-content/uploads/2022/06/MONSOON-FOOD-GUIDE-626x350.png", alt: "Fresh vegetables being washed in a clean kitchen sink" },
     content: "Monsoon season increases the risk of food contamination due to higher humidity and moisture, which helps bacteria grow. Always wash vegetables and fruits thoroughly with safe water. Cook food to the proper temperature and avoid leaving it at room temperature for more than two hours. Keep raw meat separate from other foods to prevent cross-contamination. These simple steps can significantly reduce your risk of foodborne illnesses like E. coli and salmonella."
   },
   {
     id: "community-sanitation",
     title: "Your Role in Community Sanitation",
     category: "Community Action",
-    image: { src: "https://picsum.photos/400/250?random=5", alt: "A group of community members cleaning a public space together" },
+    image: { src: "https://media.licdn.com/dms/image/v2/D5612AQEKynT45oJLzA/article-cover_image-shrink_720_1280/B56ZY49pKLH0AI-/0/1744712414377?e=2147483647&v=beta&t=QLrd1EYdd5gBb8Bt766NdwGvl9WEUop_e1jlA-h08Us", alt: "A group of community members cleaning a public space together" },
     content: "Public health is a collective responsibility. Keeping your community clean is just as important as keeping your home clean. Participate in local sanitation drives, ensure waste is disposed of in designated areas, and prevent water from stagnating to control mosquito breeding. By working together, we can prevent the spread of diseases and create a safer environment for everyone. Report any public sanitation issues, like overflowing drains, to local authorities."
   },
   {
     id: "understanding-your-kit",
     title: "Unpacking the Jal Jeevan Kit",
     category: "Kit Guide",
-    image: { src: "https://picsum.photos/400/250?random=6", alt: "The contents of a Jal Jeevan health kit laid out on a table" },
+    image: { src: "https://kj1bcdn.b-cdn.net/media/88807/jal-jivan-mission.jpg", alt: "The contents of a Jal Jeevan health kit laid out on a table" },
     content: "Your Jal Jeevan kit is a powerful tool for health protection. It contains several key components: IoT water monitors for real-time quality checks, manual test strips for quick contaminant detection, purification tablets for making water safe, and basic first-aid supplies for minor injuries. Familiarize yourself with each component and how to use it. The video guides provide detailed instructions, but this article serves as a quick reference for everything inside your kit."
   }
 ];
