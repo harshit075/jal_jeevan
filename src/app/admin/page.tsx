@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download, Map, BarChart, ShieldAlert, CalendarClock } from "lucide-react";
+import { Download, Map, BarChart, ShieldAlert, CalendarClock, UserPlus, Trash2, Users } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -11,6 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
@@ -25,10 +27,21 @@ const highRiskHotspots = [
   { village: "Kohima", district: "Kohima", state: "Nagaland", risk: "Medium", reports: 12, position: { lat: 25.66, lng: 94.10 } },
 ];
 
+const initialAshaWorkers = [
+    { id: 1, name: 'Sunita Devi', location: 'Kamrup, Assam', reportsFiled: 120 },
+    { id: 2, name: 'Priya Sharma', location: 'West Siang, Arunachal Pradesh', reportsFiled: 95 },
+    { id: 3, name: 'Anjali Das', location: 'Bishnupur, Manipur', reportsFiled: 78 },
+];
+
+
 export default function AdminPage() {
   const [selectedState, setSelectedState] = useState<string>("");
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
   const [selectedWard, setSelectedWard] = useState<string>("");
+  const [ashaWorkers, setAshaWorkers] = useState(initialAshaWorkers);
+  const [newWorkerName, setNewWorkerName] = useState("");
+  const [newWorkerLocation, setNewWorkerLocation] = useState("");
+
 
   const highRiskCount = highRiskHotspots.filter(h => h.risk === 'High').length;
   
@@ -66,6 +79,26 @@ export default function AdminPage() {
     link.click();
     document.body.removeChild(link);
   };
+
+  const handleAddWorker = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newWorkerName && newWorkerLocation) {
+        const newWorker = {
+            id: Date.now(),
+            name: newWorkerName,
+            location: newWorkerLocation,
+            reportsFiled: 0
+        };
+        setAshaWorkers([...ashaWorkers, newWorker]);
+        setNewWorkerName("");
+        setNewWorkerLocation("");
+    }
+  };
+
+  const handleRemoveWorker = (id: number) => {
+      setAshaWorkers(ashaWorkers.filter(worker => worker.id !== id));
+  };
+
 
   return (
     <div className="space-y-8">
@@ -212,6 +245,61 @@ export default function AdminPage() {
         </CardContent>
       </Card>
 
+        <Card>
+            <CardHeader>
+                <div className="flex items-center gap-4">
+                    <Users className="h-6 w-6 text-primary" />
+                    <CardTitle>Manage ASHA Workers</CardTitle>
+                </div>
+                <CardDescription>
+                    View, add, or remove ASHA workers from the directory.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <form onSubmit={handleAddWorker} className="flex flex-col sm:flex-row items-end gap-4 mb-6 p-4 border rounded-lg bg-muted/20">
+                    <div className="grid w-full sm:w-auto flex-grow gap-1.5">
+                        <Label htmlFor="worker-name">Worker Name</Label>
+                        <Input id="worker-name" placeholder="e.g., Geeta Devi" value={newWorkerName} onChange={(e) => setNewWorkerName(e.target.value)} />
+                    </div>
+                    <div className="grid w-full sm:w-auto flex-grow gap-1.5">
+                        <Label htmlFor="worker-location">Location</Label>
+                        <Input id="worker-location" placeholder="e.g., Rampur, Kamrup" value={newWorkerLocation} onChange={(e) => setNewWorkerLocation(e.target.value)} />
+                    </div>
+                    <Button type="submit" className="w-full sm:w-auto">
+                        <UserPlus className="mr-2 h-4 w-4" /> Add Worker
+                    </Button>
+                </form>
+
+                <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-border">
+                        <thead className="bg-muted/50">
+                            <tr>
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Name</th>
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Location</th>
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Reports Filed</th>
+                                <th scope="col" className="relative px-6 py-3"><span className="sr-only">Actions</span></th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-border">
+                            {ashaWorkers.map((worker) => (
+                                <tr key={worker.id}>
+                                    <td className="whitespace-nowrap px-6 py-4 font-medium text-foreground">{worker.name}</td>
+                                    <td className="whitespace-nowrap px-6 py-4 text-muted-foreground">{worker.location}</td>
+                                    <td className="whitespace-nowrap px-6 py-4 text-muted-foreground">{worker.reportsFiled}</td>
+                                    <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                                        <Button variant="ghost" size="icon" onClick={() => handleRemoveWorker(worker.id)}>
+                                            <Trash2 className="h-4 w-4 text-destructive" />
+                                            <span className="sr-only">Remove</span>
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </CardContent>
+        </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>High-Risk Hotspots</CardTitle>
@@ -274,5 +362,6 @@ export default function AdminPage() {
       </Card>
     </div>
   );
+}
 
     
