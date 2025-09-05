@@ -9,6 +9,10 @@ import Image from "next/image";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { AdvisoryCard } from "@/components/advisory-card";
 import Autoplay from "embla-carousel-autoplay";
+import { useEffect, useState } from "react";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { Advisory } from "@/lib/types";
 
 
 const heroStories = [
@@ -71,32 +75,29 @@ const topStories = [
   }
 ];
 
-const mockAdvisories = [
-  {
-    advisoryTitle: "Increased Mosquito Activity and Dengue Risk",
-    advisorySummary: "Health officials have noted a significant increase in mosquito populations following recent rains. This raises the risk of dengue fever transmission. Be proactive in eliminating breeding grounds.",
-    affectedArea: "City-wide",
-    recommendedActions: ["Eliminate standing water in and around your home (e.g., in tires, flower pots, and containers).", "Use mosquito repellent containing DEET, especially during dawn and dusk.", "Wear long-sleeved shirts and long pants to cover your skin.", "Keep windows and doors screened or closed to prevent mosquitos from entering."]
-  },
-   {
-    advisoryTitle: "Boil Water Advisory for Sector 15",
-    advisorySummary: "Due to potential contamination, all residents in Sector 15 are advised to boil tap water before consumption or use. Water samples have shown elevated levels of E. coli bacteria.",
-    affectedArea: "Sector 15, Township Area",
-    recommendedActions: ["Boil all drinking water for at least 1 minute.", "Use bottled water for drinking, cooking, and brushing teeth.", "Disinfect all food preparation surfaces.", "Report any gastrointestinal symptoms to your local health clinic immediately."]
-  },
-  {
-    advisoryTitle: "Cholera Outbreak Warning in Riverside Communities",
-    advisorySummary: "An increasing number of cholera cases have been reported in communities along the river. The primary source is suspected to be contaminated river water used for drinking and bathing.",
-    affectedArea: "All communities along the Great River bank, from Elm Bridge to Pine Ford.",
-    recommendedActions: ["Drink and use safe water (boiled or treated).", "Wash your hands often with soap and safe water.", "Cook food well, especially seafood, and eat it while it's hot.", "Clean up safely—in the kitchen and when caring for sick family members."]
-  }
- 
-];
-
 
 export default function DashboardPage() {
   const { role } = useAuth();
   const isAdmin = role === 'admin';
+  const [latestAdvisories, setLatestAdvisories] = useState<Advisory[]>([]);
+
+  useEffect(() => {
+    const fetchAdvisories = async () => {
+      const q = query(
+        collection(db, "advisories"),
+        orderBy("createdAt", "desc"),
+        limit(2)
+      );
+      const querySnapshot = await getDocs(q);
+      const advisories = querySnapshot.docs.map(
+        (doc) => ({ id: doc.id, ...doc.data() } as Advisory)
+      );
+      setLatestAdvisories(advisories);
+    };
+
+    fetchAdvisories();
+  }, []);
+
 
   if (isAdmin) {
     return (
@@ -216,7 +217,7 @@ export default function DashboardPage() {
           </Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {mockAdvisories.slice(0, 2).map((advisory, index) => (
+            {latestAdvisories.map((advisory, index) => (
               <AdvisoryCard key={index} advisory={advisory} />
             ))}
         </div>

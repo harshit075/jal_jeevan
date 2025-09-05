@@ -15,11 +15,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { collection, getDocs, addDoc, deleteDoc, doc, writeBatch } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc, writeBatch, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useToast } from '@/hooks/use-toast';
 import type { AshaWorker, HighRiskHotspot } from '@/lib/types';
-import { mockHighRiskHotspots, mockAshaWorkers } from '@/lib/seed-data';
+import { mockHighRiskHotspots, mockAshaWorkers, mockAdvisories } from '@/lib/seed-data';
 
 const states = ["Arunachal Pradesh", "Assam", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Sikkim", "Tripura"];
 
@@ -71,6 +71,13 @@ export default function AdminPage() {
         const docRef = doc(workersRef);
         batch.set(docRef, worker);
     });
+
+    const advisoriesRef = collection(db, "advisories");
+    mockAdvisories.forEach((advisory) => {
+      const docRef = doc(advisoriesRef);
+      batch.set(docRef, { ...advisory, createdAt: serverTimestamp() });
+    });
+
 
     try {
         await batch.commit();
