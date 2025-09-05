@@ -87,7 +87,7 @@ const educationalArticles = [
     id: "what-are-waterborne-diseases",
     title: "A Deep Dive into Waterborne Diseases",
     category: "Disease Info",
-    image: { src: "https://picsum.photos/400/250?random=1", alt: "Microscopic view of water bacteria" },
+    image: { src: "https://watershopbd.com/assets/uploads/media-uploader/decrease-the-risk-of-water-borne-diseases1694253944.jpg", alt: "Microscopic view of water bacteria" },
     content: "Waterborne diseases are illnesses caused by pathogenic microorganisms transmitted through contaminated water. Common examples include cholera, typhoid fever, dysentery, and giardiasis. These diseases spread easily in areas with poor sanitation and unsafe drinking water. Symptoms often include diarrhea, vomiting, and fever. The best prevention is always ensuring your water is from a safe source, or treating it before use through methods like boiling, filtration, or chemical disinfection with tablets. Understanding the risks is the first step toward protecting your family."
   },
   {
