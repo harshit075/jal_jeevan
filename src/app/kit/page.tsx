@@ -17,7 +17,7 @@ const kits = [
     name: "Jal Suraksha Kit",
     price: "499",
     description: "Comprehensive water and health monitoring solution.",
-    image: { src: "https://picsum.photos/400/300", hint: "complete water kit" },
+    image: { src: "/images/kit-suraksha.jpg", alt: "Complete water and health monitoring kit" },
     contents: [
       { name: "IoT Water Quality Monitor", icon: Package },
       { name: "Manual Water Test Strips", icon: TestTube },
@@ -29,7 +29,7 @@ const kits = [
     name: "Swasthya Rakshak Kit",
     price: "249",
     description: "Essential first-aid and water purification supplies.",
-    image: { src: "https://picsum.photos/400/300", hint: "first aid water" },
+    image: { src: "/images/kit-rakshak.jpg", alt: "First-aid and water purification supplies" },
     contents: [
       { name: "Basic First-Aid Supplies", icon: PlusSquare },
       { name: "Water Purification Tablets", icon: ShieldCheck },
@@ -39,7 +39,7 @@ const kits = [
     name: "Jal Parikshan Kit",
     price: "99",
     description: "Quick and easy manual water testing.",
-    image: { src: "https://picsum.photos/400/300", hint: "water testing strips" },
+    image: { src: "/images/kit-parikshan.jpg", alt: "Pack of manual water testing strips" },
     contents: [
       { name: "Manual Water Test Strips (50 pack)", icon: TestTube },
     ]
@@ -87,10 +87,9 @@ export default function KitPage() {
                 <div className="relative h-56 w-full">
                     <Image
                         src={kit.image.src}
-                        alt={`Image of ${kit.name}`}
+                        alt={kit.image.alt}
                         fill
                         style={{ objectFit: 'cover' }}
-                        data-ai-hint={kit.image.hint}
                     />
                 </div>
                 <CardHeader>

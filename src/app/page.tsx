@@ -1,5 +1,4 @@
 
-
 'use client';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,9 +17,8 @@ const heroStories = [
     title: "Your Guide to the Jal Jeevan Kit",
     description: "Discover the essential tools in your kit for water testing and handling minor medical emergencies.",
     image: {
-      src: "https://picsum.photos/1200/600",
-      alt: "A first aid kit sitting on a wooden table in a hut with rain visible outside.",
-      hint: "medical kit rain"
+      src: "/images/hero-kit.jpg",
+      alt: "A first aid kit sitting on a wooden table in a hut with rain visible outside."
     },
     href: "/kit"
   },
@@ -29,9 +27,8 @@ const heroStories = [
     title: "Boil Water Advisory: A Community Guide",
     description: "Recent tests have indicated potential contamination in local water sources. Learn why boiling water is crucial for your health and safety during an advisory.",
     image: {
-      src: "https://picsum.photos/1200/600",
-      alt: "Heavy rain falling on a lush green forest.",
-      hint: "heavy rainfall"
+      src: "/images/hero-rain.jpg",
+      alt: "Heavy rain falling on a lush green forest."
     },
     href: "/education"
   },
@@ -40,9 +37,8 @@ const heroStories = [
     title: "How to Identify Contaminated Water Sources",
     description: "Learn the visual signs of unsafe water to protect yourself and your community from waterborne diseases.",
     image: {
-      src: "https://picsum.photos/1200/600",
-      alt: "A person inspecting a stream in a rainy, green landscape.",
-      hint: "rainy landscape"
+      src: "/images/hero-landscape.jpg",
+      alt: "A person inspecting a stream in a rainy, green landscape."
     },
     href: "/report/water-source"
   }
@@ -52,27 +48,24 @@ const topStories = [
    {
     title: "How to Report Symptoms Anonymously",
     image: {
-      src: "https://picsum.photos/400/300",
-      alt: "A person using a smartphone in a village during a monsoon.",
-      hint: "monsoon village traffic light"
+      src: "/images/story-symptoms.jpg",
+      alt: "A person using a smartphone in a village during a monsoon."
     },
     href: "/report/symptoms"
   },
   {
     title: "Identifying Unsafe Water Sources",
      image: {
-      src: "https://picsum.photos/400/300",
-      alt: "A woman collecting water from a stream during light rain in a green valley.",
-      hint: "collecting water greenery traffic light"
+      src: "/images/story-water-source.jpg",
+      alt: "A woman collecting water from a stream during light rain in a green valley."
     },
     href: "/report/water-source"
   },
   {
     title: "Your Guide to the Jal Jeevan Kit",
      image: {
-      src: "https://picsum.photos/400/300",
-      alt: "A display of a first-aid kit with lush green foliage in the background.",
-      hint: "first-aid kit traffic light"
+      src: "/images/story-kit.jpg",
+      alt: "A display of a first-aid kit with lush green foliage in the background."
     },
     href: "/kit"
   }
@@ -158,7 +151,6 @@ export default function DashboardPage() {
                     <Image
                       src={story.image.src}
                       alt={story.image.alt}
-                      data-ai-hint={story.image.hint}
                       fill
                       className="object-cover transition-transform group-hover:scale-105"
                     />
@@ -242,7 +234,6 @@ export default function DashboardPage() {
                       <Image
                       src={story.image.src}
                       alt={story.image.alt}
-                      data-ai-hint={story.image.hint}
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
