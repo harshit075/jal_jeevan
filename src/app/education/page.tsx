@@ -1,4 +1,3 @@
-
 import {
   Accordion,
   AccordionContent,
@@ -6,8 +5,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Video } from "lucide-react";
+import { BookOpen } from "lucide-react";
 
+// Array of educational modules with titles, content, and corresponding YouTube video URLs
 const educationalModules = [
   {
     id: "handwashing",
@@ -39,7 +39,7 @@ const educationalModules = [
     content: "Cholera is a severe diarrheal disease caused by contaminated food or water. Key symptoms include severe watery diarrhea ('rice-water stool') and vomiting. Prevention is key: always use safe water and wash hands frequently.",
     videoUrl: "https://www.youtube.com/embed/L-Ac-sZ12XU"
   },
-   {
+  {
     id: "typhoid",
     title: "Disease Info: Understanding Typhoid Fever",
     content: "Typhoid is a bacterial infection spread through contaminated food and water. Symptoms include high fever, headache, stomach pain, and constipation or diarrhea. Vaccination and safe hygiene practices are the best prevention.",
@@ -55,7 +55,7 @@ const educationalModules = [
     id: "food_safety",
     title: "General Health: The 4 Core Rules of Food Safety",
     content: "Prevent foodborne illness by following four key principles: Clean, Separate, Cook, and Chill. These steps help prevent the spread of harmful bacteria in your kitchen and ensure your food is safe to eat.",
-    videoUrl: "https://www.youtube.com/embed/8yY-Ua-p-z4"
+    videoUrl: "https://www.youtube.com/embed/j-G-92Ay-0Q"
   },
   {
     id: "sanitation",
@@ -95,16 +95,19 @@ export default function EducationPage() {
               <AccordionContent>
                 <div className="space-y-6 pt-4">
                   <p className="text-base leading-relaxed">{module.content}</p>
+                  
+                  {/* This is where the YouTube video is embedded */}
                   <div className="aspect-video overflow-hidden rounded-lg shadow-md border">
-                      <iframe
-                        className="w-full h-full"
-                        src={module.videoUrl}
-                        title={`YouTube video for ${module.title}`}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
+                    <iframe
+                      className="w-full h-full"
+                      src={module.videoUrl} // The source URL is taken from the module object
+                      title={`YouTube video for ${module.title}`}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
                   </div>
+
                 </div>
               </AccordionContent>
             </AccordionItem>
