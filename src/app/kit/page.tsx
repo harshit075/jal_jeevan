@@ -1,8 +1,10 @@
 
+'use client';
 
+import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Package, ShoppingCart, TestTube, PlusSquare, ShieldCheck, Heart, FileText } from "lucide-react";
+import { Package, ShoppingCart, TestTube, PlusSquare, ShieldCheck, Heart, FileText, PlusCircle } from "lucide-react";
 import Image from "next/image";
 import {
   Accordion,
@@ -74,12 +76,23 @@ const manualSections = [
 ];
 
 export default function KitPage() {
+  const { role } = useAuth();
+  const isAdmin = role === 'admin';
+
   return (
     <div className="space-y-8">
-       <div>
-        <h1 className="font-headline text-3xl font-bold tracking-tight">Jal Jeevan Kits</h1>
-        <p className="text-muted-foreground">Your complete solution for water safety and community health. All prices are in INR.</p>
+       <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-start">
+        <div>
+          <h1 className="font-headline text-3xl font-bold tracking-tight">Jal Jeevan Kits</h1>
+          <p className="text-muted-foreground">Your complete solution for water safety and community health. All prices are in INR.</p>
+        </div>
+        {isAdmin && (
+          <Button className="transition-transform hover:scale-105">
+            <PlusCircle className="mr-2 h-4 w-4" /> Add New Kit
+          </Button>
+        )}
       </div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {kits.map((kit) => (
