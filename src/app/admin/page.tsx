@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import RegionalRiskMap from "@/components/regional-risk-map";
+import Image from "next/image";
 
 const states = ["Arunachal Pradesh", "Assam", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Sikkim", "Tripura"];
 
@@ -81,7 +81,7 @@ export default function AdminPage() {
           </CardHeader>
           <CardContent>
              <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center">
-                 <RegionalRiskMap hotspots={highRiskHotspots} />
+                 <Image src="https://picsum.photos/1200/800" alt="Map of Northeast India" width={1200} height={800} data-ai-hint="map northeast india" className="object-cover rounded-lg" />
              </div>
           </CardContent>
         </Card>
