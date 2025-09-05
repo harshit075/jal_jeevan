@@ -1,3 +1,4 @@
+
 'use server';
 
 import {
@@ -18,18 +19,4 @@ export async function createAdvisoryAction(
     console.error('Error generating advisory:', error);
     throw new Error('Failed to generate advisory. Please try again.');
   }
-}
-
-export async function continueConversation(
-  history: any[],
-  prompt: string,
-) {
-  const {stream} = await chat({
-    history,
-    prompt,
-    stream: true,
-  });
-  return experimental_streamText({
-    stream,
-  });
 }

@@ -8,7 +8,6 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Input } from './ui/input';
 import { LifeBuoy, Send, X } from 'lucide-react';
 import { ScrollArea } from './ui/scroll-area';
-import { continueConversation } from '@/lib/actions';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
@@ -40,7 +39,7 @@ function ChatMessage({ role, content }: { role: 'user' | 'assistant'; content: s
 export function Chatbot() {
   const [open, setOpen] = useState(false);
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    action: continueConversation
+    api: '/api/chat'
   });
 
   return (
@@ -93,5 +92,3 @@ export function Chatbot() {
     </div>
   );
 }
-
-    
