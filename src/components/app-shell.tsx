@@ -43,12 +43,12 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const mainNavItems = [
   { href: "/education", labelKey: "nav_education", icon: BookOpen, roles: ["guest", "user", "admin"] },
-  { href: "/report/symptoms", labelKey: "nav_report_symptoms", icon: HeartPulse, roles: ["user"], className: "hidden lg:flex" },
-  { href: "/report/water-source", labelKey: "nav_report_water", icon: Droplet, roles: ["user"], className: "hidden lg:flex" },
+  { href: "/report/symptoms", labelKey: "nav_report_symptoms", icon: HeartPulse, roles: ["user"] },
+  { href: "/report/water-source", labelKey: "nav_report_water", icon: Droplet, roles: ["user"] },
   { href: "/advisories", labelKey: "nav_advisories", icon: Siren, roles: ["guest", "user", "admin"] },
   { href: "/kit", labelKey: "nav_get_kit", icon: ShoppingCart, roles: ["guest", "user", "admin"] },
-  { href: "/about", labelKey: "nav_about", icon: Info, roles: ["guest", "user", "admin"] },
-  { href: "/contact", labelKey: "nav_contact", icon: Phone, roles: ["guest", "user", "admin"] },
+  { href: "/about", labelKey: "nav_about", icon: Info, roles: ["guest", "user"] },
+  { href: "/contact", labelKey: "nav_contact", icon: Phone, roles: ["guest", "user"] },
   { href: "/admin", labelKey: "nav_admin", icon: Shield, roles: ["admin"]},
 ];
 
