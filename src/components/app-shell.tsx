@@ -87,11 +87,11 @@ function MobileNavLink({
 
 function BottomNavBar() {
   const pathname = usePathname();
-  const { role } = useAuth();
+  const { role, loading } = useAuth();
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   
-  if (!isMobile) {
+  if (loading || !isMobile) {
     return null;
   }
   
@@ -145,8 +145,7 @@ function MainNav({ items, role }: { items: (typeof mainNavItems), role: 'admin' 
           href={item.href}
           className={cn(
             "text-sm font-medium transition-colors hover:text-primary/80",
-            pathname.startsWith(item.href) ? "text-primary" : "text-foreground/80",
-            item.className
+            pathname.startsWith(item.href) ? "text-primary" : "text-foreground/80"
           )}
         >
           {t(item.labelKey)}
@@ -165,7 +164,7 @@ function Logo() {
       className="h-6 w-6 text-primary"
     >
       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
-      <path d="M12 4.13c-2.61 0-4.95 1.06-6.66 2.77.3.3.61.62.92.92C7.94 6.2 9.89 5.13 12 5.13s4.06 1.07 5.74 2.7.31-.31.62-.62C16.95 5.19 14.61 4.13 12 4.13zM12 19.87c2.61 0-4.95-1.06 6.66-2.77l-.92-.92c-1.68 1.62-3.63 2.7-5.74 2.7s-4.06-1.08-5.74-2.7l-.92.92c1.71 1.71 4.05 2.77 6.66 2.77z" opacity=".3" />
+      <path d="M12 4.13c-2.61 0-4.95 1.06-6.66 2.77.3.3.61.62.92.92C7.94 6.2 9.89 5.13 12 5.13s4.06 1.07 5.74 2.7.31-.31.62-.62C16.95 5.19 14.61 4.13 12 4.13zM12 19.87c2.61 0-4.95-1.06-6.66-2.77l-.92-.92c-1.68 1.62-3.63 2.7-5.74 2.7s-4.06-1.08-5.74-2.7l-.92.92c1.71 1.71 4.05 2.77 6.66 2.77z" opacity=".3" />
       <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
     </svg>
   );
@@ -222,8 +221,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, role, loading, logout } = useAuth();
   const { t } = useTranslation();
   
-  const currentRole = loading ? "guest" : role;
-
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background">
@@ -232,8 +229,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <Logo />
             <span className="hidden font-bold sm:inline-block text-foreground font-headline text-lg">Jal Jeevan</span>
           </Link>
-
-          <MainNav items={mainNavItems} role={currentRole} />
+          
+          {!loading && <MainNav items={mainNavItems} role={role} />}
 
           <div className="flex flex-1 items-center justify-end space-x-2">
              {loading ? null : user ? (
