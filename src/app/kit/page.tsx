@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Package, ShoppingCart, TestTube, PlusSquare, ShieldCheck, HelpCircle, FileText, Heart } from "lucide-react";
+import { Package, ShoppingCart, TestTube, PlusSquare, ShieldCheck, Heart, FileText } from "lucide-react";
 import Image from "next/image";
 import {
   Accordion,
@@ -51,25 +51,25 @@ const manualSections = [
     id: "benefits",
     title: "Why Own a Health & Water Kit?",
     icon: Heart,
-    content: "In areas prone to water contamination, especially during monsoons, having a Jal Jeevan kit is a crucial step towards proactive health management. Our kits empower you to monitor your drinking water, purify it when necessary, and handle minor health issues promptly, preventing the spread of waterborne diseases and ensuring your family's well-being."
+    content: "In areas prone to water contamination, having a Jal Jeevan kit is a crucial step towards proactive health management. It empowers you to monitor drinking water, purify it when necessary, and handle minor health issues promptly, preventing the spread of disease and ensuring your family's well-being."
   },
   {
     id: "iot_monitor",
     title: "Using the IoT Water Quality Monitor",
     icon: Package,
-    content: "The IoT monitor provides real-time data on your water's safety. Simply place the sensor end into the water source. The device will automatically analyze parameters like pH, turbidity, and temperature. The results will be sent to your Jal Jeevan app, giving you instant insights and alerts if any parameter falls outside the safe range."
+    content: "The IoT monitor provides real-time data on your water's safety. Follow these steps:\n1. **Activate:** Ensure the device is charged and powered on.\n2. **Submerge:** Place the sensor end fully into the water source you want to test.\n3. **Analyze:** The device will automatically analyze parameters like pH, turbidity, and temperature.\n4. **Sync:** Results are sent to your Jal Jeevan app, providing instant insights and alerts if any parameter is unsafe."
   },
   {
     id: "test_strips",
     title: "How to Use Manual Test Strips",
     icon: TestTube,
-    content: "Manual test strips are a quick, effective way to check for common contaminants. Dip a strip into a water sample for the time specified on the packaging (usually 1-2 seconds). Remove it without shaking off excess water, and wait for the indicated time (typically 30-60 seconds). Compare the color on the strip to the chart on the container to read the results for bacteria, pH, chlorine, and hardness."
+    content: "Manual strips are a quick way to check for contaminants:\n1. **Collect Sample:** Use a clean container to get a sample of your water.\n2. **Dip:** Submerge a test strip into the water for the time specified on the packaging (usually 1-2 seconds).\n3. **Wait:** Remove the strip without shaking off excess water and wait for the indicated time (typically 30-60 seconds).\n4. **Compare:** Match the colors on the strip to the chart on the container to read the results for bacteria, pH, chlorine, etc."
   },
   {
     id: "first_aid",
     title: "First-Aid & Purification Tablets",
     icon: PlusSquare,
-    content: "The first-aid supplies are for treating minor cuts and scrapes to prevent infection. Clean any wound before applying a bandage. The water purification tablets are a lifesaver when you can't boil water. Drop one tablet into a specified amount of water (check the packaging), and wait for at least 30 minutes before drinking to ensure harmful bacteria and viruses are neutralized."
+    content: "**First-Aid:** For minor cuts, clean the wound with an antiseptic wipe, then apply a bandage to prevent infection.\n\n**Purification Tablets:** When you can't boil water, drop one tablet into the specified amount of water (check the packaging). Wait at least 30 minutes before drinking to ensure harmful bacteria and viruses are neutralized."
   }
 ];
 
@@ -142,7 +142,7 @@ export default function KitPage() {
                     {section.title}
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="pt-4 text-base leading-relaxed">
+                <AccordionContent className="pt-4 text-base leading-relaxed whitespace-pre-line">
                   {section.content}
                 </AccordionContent>
               </AccordionItem>
