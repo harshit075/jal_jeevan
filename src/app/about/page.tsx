@@ -5,50 +5,50 @@ import { Users, BookUser } from "lucide-react";
 
 const teamMembers = [
   {
-    name: "Dr. Aruna Sharma",
-    role: "Lead Public Health Strategist",
+    name: "Harshit Borana",
+    role: "Team Lead",
     avatar: "/images/team-aruna-sharma.jpg",
   },
   {
-    name: "Bikram Singh",
-    role: "Community Operations Manager",
+    name: "Parth Sharma",
+    role: "Co-Lead",
     avatar: "/images/team-bikram-singh.jpg",
   },
   {
-    name: "Priya Das",
-    role: "Lead Software Engineer",
+    name: "Nitin Purohit",
+    role: "Member",
     avatar: "/images/team-priya-das.jpg",
   },
   {
-    name: "Rohan Gupta",
-    role: "IoT Specialist",
+    name: "Snigdha Gupta",
+    role: "Member",
     avatar: "/images/team-rohan-gupta.jpg",
   },
   {
-    name: "Sameer Khan",
-    role: "Data Scientist",
+    name: "Umang Pahuja",
+    role: "Member",
     avatar: "/images/team-sameer-khan.jpg",
   },
   {
-    name: "Anjali Desai",
-    role: "UX/UI Designer",
+    name: "Mohit Joshi",
+    role: "Member",
     avatar: "/images/team-anjali-desai.jpg",
   }
 ];
 
 const mentors = [
   {
-    name: "Dr. Rajesh Kumar",
-    role: "Public Health Advisor",
+    name: "Dr. Mayank Patel",
+    role: "HOD CSE",
     avatar: "/images/mentor-rajesh-kumar.jpg",
   },
   {
-    name: "Prof. Meena Kumari",
+    name: "Prof. ABC",
     role: "Environmental Scientist",
     avatar: "/images/mentor-meena-kumari.jpg",
   },
   {
-    name: "Mr. Vijay Thapa",
+    name: "Mr. ABC",
     role: "Social Entrepreneurship Mentor",
     avatar: "/images/mentor-vijay-thapa.jpg",
   }
@@ -121,7 +121,7 @@ export default function AboutPage() {
                 <AvatarImage src={mentor.avatar} alt={mentor.name} />
                 <AvatarFallback>{mentor.name.charAt(0)}</AvatarFallback>
               </Avatar>
-              <h3 className="mt-4 text-xl font-bold">{member.name}</h3>
+              <h3 className="mt-4 text-xl font-bold">{mentor.name}</h3>
               <p className="text-accent">{mentor.role}</p>
             </div>
           ))}
