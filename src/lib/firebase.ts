@@ -1,11 +1,7 @@
-"use client";
-// Import the functions you need from the SDKs you need
-import { initializeApp, getApps } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+"use client";
+import { initializeApp, getApps } from "firebase/app";
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -16,10 +12,12 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-
 // Initialize Firebase
 let app;
 if (!getApps().length) {
+  if (!firebaseConfig.apiKey) {
+    console.error("Firebase API key is missing. Please check your .env.local file.");
+  }
   app = initializeApp(firebaseConfig);
 } else {
   app = getApps()[0];
