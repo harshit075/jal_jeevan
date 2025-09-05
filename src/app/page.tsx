@@ -17,7 +17,7 @@ const heroStories = [
     title: "Your Guide to the Jal Jeevan Kit",
     description: "Discover the essential tools in your kit for water testing and handling minor medical emergencies.",
     image: {
-      src: "/images/hero-kit.jpg",
+      src: "/images/hero-kit.jpeg",
       alt: "A first aid kit sitting on a wooden table in a hut with rain visible outside."
     },
     href: "/kit"
@@ -27,7 +27,7 @@ const heroStories = [
     title: "Boil Water Advisory: A Community Guide",
     description: "Recent tests have indicated potential contamination in local water sources. Learn why boiling water is crucial for your health and safety during an advisory.",
     image: {
-      src: "/images/hero-rain.jpg",
+      src: "/images/hero-rain.jpeg",
       alt: "Heavy rain falling on a lush green forest."
     },
     href: "/education"
@@ -37,7 +37,7 @@ const heroStories = [
     title: "How to Identify Contaminated Water Sources",
     description: "Learn the visual signs of unsafe water to protect yourself and your community from waterborne diseases.",
     image: {
-      src: "/images/hero-landscape.jpg",
+      src: "/images/hero-landscape.jpeg",
       alt: "A person inspecting a stream in a rainy, green landscape."
     },
     href: "/report/water-source"

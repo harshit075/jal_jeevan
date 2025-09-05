@@ -1,14 +1,26 @@
 
-
+'use client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download, Users, BarChart, Siren } from "lucide-react";
+import { Download, Users, BarChart, Siren, Map, Globe, ShieldAlert, CalendarClock } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import Image from "next/image";
 
-const reportData = [
-  { village: "Rampur", reports: 42, type: "Water Quality" },
-  { village: "Sitapur", reports: 28, type: "Symptom" },
-  { village: "Gopalganj", reports: 15, type: "Water Quality" },
-  { village: "Madhupur", reports: 35, type: "Symptom" },
+const states = ["Arunachal Pradesh", "Assam", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Sikkim", "Tripura"];
+
+const highRiskHotspots = [
+  { village: "Rampur", district: "Kamrup", state: "Assam", risk: "High", reports: 42, trend: "up" },
+  { village: "Sitapur", district: "West Siang", state: "Arunachal Pradesh", risk: "High", reports: 28, trend: "up" },
+  { village: "Gopalganj", district: "Bishnupur", state: "Manipur", risk: "Medium", reports: 15, trend: "down" },
+  { village: "Madhupur", district: "East Khasi Hills", state: "Meghalaya", risk: "High", reports: 35, trend: "up" },
+  { village: "Aizawl", district: "Aizawl", state: "Mizoram", risk: "Low", reports: 5, trend: "stable" },
+  { village: "Kohima", district: "Kohima", state: "Nagaland", risk: "Medium", reports: 12, trend: "down" },
 ];
 
 export default function AdminPage() {
@@ -16,52 +28,125 @@ export default function AdminPage() {
     <div className="space-y-8">
       <div>
         <h1 className="font-headline text-3xl font-bold tracking-tight">Admin Dashboard</h1>
-        <p className="text-muted-foreground">Manage reports and monitor community health data.</p>
+        <p className="text-muted-foreground">Manage reports and monitor community health data across Northeast India.</p>
       </div>
 
-       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="transition-transform hover:scale-105">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Reports</CardTitle>
-            <BarChart className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">High-Risk Areas</CardTitle>
+            <ShieldAlert className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">120</div>
-            <p className="text-xs text-muted-foreground">+15% from last month</p>
+            <div className="text-2xl font-bold text-destructive">12</div>
+            <p className="text-xs text-muted-foreground">Villages with active advisories</p>
           </CardContent>
         </Card>
         <Card className="transition-transform hover:scale-105">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Villages</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Most Affected District</CardTitle>
+            <Map className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">4</div>
-            <p className="text-xs text-muted-foreground">Reporting data this week</p>
+            <div className="text-2xl font-bold">Kamrup, Assam</div>
+            <p className="text-xs text-muted-foreground">Highest number of reports</p>
           </CardContent>
         </Card>
          <Card className="transition-transform hover:scale-105">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending Actions</CardTitle>
-            <Siren className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Total Reports (Last 7d)</CardTitle>
+            <BarChart className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">3</div>
-            <p className="text-xs text-muted-foreground">Advisories to review</p>
+            <div className="text-2xl font-bold">120</div>
+            <p className="text-xs text-muted-foreground">+15% from last week</p>
+          </CardContent>
+        </Card>
+        <Card className="transition-transform hover:scale-105">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Last Update</CardTitle>
+            <CalendarClock className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">Today</div>
+            <p className="text-xs text-muted-foreground">2:15 PM</p>
+          </CardContent>
+        </Card>
+      </div>
+
+       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <Card className="lg:col-span-2">
+          <CardHeader>
+            <CardTitle>Regional Risk Map of Northeast India</CardTitle>
+          </CardHeader>
+          <CardContent>
+             <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center">
+                 <Image src="https://picsum.photos/800/450" alt="Map of Northeast India" width={800} height={450} className="rounded-lg object-cover" data-ai-hint="map india" />
+             </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Download Reports</CardTitle>
+            <CardDescription>
+              Filter by region to download reports.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+              <div>
+                  <label className="text-sm font-medium">State</label>
+                  <Select>
+                      <SelectTrigger>
+                          <SelectValue placeholder="Select a State" />
+                      </SelectTrigger>
+                      <SelectContent>
+                          {states.map(state => <SelectItem key={state} value={state}>{state}</SelectItem>)}
+                      </SelectContent>
+                  </Select>
+              </div>
+               <div>
+                  <label className="text-sm font-medium">District</label>
+                  <Select>
+                      <SelectTrigger>
+                          <SelectValue placeholder="Select a District" />
+                      </SelectTrigger>
+                       <SelectContent>
+                          <SelectItem value="kamrup">Kamrup</SelectItem>
+                          <SelectItem value="west-siang">West Siang</SelectItem>
+                          <SelectItem value="bishnupur">Bishnupur</SelectItem>
+                          <SelectItem value="east-khasi-hills">East Khasi Hills</SelectItem>
+                      </SelectContent>
+                  </Select>
+              </div>
+               <div>
+                  <label className="text-sm font-medium">Ward</label>
+                   <Select>
+                      <SelectTrigger>
+                          <SelectValue placeholder="Select a Ward" />
+                      </SelectTrigger>
+                       <SelectContent>
+                          <SelectItem value="ward1">Ward 1</SelectItem>
+                          <SelectItem value="ward2">Ward 2</SelectItem>
+                          <SelectItem value="ward3">Ward 3</SelectItem>
+                      </SelectContent>
+                  </Select>
+              </div>
+              <Button className="w-full">
+                  <Download className="mr-2 h-4 w-4" />
+                  Download CSV
+              </Button>
           </CardContent>
         </Card>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Download Reports by Village</CardTitle>
+          <CardTitle>High-Risk Hotspots</CardTitle>
           <CardDescription>
-            Select a village to download all submitted reports in CSV format.
+            Villages and areas with the highest risk levels based on recent reports.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {/* For larger screens: Table view */}
-          <div className="hidden sm:block">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-border">
                 <thead className="bg-muted/50">
@@ -70,22 +155,41 @@ export default function AdminPage() {
                       Village
                     </th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      District
+                    </th>
+                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      State
+                    </th>
+                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Risk Level
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                       Report Count
                     </th>
                     <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Download</span>
+                      <span className="sr-only">Details</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  {reportData.map((item) => (
+                  {highRiskHotspots.map((item) => (
                     <tr key={item.village} className="transition-colors hover:bg-muted/50">
                       <td className="whitespace-nowrap px-6 py-4 font-medium text-foreground">{item.village}</td>
+                      <td className="whitespace-nowrap px-6 py-4 text-muted-foreground">{item.district}</td>
+                      <td className="whitespace-nowrap px-6 py-4 text-muted-foreground">{item.state}</td>
+                       <td className="whitespace-nowrap px-6 py-4">
+                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          item.risk === 'High' ? 'bg-red-100 text-red-800' : 
+                          item.risk === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-green-100 text-green-800'
+                        }`}>
+                          {item.risk}
+                        </span>
+                      </td>
                       <td className="whitespace-nowrap px-6 py-4 text-muted-foreground">{item.reports}</td>
                       <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                         <Button variant="outline" size="sm">
-                          <Download className="mr-2 h-4 w-4" />
-                          Download CSV
+                          View Details
                         </Button>
                       </td>
                     </tr>
@@ -93,24 +197,6 @@ export default function AdminPage() {
                 </tbody>
               </table>
             </div>
-          </div>
-          {/* For smaller screens: Card view */}
-          <div className="grid grid-cols-1 gap-4 sm:hidden">
-            {reportData.map((item) => (
-               <Card key={item.village} className="transition-shadow hover:shadow-md">
-                 <CardContent className="flex items-center justify-between p-4">
-                   <div>
-                     <p className="font-semibold">{item.village}</p>
-                     <p className="text-sm text-muted-foreground">{item.reports} reports</p>
-                   </div>
-                   <Button variant="outline" size="sm">
-                     <Download className="mr-2 h-4 w-4" />
-                     CSV
-                   </Button>
-                 </CardContent>
-               </Card>
-            ))}
-          </div>
         </CardContent>
       </Card>
     </div>

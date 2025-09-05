@@ -17,7 +17,7 @@ const kits = [
     name: "Jal Suraksha Kit",
     price: "499",
     description: "Comprehensive water and health monitoring solution.",
-    image: { src: "/images/kit-suraksha.jpg", alt: "Complete water and health monitoring kit" },
+    image: { src: "/images/story-kit.jpg", alt: "Complete water and health monitoring kit" },
     contents: [
       { name: "IoT Water Quality Monitor", icon: Package },
       { name: "Manual Water Test Strips", icon: TestTube },

@@ -7,7 +7,7 @@ const teamMembers = [
   {
     name: "Harshit Borana",
     role: "Team Lead",
-    avatar: "/images/team-aruna-sharma.jpg",
+    avatar: "/images/team-Harshit.jpeg",
   },
   {
     name: "Parth Sharma",
@@ -61,7 +61,7 @@ export default function AboutPage() {
       <Card className="overflow-hidden shadow-lg">
         <div className="relative h-64 w-full">
             <Image 
-                src="/images/mission-hero.jpg"
+                src="/images/mission-hero.png"
                 alt="A lush green landscape in NorthEast India during monsoon."
                 fill
                 style={{ objectFit: "cover" }}
