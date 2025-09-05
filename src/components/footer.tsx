@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -8,13 +7,13 @@ export function Footer() {
     <footer className="bg-background border-t">
       <div className="container mx-auto py-8 px-4 md:px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-8">
              <div className="flex flex-col items-center text-center">
-                <Image src="https://upload.wikimedia.org/wikipedia/commons/8/85/National_emblem_of_India.svg" alt="Ministry of Health and Family Welfare Logo" width={40} height={40} className="h-12 w-auto"/>
+                <Image src="/images/logo-health.png" alt="Ministry of Health and Family Welfare Logo" width={60} height={60} className="h-16 w-auto"/>
                 <p className="text-xs text-muted-foreground mt-2 max-w-40">Ministry of Health and Family Welfare</p>
              </div>
              <div className="flex flex-col items-center text-center">
-                <Image src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Ministry_of_Jal_Shakti.svg" alt="Ministry of Jal Shakti Logo" width={40} height={40} className="h-12 w-auto"/>
+                <Image src="/images/logo-jal-shakti.png" alt="Ministry of Jal Shakti Logo" width={60} height={60} className="h-16 w-auto"/>
                 <p className="text-xs text-muted-foreground mt-2 max-w-40">Ministry of Jal Shakti</p>
             </div>
           </div>
