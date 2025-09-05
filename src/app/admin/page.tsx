@@ -1,8 +1,9 @@
 
 'use client';
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download, Users, BarChart, Siren, Map, Globe, ShieldAlert, CalendarClock } from "lucide-react";
+import { Download, Map, BarChart, ShieldAlert, CalendarClock } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -24,6 +25,42 @@ const highRiskHotspots = [
 ];
 
 export default function AdminPage() {
+  const [selectedState, setSelectedState] = useState<string>("");
+  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
+  const [selectedWard, setSelectedWard] = useState<string>("");
+
+  const highRiskCount = highRiskHotspots.filter(h => h.risk === 'High').length;
+  
+  const reportsByDistrict = highRiskHotspots.reduce((acc, curr) => {
+    acc[curr.district] = (acc[curr.district] || 0) + curr.reports;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const mostAffectedDistrict = Object.keys(reportsByDistrict).reduce((a, b) => reportsByDistrict[a] > reportsByDistrict[b] ? a : b);
+  const mostAffectedState = highRiskHotspots.find(h => h.district === mostAffectedDistrict)?.state || "";
+  
+  const totalReports = highRiskHotspots.reduce((sum, item) => sum + item.reports, 0);
+
+  const handleDownload = () => {
+    const headers = ["village", "district", "state", "risk", "reports"];
+    const csvContent = [
+      headers.join(','),
+      ...highRiskHotspots.map(row => headers.map(header => row[header as keyof typeof row]).join(','))
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    if (link.href) {
+      URL.revokeObjectURL(link.href);
+    }
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'high-risk-hotspots.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="space-y-8">
       <div>
@@ -38,7 +75,7 @@ export default function AdminPage() {
             <ShieldAlert className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-destructive">12</div>
+            <div className="text-2xl font-bold text-destructive">{highRiskCount}</div>
             <p className="text-xs text-muted-foreground">Villages with active advisories</p>
           </CardContent>
         </Card>
@@ -48,18 +85,18 @@ export default function AdminPage() {
             <Map className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">Kamrup, Assam</div>
+            <div className="text-2xl font-bold">{mostAffectedDistrict}, {mostAffectedState}</div>
             <p className="text-xs text-muted-foreground">Highest number of reports</p>
           </CardContent>
         </Card>
          <Card className="transition-transform hover:scale-105">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Reports (Last 7d)</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Reports (All Time)</CardTitle>
             <BarChart className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">120</div>
-            <p className="text-xs text-muted-foreground">+15% from last week</p>
+            <div className="text-2xl font-bold">{totalReports}</div>
+            <p className="text-xs text-muted-foreground">From high-risk areas</p>
           </CardContent>
         </Card>
         <Card className="transition-transform hover:scale-105">
@@ -68,8 +105,8 @@ export default function AdminPage() {
             <CalendarClock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">Today</div>
-            <p className="text-xs text-muted-foreground">2:15 PM</p>
+            <div className="text-2xl font-bold">Live Data</div>
+            <p className="text-xs text-muted-foreground">Updated on page load</p>
           </CardContent>
         </Card>
       </div>
@@ -95,7 +132,7 @@ export default function AdminPage() {
           <CardContent className="space-y-4">
               <div>
                   <label className="text-sm font-medium">State</label>
-                  <Select>
+                  <Select onValueChange={setSelectedState} value={selectedState}>
                       <SelectTrigger>
                           <SelectValue placeholder="Select a State" />
                       </SelectTrigger>
@@ -106,11 +143,12 @@ export default function AdminPage() {
               </div>
                <div>
                   <label className="text-sm font-medium">District</label>
-                  <Select>
+                  <Select onValueChange={setSelectedDistrict} value={selectedDistrict} disabled={!selectedState}>
                       <SelectTrigger>
                           <SelectValue placeholder="Select a District" />
                       </SelectTrigger>
                        <SelectContent>
+                          {/* This would be dynamically populated based on selectedState */}
                           <SelectItem value="kamrup">Kamrup</SelectItem>
                           <SelectItem value="west-siang">West Siang</SelectItem>
                           <SelectItem value="bishnupur">Bishnupur</SelectItem>
@@ -120,18 +158,19 @@ export default function AdminPage() {
               </div>
                <div>
                   <label className="text-sm font-medium">Ward</label>
-                   <Select>
+                   <Select onValueChange={setSelectedWard} value={selectedWard} disabled={!selectedDistrict}>
                       <SelectTrigger>
                           <SelectValue placeholder="Select a Ward" />
                       </SelectTrigger>
                        <SelectContent>
+                          {/* This would be dynamically populated based on selectedDistrict */}
                           <SelectItem value="ward1">Ward 1</SelectItem>
                           <SelectItem value="ward2">Ward 2</SelectItem>
                           <SelectItem value="ward3">Ward 3</SelectItem>
                       </SelectContent>
                   </Select>
               </div>
-              <Button className="w-full">
+              <Button className="w-full" onClick={handleDownload}>
                   <Download className="mr-2 h-4 w-4" />
                   Download CSV
               </Button>
