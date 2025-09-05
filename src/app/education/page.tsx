@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { PlayCircle, BookOpen } from "lucide-react";
+import { PlayCircle, BookOpen, Newspaper } from "lucide-react";
 
 // Array of educational modules with titles, content, and corresponding YouTube video URLs
 const educationalModules = [
@@ -14,7 +14,7 @@ const educationalModules = [
     title: "The 5 Steps of Proper Handwashing",
     category: "Hygiene",
     content: "Handwashing is your first line of defense against many illnesses. Following these five simple steps—wet, lather, scrub, rinse, and dry—can prevent the spread of germs and keep you and your community healthy.",
-    videoUrl: "https://www.youtube.com/embed/e1-n3yG4-pU" 
+    videoUrl: "https://www.youtube.com/embed/e1-n3yG4-pU"
   },
   {
     id: "water_treatment",
@@ -81,12 +81,33 @@ const educationalModules = [
   }
 ];
 
+const educationalArticles = [
+  {
+    id: "what-are-waterborne-diseases",
+    title: "A Deep Dive into Waterborne Diseases",
+    category: "Disease Info",
+    content: "Waterborne diseases are illnesses caused by pathogenic microorganisms transmitted through contaminated water. Common examples include cholera, typhoid fever, dysentery, and giardiasis. These diseases spread easily in areas with poor sanitation and unsafe drinking water. Symptoms often include diarrhea, vomiting, and fever. The best prevention is always ensuring your water is from a safe source, or treating it before use through methods like boiling, filtration, or chemical disinfection with tablets. Understanding the risks is the first step toward protecting your family."
+  },
+  {
+    id: "purification-methods-explained",
+    title: "Water Purification: Boiling vs. Tablets",
+    category: "Water Safety",
+    content: "When you can't trust your water source, purification is essential. Boiling is the gold standard for killing bacteria, viruses, and parasites. Bring water to a rolling boil for at least one minute (or three minutes at high altitudes). If you cannot boil water, purification tablets are a reliable alternative. They typically use chlorine or iodine to kill microorganisms. It's crucial to follow the instructions on the package, as the required waiting time (usually 30 minutes) is necessary for the chemicals to work effectively. Both methods are great options included in your Jal Jeevan kit."
+  },
+  {
+    id: "hygiene-and-health",
+    title: "The Critical Link Between Hygiene and Health",
+    category: "General Health",
+    content: "Good hygiene is one of the most effective ways to prevent the spread of infectious diseases. This goes beyond just handwashing. It includes safe disposal of waste, keeping cooking areas clean, and protecting food from flies and other pests. Simple actions, like covering your mouth when you cough and washing your hands after using the toilet, create a healthier environment for everyone. During monsoon season, when germs can spread more easily, maintaining high standards of personal and community hygiene is more important than ever."
+  }
+];
+
 
 export default function EducationPage() {
     const [selectedModule, setSelectedModule] = useState(educationalModules[0]);
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-12">
             <Card className="border-0 shadow-none bg-transparent">
                 <CardHeader className="p-0">
                     <div className="flex items-center gap-4">
@@ -161,6 +182,33 @@ export default function EducationPage() {
                         </CardContent>
                     </Card>
                 </div>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-4 mb-8">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-accent/10">
+                      <Newspaper className="h-8 w-8 text-accent" />
+                  </div>
+                  <div>
+                      <h2 className="font-headline text-3xl font-bold tracking-tight">Further Reading</h2>
+                      <p className="mt-1 text-lg text-muted-foreground">
+                          Dive deeper into key health and safety topics with these articles.
+                      </p>
+                  </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {educationalArticles.map((article) => (
+                  <Card key={article.id} className="flex flex-col">
+                    <CardHeader>
+                      <CardTitle className="font-headline text-xl">{article.title}</CardTitle>
+                      <CardDescription className="text-base font-medium text-accent">{article.category}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex-grow">
+                      <p className="text-base leading-relaxed text-muted-foreground">{article.content}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
         </div>
     );
