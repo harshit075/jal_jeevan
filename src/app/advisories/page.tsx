@@ -7,42 +7,25 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useAuth } from '@/hooks/use-auth';
 import { PlusCircle, Siren } from 'lucide-react';
 import Link from 'next/link';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 import type { Advisory } from '@/lib/types';
-import { useToast } from '@/hooks/use-toast';
+import { mockAdvisories } from '@/lib/seed-data';
+
 
 export default function AdvisoriesPage() {
   const { role, loading: authLoading } = useAuth();
   const isAdmin = role === 'admin';
-  const { toast } = useToast();
   const [advisories, setAdvisories] = useState<Advisory[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAdvisories = async () => {
-      setLoading(true);
-      try {
-        const q = query(collection(db, "advisories"), orderBy("createdAt", "desc"));
-        const querySnapshot = await getDocs(q);
-        const fetchedAdvisories = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        } as Advisory));
-        setAdvisories(fetchedAdvisories);
-      } catch (error) {
-        console.error("Error fetching advisories: ", error);
-        toast({
-          variant: "destructive",
-          title: "Failed to load advisories.",
-          description: "Please try again later.",
-        });
-      }
-      setLoading(false);
-    };
-
-    fetchAdvisories();
-  }, [toast]);
+    // Simulating a fetch request
+    setLoading(true);
+    // In a real app, you would fetch from an API. Here we use mock data.
+    setTimeout(() => {
+        setAdvisories(mockAdvisories);
+        setLoading(false);
+    }, 500);
+  }, []);
 
   return (
     <div className="flex flex-col gap-8">
@@ -73,8 +56,8 @@ export default function AdvisoriesPage() {
         </div>
       ) : advisories.length > 0 ? (
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {advisories.map((advisory) => (
-            <AdvisoryCard key={advisory.id} advisory={advisory} />
+          {advisories.map((advisory, index) => (
+            <AdvisoryCard key={index} advisory={advisory} />
           ))}
         </div>
       ) : (

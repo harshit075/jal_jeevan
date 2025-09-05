@@ -33,5 +33,17 @@ export const mockAdvisories = [
     advisorySummary: "An increasing number of cholera cases have been reported in communities along the river. The primary source is suspected to be contaminated river water used for drinking and bathing.",
     affectedArea: "All communities along the Great River bank, from Elm Bridge to Pine Ford.",
     recommendedActions: ["Drink and use safe water (boiled or treated).", "Wash your hands often with soap and safe water.", "Cook food well, especially seafood, and eat it while it's hot.", "Clean up safely—in the kitchen and when caring for sick family members."]
+  },
+  {
+    advisoryTitle: "Hygiene Alert: Monsoon Season",
+    advisorySummary: "The arrival of monsoon season increases the risk of various water and foodborne illnesses. Please take extra precautions to maintain personal and household hygiene.",
+    affectedArea: "All Northeast regions",
+    recommendedActions: ["Wash hands thoroughly before eating or preparing food.", "Ensure street food is prepared hygienically and served hot.", "Avoid wading in floodwater to prevent skin infections.", "Keep your home and surroundings clean and dry."]
+  },
+  {
+    advisoryTitle: "Heatwave Health Warning",
+    advisorySummary: "An extreme heatwave is forecasted for the next 48-72 hours. High temperatures pose a significant health risk, especially for children, the elderly, and those with pre-existing conditions.",
+    affectedArea: "Plains districts of Assam and Tripura",
+    recommendedActions: ["Stay hydrated by drinking plenty of water, even if you don't feel thirsty.", "Avoid direct sun exposure between 11 AM and 4 PM.", "Wear lightweight, light-colored, and loose-fitting clothing.", "Never leave children or pets in a parked car."]
   }
 ];

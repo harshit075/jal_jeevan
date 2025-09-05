@@ -72,6 +72,30 @@ const nextConfig: NextConfig = {
         hostname: 'kj1bcdn.b-cdn.net',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https' ,
+        hostname: 'images.medicinenet.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https' ,
+        hostname: 'www.who.int',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https' ,
+        hostname: 'assets.lybrate.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https' ,
+        hostname: 'images.ctfassets.net',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
