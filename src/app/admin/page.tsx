@@ -10,17 +10,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Image from "next/image";
+import RegionalRiskMap from "@/components/regional-risk-map";
 
 const states = ["Arunachal Pradesh", "Assam", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Sikkim", "Tripura"];
 
 const highRiskHotspots = [
-  { village: "Rampur", district: "Kamrup", state: "Assam", risk: "High", reports: 42, trend: "up" },
-  { village: "Sitapur", district: "West Siang", state: "Arunachal Pradesh", risk: "High", reports: 28, trend: "up" },
-  { village: "Gopalganj", district: "Bishnupur", state: "Manipur", risk: "Medium", reports: 15, trend: "down" },
-  { village: "Madhupur", district: "East Khasi Hills", state: "Meghalaya", risk: "High", reports: 35, trend: "up" },
-  { village: "Aizawl", district: "Aizawl", state: "Mizoram", risk: "Low", reports: 5, trend: "stable" },
-  { village: "Kohima", district: "Kohima", state: "Nagaland", risk: "Medium", reports: 12, trend: "down" },
+  { village: "Rampur", district: "Kamrup", state: "Assam", risk: "High", reports: 42, position: { lat: 26.1445, lng: 91.7362 } },
+  { village: "Sitapur", district: "West Siang", state: "Arunachal Pradesh", risk: "High", reports: 28, position: { lat: 28.23, lng: 94.86 } },
+  { village: "Gopalganj", district: "Bishnupur", state: "Manipur", risk: "Medium", reports: 15, position: { lat: 24.66, lng: 93.84 } },
+  { village: "Madhupur", district: "East Khasi Hills", state: "Meghalaya", risk: "High", reports: 35, position: { lat: 25.57, lng: 91.88 } },
+  { village: "Aizawl", district: "Aizawl", state: "Mizoram", risk: "Low", reports: 5, position: { lat: 23.73, lng: 92.72 } },
+  { village: "Kohima", district: "Kohima", state: "Nagaland", risk: "Medium", reports: 12, position: { lat: 25.66, lng: 94.10 } },
 ];
 
 export default function AdminPage() {
@@ -81,7 +81,7 @@ export default function AdminPage() {
           </CardHeader>
           <CardContent>
              <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center">
-                 <Image src="https://picsum.photos/800/450" alt="Map of Northeast India" width={800} height={450} className="rounded-lg object-cover" data-ai-hint="map india" />
+                 <RegionalRiskMap hotspots={highRiskHotspots} />
              </div>
           </CardContent>
         </Card>
