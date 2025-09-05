@@ -89,7 +89,7 @@ export default function KitPage() {
                         src={kit.image.src}
                         alt={kit.image.alt}
                         fill
-                        style={{ objectFit: 'cover' }}
+                        className="object-cover"
                     />
                 </div>
                 <CardHeader>
