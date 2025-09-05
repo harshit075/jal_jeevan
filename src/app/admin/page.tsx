@@ -1,9 +1,9 @@
 
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download, Map, BarChart, ShieldAlert, CalendarClock, UserPlus, Trash2, Users } from "lucide-react";
+import { Download, Map, BarChart, ShieldAlert, CalendarClock, UserPlus, Trash2, Users, Database } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -15,33 +15,76 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { collection, getDocs, addDoc, deleteDoc, doc, writeBatch } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { useToast } from '@/hooks/use-toast';
+import type { AshaWorker, HighRiskHotspot } from '@/lib/types';
+import { mockHighRiskHotspots, mockAshaWorkers } from '@/lib/seed-data';
 
 const states = ["Arunachal Pradesh", "Assam", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Sikkim", "Tripura"];
 
-const highRiskHotspots = [
-  { village: "Rampur", district: "Kamrup", state: "Assam", risk: "High", reports: 42, position: { lat: 26.1445, lng: 91.7362 } },
-  { village: "Sitapur", district: "West Siang", state: "Arunachal Pradesh", risk: "High", reports: 28, position: { lat: 28.23, lng: 94.86 } },
-  { village: "Gopalganj", district: "Bishnupur", state: "Manipur", risk: "Medium", reports: 15, position: { lat: 24.66, lng: 93.84 } },
-  { village: "Madhupur", district: "East Khasi Hills", state: "Meghalaya", risk: "High", reports: 35, position: { lat: 25.57, lng: 91.88 } },
-  { village: "Aizawl", district: "Aizawl", state: "Mizoram", risk: "Low", reports: 5, position: { lat: 23.73, lng: 92.72 } },
-  { village: "Kohima", district: "Kohima", state: "Nagaland", risk: "Medium", reports: 12, position: { lat: 25.66, lng: 94.10 } },
-];
-
-const initialAshaWorkers = [
-    { id: 1, name: 'Sunita Devi', location: 'Kamrup, Assam', reportsFiled: 120 },
-    { id: 2, name: 'Priya Sharma', location: 'West Siang, Arunachal Pradesh', reportsFiled: 95 },
-    { id: 3, name: 'Anjali Das', location: 'Bishnupur, Manipur', reportsFiled: 78 },
-];
-
-
 export default function AdminPage() {
+  const { toast } = useToast();
   const [selectedState, setSelectedState] = useState<string>("");
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
   const [selectedWard, setSelectedWard] = useState<string>("");
-  const [ashaWorkers, setAshaWorkers] = useState(initialAshaWorkers);
+  
+  const [highRiskHotspots, setHighRiskHotspots] = useState<HighRiskHotspot[]>([]);
+  const [ashaWorkers, setAshaWorkers] = useState<AshaWorker[]>([]);
+
   const [newWorkerName, setNewWorkerName] = useState("");
   const [newWorkerLocation, setNewWorkerLocation] = useState("");
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const hotspotsSnapshot = await getDocs(collection(db, "highRiskHotspots"));
+            const hotspotsData = hotspotsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as HighRiskHotspot));
+            setHighRiskHotspots(hotspotsData);
+
+            const workersSnapshot = await getDocs(collection(db, "ashaWorkers"));
+            const workersData = workersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AshaWorker));
+            setAshaWorkers(workersData);
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+            toast({ variant: "destructive", title: "Failed to fetch data" });
+        }
+        setLoading(false);
+    };
+
+    fetchData();
+  }, [toast]);
+
+  const handleSeedDatabase = async () => {
+    const batch = writeBatch(db);
+
+    const hotspotsRef = collection(db, "highRiskHotspots");
+    mockHighRiskHotspots.forEach((hotspot) => {
+        const docRef = doc(hotspotsRef);
+        batch.set(docRef, hotspot);
+    });
+
+    const workersRef = collection(db, "ashaWorkers");
+    mockAshaWorkers.forEach((worker) => {
+        const docRef = doc(workersRef);
+        batch.set(docRef, worker);
+    });
+
+    try {
+        await batch.commit();
+        toast({ title: "Database Seeded!", description: "Mock data has been added to Firestore." });
+        // Refetch data
+        const hotspotsSnapshot = await getDocs(collection(db, "highRiskHotspots"));
+        setHighRiskHotspots(hotspotsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as HighRiskHotspot)));
+        const workersSnapshot = await getDocs(collection(db, "ashaWorkers"));
+        setAshaWorkers(workersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AshaWorker)));
+    } catch (error) {
+        console.error("Error seeding database: ", error);
+        toast({ variant: "destructive", title: "Failed to seed database" });
+    }
+  };
 
   const highRiskCount = highRiskHotspots.filter(h => h.risk === 'High').length;
   
@@ -55,7 +98,7 @@ export default function AdminPage() {
     reports: reportsByDistrict[district]
   }));
 
-  const mostAffectedDistrict = Object.keys(reportsByDistrict).reduce((a, b) => reportsByDistrict[a] > reportsByDistrict[b] ? a : b);
+  const mostAffectedDistrict = chartData.length > 0 ? Object.keys(reportsByDistrict).reduce((a, b) => reportsByDistrict[a] > reportsByDistrict[b] ? a : b) : "N/A";
   const mostAffectedState = highRiskHotspots.find(h => h.district === mostAffectedDistrict)?.state || "";
   
   const totalReports = highRiskHotspots.reduce((sum, item) => sum + item.reports, 0);
@@ -80,32 +123,49 @@ export default function AdminPage() {
     document.body.removeChild(link);
   };
 
-  const handleAddWorker = (e: React.FormEvent) => {
+  const handleAddWorker = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newWorkerName && newWorkerLocation) {
         const newWorker = {
-            id: Date.now(),
             name: newWorkerName,
             location: newWorkerLocation,
             reportsFiled: 0
         };
-        setAshaWorkers([...ashaWorkers, newWorker]);
-        setNewWorkerName("");
-        setNewWorkerLocation("");
+        try {
+            const docRef = await addDoc(collection(db, "ashaWorkers"), newWorker);
+            setAshaWorkers([...ashaWorkers, { id: docRef.id, ...newWorker }]);
+            setNewWorkerName("");
+            setNewWorkerLocation("");
+            toast({ title: "Worker Added Successfully" });
+        } catch (error) {
+            console.error("Error adding worker: ", error);
+            toast({ variant: "destructive", title: "Failed to add worker" });
+        }
     }
   };
 
-  const handleRemoveWorker = (id: number) => {
-      setAshaWorkers(ashaWorkers.filter(worker => worker.id !== id));
+  const handleRemoveWorker = async (id: string) => {
+      try {
+        await deleteDoc(doc(db, "ashaWorkers", id));
+        setAshaWorkers(ashaWorkers.filter(worker => worker.id !== id));
+        toast({ title: "Worker Removed Successfully" });
+      } catch (error) {
+        console.error("Error removing worker: ", error);
+        toast({ variant: "destructive", title: "Failed to remove worker" });
+      }
   };
 
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="font-headline text-3xl font-bold tracking-tight">Admin Dashboard</h1>
-        <p className="text-muted-foreground">Manage reports and monitor community health data across Northeast India.</p>
+      <div className="flex justify-between items-start">
+        <div>
+          <h1 className="font-headline text-3xl font-bold tracking-tight">Admin Dashboard</h1>
+          <p className="text-muted-foreground">Manage reports and monitor community health data across Northeast India.</p>
+        </div>
+        <Button onClick={handleSeedDatabase} variant="outline"><Database className="mr-2 h-4 w-4" /> Seed Database</Button>
       </div>
+
 
        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="transition-transform hover:scale-105">
@@ -114,7 +174,7 @@ export default function AdminPage() {
             <ShieldAlert className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-destructive">{highRiskCount}</div>
+            <div className="text-2xl font-bold text-destructive">{loading ? "..." : highRiskCount}</div>
             <p className="text-xs text-muted-foreground">Villages with active advisories</p>
           </CardContent>
         </Card>
@@ -124,7 +184,7 @@ export default function AdminPage() {
             <Map className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{mostAffectedDistrict}, {mostAffectedState}</div>
+            <div className="text-2xl font-bold">{loading ? "..." : `${mostAffectedDistrict}, ${mostAffectedState}`}</div>
             <p className="text-xs text-muted-foreground">Highest number of reports</p>
           </CardContent>
         </Card>
@@ -134,7 +194,7 @@ export default function AdminPage() {
             <BarChart className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalReports}</div>
+            <div className="text-2xl font-bold">{loading ? "..." : totalReports}</div>
             <p className="text-xs text-muted-foreground">From high-risk areas</p>
           </CardContent>
         </Card>
@@ -145,7 +205,7 @@ export default function AdminPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">Live Data</div>
-            <p className="text-xs text-muted-foreground">Updated on page load</p>
+            <p className="text-xs text-muted-foreground">Fetched on page load</p>
           </CardContent>
         </Card>
       </div>
@@ -209,7 +269,7 @@ export default function AdminPage() {
                       </SelectContent>
                   </Select>
               </div>
-              <Button className="w-full" onClick={handleDownload}>
+              <Button className="w-full" onClick={handleDownload} disabled={highRiskHotspots.length === 0}>
                   <Download className="mr-2 h-4 w-4" />
                   Download CSV
               </Button>
@@ -334,7 +394,7 @@ export default function AdminPage() {
                 </thead>
                 <tbody className="divide-y divide-border">
                   {highRiskHotspots.map((item) => (
-                    <tr key={item.village} className="transition-colors hover:bg-muted/50">
+                    <tr key={item.id} className="transition-colors hover:bg-muted/50">
                       <td className="whitespace-nowrap px-6 py-4 font-medium text-foreground">{item.village}</td>
                       <td className="whitespace-nowrap px-6 py-4 text-muted-foreground">{item.district}</td>
                       <td className="whitespace-nowrap px-6 py-4 text-muted-foreground">{item.state}</td>
@@ -363,5 +423,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    

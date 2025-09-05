@@ -1,10 +1,10 @@
 
 'use client';
-
+import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Package, ShoppingCart, TestTube, PlusSquare, ShieldCheck, Heart, FileText, PlusCircle } from "lucide-react";
+import { Package, ShoppingCart, TestTube, PlusSquare, ShieldCheck, Heart, FileText, PlusCircle, Loader2 } from "lucide-react";
 import Image from "next/image";
 import {
   Accordion,
@@ -12,41 +12,22 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { useToast } from "@/hooks/use-toast";
 
+type KitContent = {
+    name: string;
+};
 
-const kits = [
-  {
-    name: "Jal Suraksha Kit",
-    price: "499",
-    description: "Comprehensive water and health monitoring solution.",
-    image: { src: "/images/story-kit.jpg", alt: "Complete water and health monitoring kit" },
-    contents: [
-      { name: "IoT Water Quality Monitor", icon: Package },
-      { name: "Manual Water Test Strips", icon: TestTube },
-      { name: "Water Purification Tablets", icon: ShieldCheck },
-      { name: "Basic First-Aid Supplies", icon: PlusSquare },
-    ]
-  },
-  {
-    name: "Swasthya Rakshak Kit",
-    price: "249",
-    description: "Essential first-aid and water purification supplies.",
-    image: { src: "/images/kit-rakshak.jpg", alt: "First-aid and water purification supplies" },
-    contents: [
-      { name: "Basic First-Aid Supplies", icon: PlusSquare },
-      { name: "Water Purification Tablets", icon: ShieldCheck },
-    ]
-  },
-  {
-    name: "Jal Parikshan Kit",
-    price: "99",
-    description: "Quick and easy manual water testing.",
-    image: { src: "/images/kit-parikshan.jpg", alt: "Pack of manual water testing strips" },
-    contents: [
-      { name: "Manual Water Test Strips (50 pack)", icon: TestTube },
-    ]
-  }
-];
+type Kit = {
+    id: string;
+    name: string;
+    price: string;
+    description: string;
+    image: { src: string, alt: string };
+    contents: KitContent[];
+};
 
 const manualSections = [
     {
@@ -75,9 +56,39 @@ const manualSections = [
     }
 ];
 
+// Lucide icon mapping
+const iconMap: { [key: string]: React.ElementType } = {
+    "IoT Water Quality Monitor": Package,
+    "Manual Water Test Strips": TestTube,
+    "Manual Water Test Strips (50 pack)": TestTube,
+    "Water Purification Tablets": ShieldCheck,
+    "Basic First-Aid Supplies": PlusSquare,
+};
+
+
 export default function KitPage() {
-  const { role, loading } = useAuth();
+  const { role, loading: authLoading } = useAuth();
   const isAdmin = role === 'admin';
+  const { toast } = useToast();
+  const [kits, setKits] = useState<Kit[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchKits = async () => {
+        setLoading(true);
+        try {
+            const querySnapshot = await getDocs(collection(db, "kits"));
+            const fetchedKits = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Kit));
+            setKits(fetchedKits);
+        } catch (error) {
+            console.error("Error fetching kits: ", error);
+            toast({ variant: "destructive", title: "Failed to fetch kits" });
+        }
+        setLoading(false);
+    };
+
+    fetchKits();
+  }, [toast]);
 
   return (
     <div className="space-y-8">
@@ -86,52 +97,58 @@ export default function KitPage() {
           <h1 className="font-headline text-3xl font-bold tracking-tight">Jal Jeevan Kits</h1>
           <p className="text-muted-foreground">Your complete solution for water safety and community health. All prices are in INR.</p>
         </div>
-        {!loading && isAdmin && (
+        {!authLoading && isAdmin && (
           <Button className="transition-transform hover:scale-105">
             <PlusCircle className="mr-2 h-4 w-4" /> Add New Kit
           </Button>
         )}
       </div>
 
-
+    {loading ? <div className="flex justify-center"><Loader2 className="animate-spin" /></div> : (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {kits.map((kit) => (
-            <Card key={kit.name} className="flex flex-col overflow-hidden shadow-lg transition-shadow hover:shadow-xl">
-                <div className="relative h-56 w-full">
-                    <Image
-                        src={kit.image.src}
-                        alt={kit.image.alt}
-                        fill
-                        className="object-cover"
-                    />
-                </div>
-                <CardHeader>
-                    <CardTitle className="font-headline text-2xl">{kit.name}</CardTitle>
-                    <CardDescription>{kit.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-col flex-grow">
-                    <div className="space-y-3 flex-grow">
-                        <h3 className="text-sm font-semibold uppercase text-muted-foreground">What's Inside:</h3>
-                        <ul className="space-y-2">
-                            {kit.contents.map((item, index) => (
-                                <li key={index} className="flex items-center gap-3">
-                                    <item.icon className="h-5 w-5 text-primary" />
-                                    <span>{item.name}</span>
-                                </li>
-                            ))}
-                        </ul>
+        {kits.map((kit) => {
+            return (
+                <Card key={kit.id} className="flex flex-col overflow-hidden shadow-lg transition-shadow hover:shadow-xl">
+                    <div className="relative h-56 w-full">
+                        <Image
+                            src={kit.image.src}
+                            alt={kit.image.alt}
+                            fill
+                            className="object-cover"
+                        />
                     </div>
-                    <div className="mt-6 text-center">
-                        <div className="text-4xl font-bold font-headline mb-4">₹{kit.price}</div>
-                        <Button size="lg" className="w-full transition-transform hover:scale-105">
-                            <ShoppingCart className="mr-2 h-5 w-5" />
-                            Buy Now
-                        </Button>
-                    </div>
-                </CardContent>
-            </Card>
-        ))}
+                    <CardHeader>
+                        <CardTitle className="font-headline text-2xl">{kit.name}</CardTitle>
+                        <CardDescription>{kit.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex flex-col flex-grow">
+                        <div className="space-y-3 flex-grow">
+                            <h3 className="text-sm font-semibold uppercase text-muted-foreground">What's Inside:</h3>
+                            <ul className="space-y-2">
+                                {kit.contents.map((item, index) => {
+                                    const IconComponent = iconMap[item.name] || Package;
+                                    return (
+                                        <li key={index} className="flex items-center gap-3">
+                                            <IconComponent className="h-5 w-5 text-primary" />
+                                            <span>{item.name}</span>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </div>
+                        <div className="mt-6 text-center">
+                            <div className="text-4xl font-bold font-headline mb-4">₹{kit.price}</div>
+                            <Button size="lg" className="w-full transition-transform hover:scale-105">
+                                <ShoppingCart className="mr-2 h-5 w-5" />
+                                Buy Now
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
+            )
+        })}
       </div>
+    )}
 
       <Card className="mt-12 shadow-lg transition-shadow hover:shadow-xl">
         <CardHeader>

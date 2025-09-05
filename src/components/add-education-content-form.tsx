@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
@@ -46,11 +45,10 @@ const formSchema = z.object({
 });
 
 type AddEducationContentFormProps = {
-  onSubmit: (data: EducationalModule | EducationalArticle) => void;
+  onSubmit: (data: Omit<EducationalModule, 'id'> | Omit<EducationalArticle, 'id'>) => void;
 }
 
 export function AddEducationContentForm({ onSubmit }: AddEducationContentFormProps) {
-  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [contentType, setContentType] = useState<"video" | "article">("video");
 
@@ -64,14 +62,13 @@ export function AddEducationContentForm({ onSubmit }: AddEducationContentFormPro
     },
   });
 
-  function handleFormSubmit(values: z.infer<typeof formSchema>) {
+  async function handleFormSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     
-    let newContent: EducationalModule | EducationalArticle;
+    let newContent: Omit<EducationalModule, 'id'> | Omit<EducationalArticle, 'id'>;
 
     if (values.type === "video") {
         newContent = {
-            id: values.title.toLowerCase().replace(/\s+/g, '-'),
             title: values.title,
             category: values.category,
             content: values.content,
@@ -79,22 +76,17 @@ export function AddEducationContentForm({ onSubmit }: AddEducationContentFormPro
         };
     } else {
         newContent = {
-            id: values.title.toLowerCase().replace(/\s+/g, '-'),
             title: values.title,
             category: values.category,
             content: values.content,
             image: { src: values.imageUrl!, alt: values.title },
         };
     }
-
-    onSubmit(newContent);
-
-    toast({
-      title: "Content Added",
-      description: "The new educational content has been added successfully.",
-    });
+    
+    await onSubmit(newContent);
 
     setLoading(false);
+    form.reset();
   }
 
   return (
