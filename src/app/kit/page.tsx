@@ -49,34 +49,34 @@ const kits = [
 ];
 
 const manualSections = [
-  {
-    id: "benefits",
-    title: "Why Own a Health & Water Kit?",
-    icon: Heart,
-    content: "In areas prone to water contamination, having a Jal Jeevan kit is a crucial step towards proactive health management. It empowers you to monitor drinking water, purify it when necessary, and handle minor health issues promptly, preventing the spread of disease and ensuring your family's well-being."
-  },
-  {
-    id: "iot_monitor",
-    title: "Using the IoT Water Quality Monitor",
-    icon: Package,
-    content: "The IoT monitor provides real-time data on your water's safety. Follow these steps:\n1. **Activate:** Ensure the device is charged and powered on.\n2. **Submerge:** Place the sensor end fully into the water source you want to test.\n3. **Analyze:** The device will automatically analyze parameters like pH, turbidity, and temperature.\n4. **Sync:** Results are sent to your Jal Jeevan app, providing instant insights and alerts if any parameter is unsafe."
-  },
-  {
-    id: "test_strips",
-    title: "How to Use Manual Test Strips",
-    icon: TestTube,
-    content: "Manual strips are a quick way to check for contaminants:\n1. **Collect Sample:** Use a clean container to get a sample of your water.\n2. **Dip:** Submerge a test strip into the water for the time specified on the packaging (usually 1-2 seconds).\n3. **Wait:** Remove the strip without shaking off excess water and wait for the indicated time (typically 30-60 seconds).\n4. **Compare:** Match the colors on the strip to the chart on the container to read the results for bacteria, pH, chlorine, etc."
-  },
-  {
-    id: "first_aid",
-    title: "First-Aid & Purification Tablets",
-    icon: PlusSquare,
-    content: "**First-Aid:** For minor cuts, clean the wound with an antiseptic wipe, then apply a bandage to prevent infection.\n\n**Purification Tablets:** When you can't boil water, drop one tablet into the specified amount of water (check the packaging). Wait at least 30 minutes before drinking to ensure harmful bacteria and viruses are neutralized."
-  }
+    {
+        id: "benefits",
+        title: "Why Own a Health & Water Kit?",
+        icon: Heart,
+        content: "In areas prone to water contamination, having a Jal Jeevan kit is a crucial step towards proactive health management. It empowers you to monitor drinking water, purify it when necessary, and handle minor health issues promptly, preventing the spread of disease and ensuring your family's well-being."
+    },
+    {
+        id: "iot_monitor",
+        title: "Using the IoT Water Quality Monitor",
+        icon: Package,
+        content: "The IoT monitor provides real-time data on your water's safety. Follow these steps:\n1. **Activate:** Ensure the device is charged and powered on.\n2. **Submerge:** Place the sensor end fully into the water source you want to test.\n3. **Analyze:** The device will automatically analyze parameters like pH, turbidity, and temperature.\n4. **Sync:** Results are sent to your Jal Jeevan app, providing instant insights and alerts if any parameter is unsafe."
+    },
+    {
+        id: "test_strips",
+        title: "How to Use Manual Test Strips",
+        icon: TestTube,
+        content: "Manual strips are a quick way to check for contaminants:\n1. **Collect Sample:** Use a clean container to get a sample of your water.\n2. **Dip:** Submerge a test strip into the water for the time specified on the packaging (usually 1-2 seconds).\n3. **Wait:** Remove the strip without shaking off excess water and wait for the indicated time (typically 30-60 seconds).\n4. **Compare:** Match the colors on the strip to the chart on the container to read the results for bacteria, pH, chlorine, etc."
+    },
+    {
+        id: "first_aid",
+        title: "First-Aid & Purification Tablets",
+        icon: PlusSquare,
+        content: "**First-Aid:** For minor cuts, clean the wound with an antiseptic wipe, then apply a bandage to prevent infection.\n\n**Purification Tablets:** When you can't boil water, drop one tablet into the specified amount of water (check the packaging). Wait at least 30 minutes before drinking to ensure harmful bacteria and viruses are neutralized."
+    }
 ];
 
 export default function KitPage() {
-  const { role } = useAuth();
+  const { role, loading } = useAuth();
   const isAdmin = role === 'admin';
 
   return (
@@ -86,7 +86,7 @@ export default function KitPage() {
           <h1 className="font-headline text-3xl font-bold tracking-tight">Jal Jeevan Kits</h1>
           <p className="text-muted-foreground">Your complete solution for water safety and community health. All prices are in INR.</p>
         </div>
-        {isAdmin && (
+        {!loading && isAdmin && (
           <Button className="transition-transform hover:scale-105">
             <PlusCircle className="mr-2 h-4 w-4" /> Add New Kit
           </Button>
