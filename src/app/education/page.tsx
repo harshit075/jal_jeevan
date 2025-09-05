@@ -67,7 +67,7 @@ const educationalModules = [
     id: "first_aid",
     title: "Kit Guide: Using Your First-Aid Supplies",
     content: "Your kit includes supplies for treating minor cuts and scrapes. Clean any wound thoroughly with safe water and an antiseptic wipe before applying a bandage to prevent infection, which is especially important during monsoon season.",
-    videoUrl: "https"
+    videoUrl: "https://www.youtube.com/embed/EaJmzB8YgS4"
   }
 ];
 
