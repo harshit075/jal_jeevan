@@ -9,9 +9,11 @@ import { PlayCircle, BookOpen, Newspaper, PlusCircle } from "lucide-react";
 import Image from "next/image";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { AddEducationContentForm } from "@/components/add-education-content-form";
 
 // Array of educational modules with titles, content, and corresponding YouTube video URLs
-const educationalModules = [
+const initialEducationalModules = [
   {
     id: "handwashing",
     title: "The 5 Steps of Proper Handwashing",
@@ -84,7 +86,7 @@ const educationalModules = [
   }
 ];
 
-const educationalArticles = [
+const initialEducationalArticles = [
   {
     id: "what-are-waterborne-diseases",
     title: "A Deep Dive into Waterborne Diseases",
@@ -103,7 +105,7 @@ const educationalArticles = [
     id: "hygiene-and-health",
     title: "The Critical Link Between Hygiene and Health",
     category: "General Health",
-    image: { src: "https://picsum.photos/600/400", alt: "Hands being washed with soap under running water" },
+    image: { src: "https://picsum.photos/600/400", "data-ai-hint": "hand washing", alt: "Hands being washed with soap under running water" },
     content: "Good hygiene is one of the most effective ways to prevent the spread of infectious diseases. This goes beyond just handwashing. It includes safe disposal of waste, keeping cooking areas clean, and protecting food from flies and other pests. Simple actions, like covering your mouth when you cough and washing your hands after using the toilet, create a healthier environment for everyone. During monsoon season, when germs can spread more easily, maintaining high standards of personal and community hygiene is more important than ever."
   },
    {
@@ -129,11 +131,25 @@ const educationalArticles = [
   }
 ];
 
+export type EducationalModule = typeof initialEducationalModules[0];
+export type EducationalArticle = typeof initialEducationalArticles[0];
 
 export default function EducationPage() {
+    const [educationalModules, setEducationalModules] = useState(initialEducationalModules);
+    const [educationalArticles, setEducationalArticles] = useState(initialEducationalArticles);
     const [selectedModule, setSelectedModule] = useState(educationalModules[0]);
     const { role, loading } = useAuth();
     const isAdmin = role === 'admin';
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    const handleAddContent = (content: EducationalModule | EducationalArticle) => {
+        if ('videoUrl' in content) {
+            setEducationalModules(prev => [...prev, content]);
+        } else {
+            setEducationalArticles(prev => [...prev, content]);
+        }
+        setIsDialogOpen(false); 
+    };
 
     return (
         <div className="space-y-12">
@@ -153,10 +169,23 @@ export default function EducationPage() {
                         </div>
                     </CardHeader>
                 </Card>
-                 {!loading && isAdmin && (
-                    <Button className="transition-transform hover:scale-105">
-                        <PlusCircle className="mr-2 h-4 w-4" /> Add Educational Content
-                    </Button>
+                {!loading && isAdmin && (
+                  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button className="transition-transform hover:scale-105">
+                          <PlusCircle className="mr-2 h-4 w-4" /> Add Educational Content
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle>Add New Educational Content</DialogTitle>
+                        <DialogDescription>
+                          Select the type of content you want to add and fill in the details.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <AddEducationContentForm onSubmit={handleAddContent} />
+                    </DialogContent>
+                  </Dialog>
                 )}
             </div>
 
@@ -241,7 +270,7 @@ export default function EducationPage() {
                             alt={article.image.alt}
                             fill
                             className="object-cover"
-                            {...(article.image.src.includes('picsum') && { 'data-ai-hint': 'hand washing' })}
+                            {...(article.image['data-ai-hint'] && { 'data-ai-hint': article.image['data-ai-hint'] })}
                         />
                     </div>
                     <CardHeader>
@@ -258,5 +287,3 @@ export default function EducationPage() {
         </div>
     );
 }
-
-    
