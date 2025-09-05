@@ -9,6 +9,9 @@ export function OnlineStatus() {
   const [isSyncing, setIsSyncing] = useState(false);
 
   useEffect(() => {
+    // Set initial online state on client
+    setIsOnline(navigator.onLine);
+
     const handleOnline = () => {
       setIsOnline(true);
       setIsSyncing(true);
@@ -16,17 +19,12 @@ export function OnlineStatus() {
     };
     const handleOffline = () => setIsOnline(false);
 
-    if (typeof window !== 'undefined') {
-        setIsOnline(window.navigator.onLine);
-        window.addEventListener('online', handleOnline);
-        window.addEventListener('offline', handleOffline);
-    }
-
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    
     return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('online', handleOnline);
-        window.removeEventListener('offline', handleOffline);
-      }
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
     };
   }, []);
 
