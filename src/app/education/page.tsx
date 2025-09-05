@@ -5,8 +5,10 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { PlayCircle, BookOpen, Newspaper } from "lucide-react";
+import { PlayCircle, BookOpen, Newspaper, PlusCircle } from "lucide-react";
 import Image from "next/image";
+import { useAuth } from "@/hooks/use-auth";
+import { Button } from "@/components/ui/button";
 
 // Array of educational modules with titles, content, and corresponding YouTube video URLs
 const educationalModules = [
@@ -130,24 +132,33 @@ const educationalArticles = [
 
 export default function EducationPage() {
     const [selectedModule, setSelectedModule] = useState(educationalModules[0]);
+    const { role, loading } = useAuth();
+    const isAdmin = role === 'admin';
 
     return (
         <div className="space-y-12">
-            <Card className="border-0 shadow-none bg-transparent">
-                <CardHeader className="p-0">
-                    <div className="flex items-center gap-4">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10">
-                            <BookOpen className="h-8 w-8 text-primary" />
+             <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-start">
+                <Card className="border-0 shadow-none bg-transparent flex-1">
+                    <CardHeader className="p-0">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10">
+                                <BookOpen className="h-8 w-8 text-primary" />
+                            </div>
+                            <div>
+                                <h1 className="font-headline text-3xl font-bold tracking-tight">Educational Resources</h1>
+                                <p className="mt-1 text-lg text-muted-foreground">
+                                    Learn essential hygiene practices, disease prevention, and how to use your kit.
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <h1 className="font-headline text-3xl font-bold tracking-tight">Educational Resources</h1>
-                            <p className="mt-1 text-lg text-muted-foreground">
-                                Learn essential hygiene practices, disease prevention, and how to use your kit.
-                            </p>
-                        </div>
-                    </div>
-                </CardHeader>
-            </Card>
+                    </CardHeader>
+                </Card>
+                 {!loading && isAdmin && (
+                    <Button className="transition-transform hover:scale-105">
+                        <PlusCircle className="mr-2 h-4 w-4" /> Add Educational Content
+                    </Button>
+                )}
+            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 space-y-6">
@@ -247,3 +258,5 @@ export default function EducationPage() {
         </div>
     );
 }
+
+    
