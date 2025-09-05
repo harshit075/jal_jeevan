@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Image from "next/image";
+import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const states = ["Arunachal Pradesh", "Assam", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Sikkim", "Tripura"];
 
@@ -35,6 +36,11 @@ export default function AdminPage() {
     acc[curr.district] = (acc[curr.district] || 0) + curr.reports;
     return acc;
   }, {} as Record<string, number>);
+
+  const chartData = Object.keys(reportsByDistrict).map(district => ({
+    name: district,
+    reports: reportsByDistrict[district]
+  }));
 
   const mostAffectedDistrict = Object.keys(reportsByDistrict).reduce((a, b) => reportsByDistrict[a] > reportsByDistrict[b] ? a : b);
   const mostAffectedState = highRiskHotspots.find(h => h.district === mostAffectedDistrict)?.state || "";
@@ -180,6 +186,34 @@ export default function AdminPage() {
 
       <Card>
         <CardHeader>
+          <CardTitle>Data Analysis: Reports by District</CardTitle>
+          <CardDescription>
+            A breakdown of total reports from high-risk areas by district.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="h-[350px] w-full">
+            <ResponsiveContainer>
+              <RechartsBarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'hsl(var(--background))', 
+                    borderColor: 'hsl(var(--border))' 
+                  }}
+                />
+                <Legend />
+                <Bar dataKey="reports" fill="hsl(var(--primary))" name="Reports" />
+              </RechartsBarChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
           <CardTitle>High-Risk Hotspots</CardTitle>
           <CardDescription>
             Villages and areas with the highest risk levels based on recent reports.
@@ -240,4 +274,5 @@ export default function AdminPage() {
       </Card>
     </div>
   );
-}
+
+    
