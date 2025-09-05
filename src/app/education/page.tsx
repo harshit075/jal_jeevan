@@ -13,7 +13,7 @@ const educationalModules = [
     id: "handwashing",
     title: "Step 1: The 5 Steps of Proper Handwashing",
     content: "Handwashing is your first line of defense against many illnesses. Following these five simple steps—wet, lather, scrub, rinse, and dry—can prevent the spread of germs and keep you and your community healthy.",
-    videoUrl: "https://www.youtube.com/embed/d914KnlxFoQ" 
+    videoUrl: "https://www.youtube.com/embed/88em9c-RK-s" 
   },
   {
     id: "water_treatment",
