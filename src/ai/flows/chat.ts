@@ -5,7 +5,7 @@
 /**
  * @fileOverview A conversational chat flow for the Jal Jeevan assistant.
  *
- * - continueConversation - A streaming flow that continues a conversation.
+ * - chat - A streaming flow that continues a conversation.
  */
 
 import { ai } from '@/ai/genkit';
@@ -32,7 +32,7 @@ export const chat = ai.defineFlow(
       history: z.array(z.any()),
       prompt: z.string(),
     }),
-    outputSchema: z.string(),
+    outputSchema: z.any(),
     stream: true,
   },
   async ({ history, prompt }) => {
