@@ -81,7 +81,7 @@ export default function AdminPage() {
           </CardHeader>
           <CardContent>
              <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center">
-                 <Image src="https://picsum.photos/1200/800" alt="Map of Northeast India" width={1200} height={800} data-ai-hint="map northeast india" className="object-cover rounded-lg" />
+                 <Image src="https://picsum.photos/seed/map123/1200/800" alt="Map of Northeast India" width={1200} height={800} data-ai-hint="satellite map" className="object-cover rounded-lg" />
              </div>
           </CardContent>
         </Card>
