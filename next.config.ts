@@ -24,6 +24,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.q-files.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
