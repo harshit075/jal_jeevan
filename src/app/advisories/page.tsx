@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { AdvisoryCard } from '@/components/advisory-card';
 import { Button } from '@/components/ui/button';
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/use-auth';
 import { PlusCircle, Siren } from 'lucide-react';
 import Link from 'next/link';
