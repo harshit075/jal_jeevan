@@ -19,7 +19,7 @@ const educationalModules = [
     id: "water_treatment",
     title: "Step 2: How to Make Water Safe for Drinking",
     content: "If you're unsure about your water's safety, treat it first. The most reliable method is to bring water to a rolling boil for at least one full minute. If boiling isn't possible, use purification tablets from your kit as instructed.",
-    videoUrl: "https://www.youtube.com/embed/G3ZO432aM8s"
+    videoUrl: "https://www.youtube.com/embed/G8TXjcCJda8"
   },
   {
     id: "iot_monitor",
