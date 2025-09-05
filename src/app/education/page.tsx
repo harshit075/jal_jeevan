@@ -55,7 +55,7 @@ const educationalModules = [
   {
     id: "dysentery",
     title: "What is Dysentery?",
-    category: "Disease Info",
+    category: "General Health",
     content: "Dysentery is an intestinal inflammation that causes bloody diarrhea. It is often spread through poor hygiene. The most critical treatment is rehydration, and handwashing with soap is the most important preventive measure.",
     videoUrl: "https://www.youtube.com/embed/kpe4a_2W_xM"
   },
@@ -101,7 +101,7 @@ const educationalArticles = [
     id: "hygiene-and-health",
     title: "The Critical Link Between Hygiene and Health",
     category: "General Health",
-    image: { src: "https://www.researchgate.net/publication/364280481/figure/fig1/AS:11431281088823450@1665319526553/Link-between-oral-health-and-general-health.png", alt: "Hands being washed with soap under running water" },
+    image: { src: "https://picsum.photos/600/400", alt: "Hands being washed with soap under running water" },
     content: "Good hygiene is one of the most effective ways to prevent the spread of infectious diseases. This goes beyond just handwashing. It includes safe disposal of waste, keeping cooking areas clean, and protecting food from flies and other pests. Simple actions, like covering your mouth when you cough and washing your hands after using the toilet, create a healthier environment for everyone. During monsoon season, when germs can spread more easily, maintaining high standards of personal and community hygiene is more important than ever."
   },
    {
@@ -230,6 +230,7 @@ export default function EducationPage() {
                             alt={article.image.alt}
                             fill
                             className="object-cover"
+                            {...(article.image.src.includes('picsum') && { 'data-ai-hint': 'hand washing' })}
                         />
                     </div>
                     <CardHeader>
