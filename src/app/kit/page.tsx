@@ -29,10 +29,10 @@ type Kit = {
 const kits: Kit[] = [
     {
         id: "kit-1",
-        name: "Jal Jeevan Basic Kit",
-        price: "499",
-        description: "An essential starter kit for every household to monitor water quality and manage basic health needs.",
-        image: { src: '/images/kit-basic.png', alt: "A basic first aid kit.", "data-ai-hint": "first aid kit" },
+        name: "Asha Worker Kit",
+        price: "1499",
+        description: "A comprehensive kit designed for community health workers to monitor multiple water sources and serve larger groups.",
+        image: { src: '/images/hero-kit.jpeg', alt: "A basic first aid kit.", "data-ai-hint": "first aid kit" },
         contents: [
             { name: "IoT Water Quality Monitor" },
             { name: "Manual Water Test Strips" },
@@ -42,25 +42,25 @@ const kits: Kit[] = [
     },
     {
         id: "kit-2",
-        name: "Jal Jeevan Community Kit",
-        price: "1999",
-        description: "A comprehensive kit designed for community health workers to monitor multiple water sources and serve larger groups.",
-        image: { src: '/images/kit-community.png', alt: "A larger community health kit.", "data-ai-hint": "community health kit" },
+        name: "Swasthya Kit",
+        price: "899",
+        description: "An essential starter kit for every household to monitor water quality and manage basic health needs.",
+        image: { src: '/images/kit-rakshak.jpg', alt: "A larger community health kit.", "data-ai-hint": "community health kit" },
         contents: [
-            { name: "IoT Water Quality Monitor" },
-            { name: "Manual Water Test Strips (50 pack)" },
+            
+            { name: "Manual Water Test Strips (100 pack)" },
             { name: "Water Purification Tablets" },
-            { name: "Basic First-Aid Supplies" },
+            { name: "First-Aid Supplies" },
         ]
     },
     {
         id: "kit-3",
-        name: "Family Health Kit",
+        name: "Parikshan Health Kit",
         price: "999",
         description: "An expanded kit for families, providing more supplies for health monitoring and emergency preparedness.",
-        image: { src: '/images/kit-family.png', alt: "A family sized first aid and health kit.", "data-ai-hint": "family first aid" },
+        image: { src: '/images/kit-parikshan.jpg', alt: "A family sized first aid and health kit.", "data-ai-hint": "family first aid" },
         contents: [
-            { name: "IoT Water Quality Monitor" },
+            
             { name: "Manual Water Test Strips (50 pack)" },
             { name: "Water Purification Tablets" },
             { name: "Basic First-Aid Supplies" },
