@@ -32,7 +32,7 @@ const kits: Kit[] = [
         name: "Jal Jeevan Basic Kit",
         price: "499",
         description: "An essential starter kit for every household to monitor water quality and manage basic health needs.",
-        image: { src: 'https://images.medicinenet.com/images/article/main_image/what-is-in-a-first-aid-kit-2.jpg', alt: "A basic first aid kit.", "data-ai-hint": "first aid kit" },
+        image: { src: '/images/kit-basic.png', alt: "A basic first aid kit.", "data-ai-hint": "first aid kit" },
         contents: [
             { name: "IoT Water Quality Monitor" },
             { name: "Manual Water Test Strips" },
@@ -45,7 +45,7 @@ const kits: Kit[] = [
         name: "Jal Jeevan Community Kit",
         price: "1999",
         description: "A comprehensive kit designed for community health workers to monitor multiple water sources and serve larger groups.",
-        image: { src: 'https://www.who.int/images/default-source/emergencies/health-kits/cholera-investigation-kit.tmb-1920v.jpg?sfvrsn=2a923512_3', alt: "A larger community health kit.", "data-ai-hint": "community health kit" },
+        image: { src: '/images/kit-community.png', alt: "A larger community health kit.", "data-ai-hint": "community health kit" },
         contents: [
             { name: "IoT Water Quality Monitor" },
             { name: "Manual Water Test Strips (50 pack)" },
@@ -58,7 +58,7 @@ const kits: Kit[] = [
         name: "Family Health Kit",
         price: "999",
         description: "An expanded kit for families, providing more supplies for health monitoring and emergency preparedness.",
-        image: { src: 'https://assets.lybrate.com/q_auto,f_auto,w_1200/eagle/product/2023/04/18/Apollo-Life-First-Aid-Kit-1.webp', alt: "A family sized first aid and health kit.", "data-ai-hint": "family first aid" },
+        image: { src: '/images/kit-family.png', alt: "A family sized first aid and health kit.", "data-ai-hint": "family first aid" },
         contents: [
             { name: "IoT Water Quality Monitor" },
             { name: "Manual Water Test Strips (50 pack)" },
