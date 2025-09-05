@@ -7,38 +7,32 @@ const teamMembers = [
   {
     name: "Dr. Aruna Sharma",
     role: "Lead Public Health Strategist",
-    avatar: "https://picsum.photos/200/200",
-    hint: "professional woman"
+    avatar: "/images/team-aruna-sharma.jpg",
   },
   {
     name: "Bikram Singh",
     role: "Community Operations Manager",
-    avatar: "https://picsum.photos/200/200",
-    hint: "professional man"
+    avatar: "/images/team-bikram-singh.jpg",
   },
   {
     name: "Priya Das",
     role: "Lead Software Engineer",
-    avatar: "https://picsum.photos/200/200",
-    hint: "software engineer"
+    avatar: "/images/team-priya-das.jpg",
   },
   {
     name: "Rohan Gupta",
     role: "IoT Specialist",
-    avatar: "https://picsum.photos/200/200",
-    hint: "iot specialist"
+    avatar: "/images/team-rohan-gupta.jpg",
   },
   {
     name: "Sameer Khan",
     role: "Data Scientist",
-    avatar: "https://picsum.photos/200/200",
-    hint: "data scientist man"
+    avatar: "/images/team-sameer-khan.jpg",
   },
   {
     name: "Anjali Desai",
     role: "UX/UI Designer",
-    avatar: "https://picsum.photos/200/200",
-    hint: "ux designer woman"
+    avatar: "/images/team-anjali-desai.jpg",
   }
 ];
 
@@ -46,20 +40,17 @@ const mentors = [
   {
     name: "Dr. Rajesh Kumar",
     role: "Public Health Advisor",
-    avatar: "https://picsum.photos/200/200",
-    hint: "senior professional man"
+    avatar: "/images/mentor-rajesh-kumar.jpg",
   },
   {
     name: "Prof. Meena Kumari",
     role: "Environmental Scientist",
-    avatar: "https://picsum.photos/200/200",
-    hint: "senior professional woman"
+    avatar: "/images/mentor-meena-kumari.jpg",
   },
   {
     name: "Mr. Vijay Thapa",
     role: "Social Entrepreneurship Mentor",
-    avatar: "https://picsum.photos/200/200",
-    hint: "experienced businessman"
+    avatar: "/images/mentor-vijay-thapa.jpg",
   }
 ];
 
@@ -70,11 +61,10 @@ export default function AboutPage() {
       <Card className="overflow-hidden shadow-lg">
         <div className="relative h-64 w-full">
             <Image 
-                src="https://picsum.photos/1200/400"
+                src="/images/mission-hero.jpg"
                 alt="A lush green landscape in NorthEast India during monsoon."
                 fill
                 style={{ objectFit: "cover" }}
-                data-ai-hint="monsoon landscape"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <div className="absolute bottom-0 p-8">
@@ -102,7 +92,7 @@ export default function AboutPage() {
           {teamMembers.map((member) => (
             <div key={member.name} className="flex flex-col items-center text-center">
               <Avatar className="h-32 w-32 border-4 border-primary/20 transition-transform hover:scale-105">
-                <AvatarImage src={member.avatar} alt={member.name} data-ai-hint={member.hint} />
+                <AvatarImage src={member.avatar} alt={member.name} />
                 <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
               </Avatar>
               <h3 className="mt-4 text-xl font-bold">{member.name}</h3>
@@ -128,10 +118,10 @@ export default function AboutPage() {
           {mentors.map((mentor) => (
             <div key={mentor.name} className="flex flex-col items-center text-center">
               <Avatar className="h-32 w-32 border-4 border-accent/20 transition-transform hover:scale-105">
-                <AvatarImage src={mentor.avatar} alt={mentor.name} data-ai-hint={mentor.hint}/>
+                <AvatarImage src={mentor.avatar} alt={mentor.name} />
                 <AvatarFallback>{mentor.name.charAt(0)}</AvatarFallback>
               </Avatar>
-              <h3 className="mt-4 text-xl font-bold">{mentor.name}</h3>
+              <h3 className="mt-4 text-xl font-bold">{member.name}</h3>
               <p className="text-accent">{mentor.role}</p>
             </div>
           ))}
