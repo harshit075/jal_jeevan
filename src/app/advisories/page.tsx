@@ -13,7 +13,7 @@ import type { Advisory } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 
 export default function AdvisoriesPage() {
-  const { role } = useAuth();
+  const { role, loading: authLoading } = useAuth();
   const isAdmin = role === 'admin';
   const { toast } = useToast();
   const [advisories, setAdvisories] = useState<Advisory[]>([]);
@@ -51,7 +51,7 @@ export default function AdvisoriesPage() {
           <h1 className="font-headline text-3xl font-bold tracking-tight">Health Advisories</h1>
           <p className="text-muted-foreground text-lg">Stay informed about active health and water safety advisories in your area.</p>
         </div>
-        {isAdmin && (
+        {!authLoading && isAdmin && (
           <Button asChild className="transition-transform hover:scale-105">
             <Link href="/advisories/generate"><PlusCircle className="mr-2 h-4 w-4" /> Generate New Advisory</Link>
           </Button>
