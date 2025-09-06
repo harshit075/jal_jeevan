@@ -39,6 +39,11 @@ export default function AdminPage() {
   const [newWorkerName, setNewWorkerName] = useState("");
   const [newWorkerLocation, setNewWorkerLocation] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -120,7 +125,7 @@ export default function AdminPage() {
     const headers: HotspotKey[] = ["village", "district", "state", "risk", "reports"];
     const csvContent = [
       headers.join(','),
-      ...highRiskHotspots.map(row => headers.map(header => row[header]).join(','))
+      ...highRiskHotspots.map(row => headers.map(header => String(row[header])).join(','))
     ].join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -299,7 +304,7 @@ export default function AdminPage() {
         </CardHeader>
         <CardContent>
           <div className="h-[350px] w-full">
-            <ResponsiveContainer>
+            {isClient && <ResponsiveContainer>
               <RechartsBarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
@@ -313,7 +318,7 @@ export default function AdminPage() {
                 <Legend />
                 <Bar dataKey="reports" fill="hsl(var(--primary))" name="Reports" />
               </RechartsBarChart>
-            </ResponsiveContainer>
+            </ResponsiveContainer>}
           </div>
         </CardContent>
       </Card>

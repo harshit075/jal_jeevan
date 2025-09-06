@@ -87,13 +87,8 @@ function MobileNavLink({
 
 function BottomNavBar() {
   const pathname = usePathname();
-  const { role, loading } = useAuth();
+  const { role } = useAuth();
   const { t } = useTranslation();
-  const isMobile = useIsMobile();
-  
-  if (loading || !isMobile) {
-    return null;
-  }
   
   const navItemsToShow = mobileNavItems.filter(item => item.roles.includes(role));
 
@@ -298,7 +293,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </main>
         {isClient && !isMobile && <Chatbot />}
         <Footer />
-      {isClient && <BottomNavBar />}
+        {isClient && isMobile && <BottomNavBar />}
     </div>
   );
 }

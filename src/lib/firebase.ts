@@ -1,7 +1,7 @@
 
 "use client";
-import { initializeApp, getApps } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getFirestore }from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -14,16 +14,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-let app;
-if (!getApps().length) {
-  if (!firebaseConfig.apiKey) {
-    console.error("Firebase API key is missing. Please check your .env.local file.");
-  }
-  app = initializeApp(firebaseConfig);
-} else {
-  app = getApps()[0];
-}
-
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 
 export { app, db };
