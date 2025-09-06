@@ -47,14 +47,14 @@ const mainNavItems = [
   { href: "/report/water-source", labelKey: "nav_report_water", icon: Droplet, roles: ["guest", "user"] },
   { href: "/advisories", labelKey: "nav_advisories", icon: Siren, roles: ["guest", "user", "admin"] },
   { href: "/kit", labelKey: "nav_get_kit", icon: ShoppingCart, roles: ["guest", "user", "admin"] },
-  { href: "/about", labelKey: "nav_about", icon: Info, roles: ["guest", "user"] },
-  { href: "/contact", labelKey: "nav_contact", icon: Phone, roles: ["guest", "user"] },
+  { href: "/about", labelKey: "nav_about", icon: Info, roles: ["guest", "user", "admin"] },
+  { href: "/contact", labelKey: "nav_contact", icon: Phone, roles: ["guest", "user", "admin"] },
   { href: "/admin", labelKey: "nav_admin", icon: Shield, roles: ["admin"]},
 ];
 
 const mobileNavItems = [
   { href: "/", labelKey: "mobile_nav_home", icon: Home, roles: ["guest", "user", "admin"] },
-  { href: "/report/symptoms", labelKey: "mobile_nav_report", icon: HeartPulse, roles: ["user", "admin"] },
+  { href: "/report/symptoms", labelKey: "mobile_nav_report", icon: HeartPulse, roles: ["guest", "user", "admin"] },
   { href: "/advisories", labelKey: "mobile_nav_advisories", icon: Siren, roles: ["guest", "user", "admin"] },
   { href: "/education", labelKey: "mobile_nav_education", icon: BookOpen, roles: ["guest", "user", "admin"] },
   { href: "/settings", labelKey: "mobile_nav_you", icon: User, roles: ["user", "admin"] },
@@ -220,6 +220,7 @@ function ThemeToggle() {
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, role, loading, logout } = useAuth();
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
   
   return (
     <div className="flex min-h-screen flex-col">
@@ -285,12 +286,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         </div>
       </header>
-       <main className="flex-1 pb-24 md:pb-8 bg-secondary/50">
-         <div className="container py-8">
+       <main className="flex-1 bg-secondary/50">
+         <div className="container py-8 pb-24 md:pb-8">
             {children}
          </div>
         </main>
-        <Chatbot />
+        {!isMobile && <Chatbot />}
         <Footer />
       <BottomNavBar />
     </div>
