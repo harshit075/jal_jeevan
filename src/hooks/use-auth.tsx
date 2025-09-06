@@ -1,11 +1,10 @@
+
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth';
-import { app } from '@/lib/firebase'; // We will create this file
+import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth';
+import { auth } from '@/lib/firebase'; // We will create this file
 import { useRouter } from 'next/navigation';
-
-const auth = getAuth(app);
 
 type AuthContextType = {
   user: User | null;
