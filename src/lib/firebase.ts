@@ -16,14 +16,14 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const auth = getAuth(app);
 
 // In a browser-only context, we can use initializeFirestore.
 // This uses fetch() and avoids the gRPC issues that cause build failures.
 const db = initializeFirestore(app, {
   experimentalForceLongPolling: true,
+  auth: auth,
 });
-
-const auth = getAuth(app);
 
 
 export { app, db, auth };

@@ -1,5 +1,5 @@
 import {genkit} from 'genkit';
-import {googleAI} from '@genkit-ai/googleai';
+import {googleAI} from '@genkit-ai/googleai/firebase';
 
 export const ai = genkit({
   plugins: [googleAI()],
