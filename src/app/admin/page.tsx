@@ -23,6 +23,10 @@ import { mockHighRiskHotspots, mockAshaWorkers, mockAdvisories } from '@/lib/see
 
 const states = ["Arunachal Pradesh", "Assam", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Sikkim", "Tripura"];
 
+type ReportsByDistrict = {
+  [key: string]: number;
+}
+
 export default function AdminPage() {
   const { toast } = useToast();
   const [selectedState, setSelectedState] = useState<string>("");
@@ -95,10 +99,11 @@ export default function AdminPage() {
 
   const highRiskCount = highRiskHotspots.filter(h => h.risk === 'High').length;
   
-  const reportsByDistrict = highRiskHotspots.reduce((acc, curr) => {
-    acc[curr.district] = (acc[curr.district] || 0) + curr.reports;
+  const reportsByDistrict: ReportsByDistrict = highRiskHotspots.reduce((acc, curr) => {
+    const district = curr.district || 'Unknown';
+    acc[district] = (acc[district] || 0) + curr.reports;
     return acc;
-  }, {} as Record<string, number>);
+  }, {} as ReportsByDistrict);
 
   const chartData = Object.keys(reportsByDistrict).map(district => ({
     name: district,
@@ -111,10 +116,11 @@ export default function AdminPage() {
   const totalReports = highRiskHotspots.reduce((sum, item) => sum + item.reports, 0);
 
   const handleDownload = () => {
-    const headers = ["village", "district", "state", "risk", "reports"];
+    type HotspotKey = keyof HighRiskHotspot;
+    const headers: HotspotKey[] = ["village", "district", "state", "risk", "reports"];
     const csvContent = [
       headers.join(','),
-      ...highRiskHotspots.map(row => headers.map(header => row[header as keyof typeof row]).join(','))
+      ...highRiskHotspots.map(row => headers.map(header => row[header]).join(','))
     ].join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
