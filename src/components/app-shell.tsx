@@ -221,6 +221,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, role, loading, logout } = useAuth();
   const { t } = useTranslation();
   const isMobile = useIsMobile();
+  const [isClient, setIsClient] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
   
   return (
     <div className="flex min-h-screen flex-col">
@@ -291,9 +296,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             {children}
          </div>
         </main>
-        {!isMobile && <Chatbot />}
+        {isClient && !isMobile && <Chatbot />}
         <Footer />
-      <BottomNavBar />
+      {isClient && <BottomNavBar />}
     </div>
   );
 }
