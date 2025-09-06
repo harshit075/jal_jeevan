@@ -123,11 +123,23 @@ export default function AdminPage() {
   const totalReports = highRiskHotspots.reduce((sum, item) => sum + item.reports, 0);
 
   const handleDownload = () => {
-    type HotspotKey = keyof HighRiskHotspot;
-    const headers: HotspotKey[] = ["village", "district", "state", "risk", "reports"];
+    if (highRiskHotspots.length === 0) {
+      toast({ variant: "destructive", title: "No data to download" });
+      return;
+    }
+
+    const headers = ["Village", "District", "State", "Risk", "Reports", "Latitude", "Longitude"];
     const csvContent = [
       headers.join(','),
-      ...highRiskHotspots.map(row => headers.map(header => String(row[header])).join(','))
+      ...highRiskHotspots.map(item => [
+        item.village,
+        item.district,
+        item.state,
+        item.risk,
+        item.reports,
+        item.position.lat,
+        item.position.lng
+      ].join(','))
     ].join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
