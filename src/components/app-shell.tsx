@@ -286,8 +286,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         </div>
       </header>
-       <main className="flex-1 bg-secondary/50">
-         <div className="container py-8 pb-24 md:pb-8">
+       <main className="flex-1 bg-secondary/50 pb-24 md:pb-8">
+         <div className="container py-8">
             {children}
          </div>
         </main>
