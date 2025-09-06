@@ -348,7 +348,31 @@ export default function AdminPage() {
                     </Button>
                 </form>
 
-                <div className="overflow-x-auto">
+                {/* Mobile View: Cards */}
+                <div className="grid grid-cols-1 gap-4 md:hidden">
+                    {ashaWorkers.map((worker) => (
+                        <Card key={worker.id} className="relative">
+                            <CardHeader>
+                                <CardTitle>{worker.name}</CardTitle>
+                                <CardDescription>{worker.location}</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-sm text-muted-foreground">
+                                    Reports Filed: <span className="font-bold text-foreground">{worker.reportsFiled}</span>
+                                </p>
+                            </CardContent>
+                             <div className="absolute top-4 right-4">
+                                <Button variant="ghost" size="icon" onClick={() => handleRemoveWorker(worker.id)}>
+                                    <Trash2 className="h-4 w-4 text-destructive" />
+                                    <span className="sr-only">Remove</span>
+                                </Button>
+                            </div>
+                        </Card>
+                    ))}
+                </div>
+
+                {/* Desktop View: Table */}
+                <div className="overflow-x-auto hidden md:block">
                     <table className="min-w-full divide-y divide-border">
                         <thead className="bg-muted/50">
                             <tr>
@@ -386,7 +410,39 @@ export default function AdminPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-            <div className="overflow-x-auto">
+            {/* Mobile View: Cards */}
+            <div className="grid grid-cols-1 gap-4 md:hidden">
+              {highRiskHotspots.map((item) => (
+                <Card key={item.id}>
+                  <CardHeader>
+                    <CardTitle>{item.village}</CardTitle>
+                    <CardDescription>{item.district}, {item.state}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <div className="flex items-center justify-between">
+                       <span className="text-muted-foreground">Risk Level</span>
+                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          item.risk === 'High' ? 'bg-red-100 text-red-800' : 
+                          item.risk === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-green-100 text-green-800'
+                        }`}>
+                          {item.risk}
+                        </span>
+                    </div>
+                     <div className="flex items-center justify-between">
+                       <span className="text-muted-foreground">Reports</span>
+                       <span className="font-medium">{item.reports}</span>
+                    </div>
+                     <Button variant="outline" size="sm" className="w-full mt-4">
+                        View Details
+                     </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Desktop View: Table */}
+            <div className="overflow-x-auto hidden md:block">
               <table className="min-w-full divide-y divide-border">
                 <thead className="bg-muted/50">
                   <tr>
