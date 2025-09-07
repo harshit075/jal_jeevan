@@ -18,7 +18,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'Jal Jeevan',
+  title: 'Aarogya jal Sanket',
   description: 'Community Health & Water Monitoring',
 };
 

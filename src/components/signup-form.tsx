@@ -50,7 +50,7 @@ export function SignupForm() {
       await signup(values.email, values.password);
       toast({
         title: "Account Created",
-        description: "Welcome to Jal Rakshak! You are now logged in.",
+        description: "Welcome to Aarogya jal Sanket! You are now logged in.",
       });
       router.push("/");
     } catch (error) {

@@ -73,13 +73,13 @@ const manualSections = [
         id: "benefits",
         title: "Why Own a Health & Water Kit?",
         icon: Heart,
-        content: "In areas prone to water contamination, having a Jal Jeevan kit is a crucial step towards proactive health management. It empowers you to monitor drinking water, purify it when necessary, and handle minor health issues promptly, preventing the spread of disease and ensuring your family's well-being."
+        content: "In areas prone to water contamination, having a Aarogya jal Sanket kit is a crucial step towards proactive health management. It empowers you to monitor drinking water, purify it when necessary, and handle minor health issues promptly, preventing the spread of disease and ensuring your family's well-being."
     },
     {
         id: "iot_monitor",
         title: "Using the IoT Water Quality Monitor",
         icon: Package,
-        content: "The IoT monitor provides real-time data on your water's safety. Follow these steps:\n1. **Activate:** Ensure the device is charged and powered on.\n2. **Submerge:** Place the sensor end fully into the water source you want to test.\n3. **Analyze:** The device will automatically analyze parameters like pH, turbidity, and temperature.\n4. **Sync:** Results are sent to your Jal Jeevan app, providing instant insights and alerts if any parameter is unsafe."
+        content: "The IoT monitor provides real-time data on your water's safety. Follow these steps:\n1. **Activate:** Ensure the device is charged and powered on.\n2. **Submerge:** Place the sensor end fully into the water source you want to test.\n3. **Analyze:** The device will automatically analyze parameters like pH, turbidity, and temperature.\n4. **Sync:** Results are sent to your Aarogya jal Sanket app, providing instant insights and alerts if any parameter is unsafe."
     },
     {
         id: "test_strips",
@@ -120,7 +120,7 @@ export default function KitPage() {
     <div className="space-y-8">
        <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-start">
         <div>
-          <h1 className="font-headline text-3xl font-bold tracking-tight">Jal Jeevan Kits</h1>
+          <h1 className="font-headline text-3xl font-bold tracking-tight">Aarogya jal Sanket Kits</h1>
           <p className="text-muted-foreground">Your complete solution for water safety and community health. All prices are in INR.</p>
         </div>
         {!authLoading && isAdmin && (

@@ -3,7 +3,7 @@
 'use server';
 
 /**
- * @fileOverview A conversational chat flow for the Jal Jeevan assistant.
+ * @fileOverview A conversational chat flow for the Aarogya jal Sanket assistant.
  *
  * - chat - A streaming flow that continues a conversation.
  */
@@ -11,8 +11,8 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
-const SystemPrompt = `You are a helpful and friendly assistant for the Jal Jeevan mission.
-Your purpose is to provide information and support to users regarding water safety, public health, and the Jal Jeevan kits.
+const SystemPrompt = `You are a helpful and friendly assistant for the Aarogya jal Sanket mission.
+Your purpose is to provide information and support to users regarding water safety, public health, and the Aarogya jal Sanket kits.
 Be conversational, empathetic, and provide clear, actionable advice.
 If you don't know the answer to a question, say so honestly. Do not make up information.
 Keep your answers concise and easy to understand for a general audience.
@@ -20,10 +20,10 @@ Keep your answers concise and easy to understand for a general audience.
 Available topics:
 - Waterborne diseases (Cholera, Typhoid, Dysentery)
 - Water purification methods (boiling, tablets)
-- Using the Jal Jeevan kits (IoT monitor, test strips)
+- Using the Aarogya jal Sanket kits (IoT monitor, test strips)
 - Reporting symptoms and water quality issues
 - General hygiene and sanitation practices
-- The mission of Jal Jeevan`;
+- The mission of Aarogya jal Sanket`;
 
 export const chat = ai.defineFlow(
   {

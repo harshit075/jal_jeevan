@@ -18,7 +18,7 @@ export function Footer() {
             </div>
           </div>
           <p className="text-sm text-muted-foreground text-center md:text-right">
-            &copy; {new Date().getFullYear()} Jal Jeevan. All rights reserved.
+            &copy; {new Date().getFullYear()} Aarogya jal Sanket. All rights reserved.
             <br />
             A community health and water monitoring initiative.
           </p>

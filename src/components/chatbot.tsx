@@ -57,7 +57,7 @@ export function Chatbot() {
             className="w-[90vw] max-w-md h-[70vh] p-0 flex flex-col"
         >
             <div className="p-4 border-b">
-                <h3 className="font-semibold text-lg">Jal Jeevan Assistant</h3>
+                <h3 className="font-semibold text-lg">Aarogya jal Sanket Assistant</h3>
                 <p className="text-sm text-muted-foreground">Ask me anything about water safety!</p>
             </div>
             <ScrollArea className="flex-1 p-4">

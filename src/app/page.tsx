@@ -18,7 +18,7 @@ import { Advisory } from "@/lib/types";
 const heroStories = [
     {
     category: "FIRST AID",
-    title: "Your Guide to the Jal Jeevan Kit",
+    title: "Your Guide to the Aarogya jal Sanket Kit",
     description: "Discover the essential tools in your kit for water testing and handling minor medical emergencies.",
     image: {
       src: "/images/hero-kit.jpeg",
@@ -66,7 +66,7 @@ const topStories = [
     href: "/report/water-source"
   },
   {
-    title: "Your Guide to the Jal Jeevan Kit",
+    title: "Your Guide to the Aarogya jal Sanket Kit",
      image: {
       src: "/images/story-kit.jpg",
       alt: "A display of a first-aid kit with lush green foliage in the background."
@@ -104,7 +104,7 @@ export default function DashboardPage() {
       <div className="flex flex-col gap-8">
         <Card className="border-0 shadow-none bg-transparent">
           <CardHeader className="p-0">
-              <h1 className="font-headline text-4xl font-bold tracking-tight text-foreground">Jal Jeevan Admin</h1>
+              <h1 className="font-headline text-4xl font-bold tracking-tight text-foreground">Aarogya jal Sanket Admin</h1>
               <p className="mt-2 text-lg text-muted-foreground">Community Health & Water Monitoring Platform</p>
           </CardHeader>
         </Card>

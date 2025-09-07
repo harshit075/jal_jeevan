@@ -25,7 +25,7 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 // Dummy check for admin role
-const adminEmails = ['admin@jaljeevan.com'];
+const adminEmails = ['admin@aarogyajalsanket.com'];
 const getRole = (user: User | null): 'admin' | 'user' | 'guest' => {
   if (!user) return 'guest';
   return adminEmails.includes(user.email || '') ? 'admin' : 'user';
