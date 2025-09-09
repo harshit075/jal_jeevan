@@ -4,31 +4,31 @@
 
 @layer base {
   :root {
-    --background: 174 13% 96%; /* Desaturated Teal Light */
-    --foreground: 174 20% 10%;
-    --card: 174 13% 100%;
-    --card-foreground: 174 20% 10%;
-    --popover: 174 13% 100%;
-    --popover-foreground: 174 20% 10%;
-    --primary: 174 41% 51%; /* Saturated Teal */
-    --primary-foreground: 174 20% 98%;
-    --secondary: 174 10% 90%;
-    --secondary-foreground: 174 20% 10%;
-    --muted: 174 10% 90%;
-    --muted-foreground: 174 10% 40%;
-    --accent: 186 70% 59%; /* Analogous Blue */
-    --accent-foreground: 174 20% 10%;
+    --background: 240 5% 96%;
+    --foreground: 240 5% 10%;
+    --card: 240 5% 100%;
+    --card-foreground: 240 5% 10%;
+    --popover: 240 5% 100%;
+    --popover-foreground: 240 5% 10%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 174 13% 88%;
-    --input: 174 13% 88%;
-    --ring: 174 41% 51%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
-    --chart-1: 174 41% 51%;
-    --chart-2: 186 70% 59%;
-    --chart-3: 174 60% 40%;
-    --chart-4: 186 60% 50%;
-    --chart-5: 174 50% 60%;
+    --chart-1: 221 83% 53%;
+    --chart-2: 174 41% 51%;
+    --chart-3: 186 70% 59%;
+    --chart-4: 174 60% 40%;
+    --chart-5: 186 60% 50%;
   }
 
   .dark {

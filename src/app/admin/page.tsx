@@ -331,7 +331,8 @@ export default function AdminPage() {
                     }}
                   />
                   <Legend />
-                  <Bar dataKey="reports" fill="hsl(var(--primary))" name="Reports" />
+                  <Bar dataKey="reports" fill="hsl(var(--chart-1))" name="Reports" stackId="a" />
+                  <Bar dataKey="reports" fill="hsl(var(--chart-2))" name="Reports (alt)" stackId="a" />
                 </RechartsBarChart>
               </ResponsiveContainer>}
             </div>
