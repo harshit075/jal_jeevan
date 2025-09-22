@@ -1,6 +1,6 @@
 
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Download, Map, BarChart, ShieldAlert, CalendarClock, UserPlus, Trash2, Users, Database } from "lucide-react";
@@ -47,26 +47,26 @@ export default function AdminPage() {
     setIsClient(true);
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-        setLoading(true);
-        try {
-            const hotspotsSnapshot = await getDocs(collection(db, "highRiskHotspots"));
-            const hotspotsData = hotspotsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as HighRiskHotspot));
-            setHighRiskHotspots(hotspotsData);
+  const fetchData = useCallback(async () => {
+      setLoading(true);
+      try {
+          const hotspotsSnapshot = await getDocs(collection(db, "highRiskHotspots"));
+          const hotspotsData = hotspotsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as HighRiskHotspot));
+          setHighRiskHotspots(hotspotsData);
 
-            const workersSnapshot = await getDocs(collection(db, "ashaWorkers"));
-            const workersData = workersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AshaWorker));
-            setAshaWorkers(workersData);
-        } catch (error) {
-            console.error("Error fetching data: ", error);
-            toast({ variant: "destructive", title: "Failed to fetch data" });
-        }
-        setLoading(false);
-    };
-
-    fetchData();
+          const workersSnapshot = await getDocs(collection(db, "ashaWorkers"));
+          const workersData = workersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AshaWorker));
+          setAshaWorkers(workersData);
+      } catch (error) {
+          console.error("Error fetching data: ", error);
+          toast({ variant: "destructive", title: "Failed to fetch data" });
+      }
+      setLoading(false);
   }, [toast]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleSeedDatabase = async () => {
     const batch = writeBatch(db);
@@ -93,11 +93,7 @@ export default function AdminPage() {
     try {
         await batch.commit();
         toast({ title: "Database Seeded!", description: "Mock data has been added to Firestore." });
-        // Refetch data
-        const hotspotsSnapshot = await getDocs(collection(db, "highRiskHotspots"));
-        setHighRiskHotspots(hotspotsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as HighRiskHotspot)));
-        const workersSnapshot = await getDocs(collection(db, "ashaWorkers"));
-        setAshaWorkers(workersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AshaWorker)));
+        fetchData();
     } catch (error) {
         console.error("Error seeding database: ", error);
         toast({ variant: "destructive", title: "Failed to seed database" });
@@ -238,7 +234,7 @@ export default function AdminPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">Live Data</div>
-              <p className="text-xs text-muted-foreground">Fetched on page load</p>
+              <p className="text-xs text-muted-foreground">Fetched on component mount</p>
             </CardContent>
           </Card>
         </div>
@@ -332,7 +328,6 @@ export default function AdminPage() {
                   />
                   <Legend />
                   <Bar dataKey="reports" fill="hsl(var(--chart-1))" name="Reports" stackId="a" />
-                  <Bar dataKey="reports" fill="hsl(var(--chart-2))" name="Reports (alt)" stackId="a" />
                 </RechartsBarChart>
               </ResponsiveContainer>}
             </div>

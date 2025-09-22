@@ -8,7 +8,9 @@ import { useAuth } from '@/hooks/use-auth';
 import { PlusCircle, Siren } from 'lucide-react';
 import Link from 'next/link';
 import type { Advisory } from '@/lib/types';
-import { mockAdvisories } from '@/lib/seed-data';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { useToast } from '@/hooks/use-toast';
 
 
 export default function AdvisoriesPage() {
@@ -16,16 +18,29 @@ export default function AdvisoriesPage() {
   const isAdmin = role === 'admin';
   const [advisories, setAdvisories] = useState<Advisory[]>([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
-    // Simulating a fetch request
-    setLoading(true);
-    // In a real app, you would fetch from an API. Here we use mock data.
-    setTimeout(() => {
-        setAdvisories(mockAdvisories);
-        setLoading(false);
-    }, 500);
-  }, []);
+    const fetchAdvisories = async () => {
+      setLoading(true);
+      try {
+        const q = query(collection(db, "advisories"), orderBy("createdAt", "desc"));
+        const querySnapshot = await getDocs(q);
+        const advisoriesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Advisory));
+        setAdvisories(advisoriesData);
+      } catch (error) {
+        console.error("Error fetching advisories: ", error);
+        toast({
+          variant: "destructive",
+          title: "Failed to fetch advisories",
+          description: "Could not load advisories from the database.",
+        });
+      }
+      setLoading(false);
+    };
+
+    fetchAdvisories();
+  }, [toast]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -45,19 +60,19 @@ export default function AdvisoriesPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(3)].map((_, i) => (
             <Card key={i} className="h-[300px]">
-              <CardHeader><div className="h-6 bg-muted rounded w-3/4"></div></CardHeader>
+              <CardHeader><div className="h-6 bg-muted rounded w-3/4 animate-pulse"></div></CardHeader>
               <CardContent className="space-y-4">
-                <div className="h-4 bg-muted rounded w-full"></div>
-                <div className="h-4 bg-muted rounded w-5/6"></div>
-                <div className="h-4 bg-muted rounded w-full"></div>
+                <div className="h-4 bg-muted rounded w-full animate-pulse"></div>
+                <div className="h-4 bg-muted rounded w-5/6 animate-pulse"></div>
+                <div className="h-4 bg-muted rounded w-full animate-pulse"></div>
               </CardContent>
             </Card>
           ))}
         </div>
       ) : advisories.length > 0 ? (
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {advisories.map((advisory, index) => (
-            <AdvisoryCard key={index} advisory={advisory} />
+          {advisories.map((advisory) => (
+            <AdvisoryCard key={advisory.id} advisory={advisory} />
           ))}
         </div>
       ) : (

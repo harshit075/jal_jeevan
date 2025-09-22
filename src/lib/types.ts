@@ -7,6 +7,7 @@ export type Advisory = {
   advisorySummary: string;
   affectedArea: string;
   recommendedActions: string[];
+  riskLevel: "High" | "Medium" | "Low";
   createdAt?: Timestamp;
 };
 
