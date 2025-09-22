@@ -2,7 +2,7 @@
 "use client";
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, initializeFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -17,13 +17,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
-
-// In a browser-only context, we can use initializeFirestore.
-// This uses fetch() and avoids the gRPC issues that cause build failures.
-const db = initializeFirestore(app, {
-  experimentalForceLongPolling: true,
-  auth: auth,
-});
-
+const db = getFirestore(app);
 
 export { app, db, auth };
