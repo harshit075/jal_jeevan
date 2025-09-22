@@ -14,20 +14,11 @@ const firebaseConfig: FirebaseOptions = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase
-const getClientApp = () => {
-    if (getApps().length) {
-        return getApp();
-    }
-    if (firebaseConfig.apiKey) {
-        return initializeApp(firebaseConfig);
-    }
-    // This is a stub for server-side rendering, where env vars might not be available.
-    // It prevents the app from crashing during the build.
-    return initializeApp({}); 
-};
+// Initialize Firebase for SSR
+const app = getApps().length
+  ? getApp()
+  : initializeApp(firebaseConfig);
 
-const app = getClientApp();
 const auth = getAuth(app);
 const db = getFirestore(app);
 
