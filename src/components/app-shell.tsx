@@ -38,7 +38,6 @@ import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "next-themes";
 import { Footer } from "./footer";
 import { useTranslation } from "@/hooks/use-translation";
-import { Chatbot } from "./chatbot";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const mainNavItems = [
@@ -228,7 +227,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="container flex h-16 items-center">
            <Link href="/" className="mr-4 flex items-center space-x-2">
             <Logo />
-            <span className="hidden font-bold sm:inline-block text-foreground font-headline text-lg">Aarogya jal Sanket</span>
+            <span className="hidden font-bold sm:inline-block text-foreground font-headline text-lg">Aarogya jal Sanket Community Health</span>
           </Link>
           
           {!loading && <MainNav items={mainNavItems} role={role} />}
@@ -291,7 +290,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             {children}
          </div>
         </main>
-        {isClient && !isMobile && <Chatbot />}
         <Footer />
         {isClient && isMobile && <BottomNavBar />}
     </div>

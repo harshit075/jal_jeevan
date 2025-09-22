@@ -1,29 +1,25 @@
-
 'use server';
 
-import {
-  generateOutbreakAdvisory,
-  type GenerateOutbreakAdvisoryInput,
-  type GenerateOutbreakAdvisoryOutput,
-} from '@/ai/flows/generate-outbreak-advisories';
 import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp, getDocs } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { Advisory } from './types';
+
 
 export async function createAdvisoryAction(
-  input: GenerateOutbreakAdvisoryInput
-): Promise<GenerateOutbreakAdvisoryOutput> {
+  advisory: Omit<Advisory, 'id' | 'createdAt'>
+): Promise<Advisory> {
   try {
-    const advisory = await generateOutbreakAdvisory(input);
-    
-    // Save the generated advisory to Firestore
-    await addDoc(collection(db, "advisories"), {
+    const docRef = await addDoc(collection(db, "advisories"), {
       ...advisory,
       createdAt: serverTimestamp()
     });
 
-    return advisory;
+    return {
+      id: docRef.id,
+      ...advisory,
+    };
   } catch (error) {
-    console.error('Error generating advisory:', error);
-    throw new Error('Failed to generate advisory. Please try again.');
+    console.error('Error creating advisory:', error);
+    throw new Error('Failed to create advisory. Please try again.');
   }
 }
