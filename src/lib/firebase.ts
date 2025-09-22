@@ -1,10 +1,10 @@
 
 "use client";
-import { initializeApp, getApps, getApp } from "firebase/app";
+import { initializeApp, getApps, getApp, type FirebaseOptions } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-const firebaseConfig = {
+const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
@@ -15,7 +15,19 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const getClientApp = () => {
+    if (getApps().length) {
+        return getApp();
+    }
+    if (firebaseConfig.apiKey) {
+        return initializeApp(firebaseConfig);
+    }
+    // This is a stub for server-side rendering, where env vars might not be available.
+    // It prevents the app from crashing during the build.
+    return initializeApp({}); 
+};
+
+const app = getClientApp();
 const auth = getAuth(app);
 const db = getFirestore(app);
 
