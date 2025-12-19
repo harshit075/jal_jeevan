@@ -7,32 +7,32 @@ const teamMembers = [
   {
     name: "Harshit Borana",
     role: "Team Lead",
-    avatar: "/images/team-Harshit.jpeg",
+    avatar: "https://picsum.photos/seed/hb/200",
   },
   {
     name: "Parth Sharma",
     role: "Co-Lead",
-    avatar: "/images/team-bikram-singh.jpg",
+    avatar: "https://picsum.photos/seed/ps/200",
   },
   {
     name: "Nitin Purohit",
     role: "Member",
-    avatar: "/images/team-priya-das.jpg",
+    avatar: "https://picsum.photos/seed/np/200",
   },
   {
     name: "Snigdha Gupta",
     role: "Member",
-    avatar: "/images/team-rohan-gupta.jpg",
+    avatar: "https://picsum.photos/seed/sg/200",
   },
   {
     name: "Umang Pahuja",
     role: "Member",
-    avatar: "/images/team-sameer-khan.jpg",
+    avatar: "https://picsum.photos/seed/up/200",
   },
   {
     name: "Mohit Joshi",
     role: "Member",
-    avatar: "/images/team-anjali-desai.jpg",
+    avatar: "https://picsum.photos/seed/mj/200",
   }
 ];
 
@@ -40,17 +40,17 @@ const mentors = [
   {
     name: "Dr. Mayank Patel",
     role: "HOD CSE",
-    avatar: "/images/mentor-rajesh-kumar.jpg",
+    avatar: "https://picsum.photos/seed/mp/200",
   },
   {
     name: "Prof. ABC",
     role: "Environmental Scientist",
-    avatar: "/images/mentor-meena-kumari.jpg",
+    avatar: "https://picsum.photos/seed/ab/200",
   },
   {
     name: "Mr. ABC",
     role: "Social Entrepreneurship Mentor",
-    avatar: "/images/mentor-vijay-thapa.jpg",
+    avatar: "https://picsum.photos/seed/ma/200",
   }
 ];
 
@@ -61,10 +61,11 @@ export default function AboutPage() {
       <Card className="overflow-hidden shadow-lg">
         <div className="relative h-64 w-full">
             <Image 
-                src="/images/mission-hero.png"
+                src="https://picsum.photos/seed/mission/1200/400"
                 alt="A lush green landscape in NorthEast India during monsoon."
                 fill
                 style={{ objectFit: "cover" }}
+                data-ai-hint="landscape forest"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <div className="absolute bottom-0 p-8">

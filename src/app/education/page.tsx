@@ -34,28 +34,28 @@ const educationalModules: EducationalModule[] = [
         title: "How to Use Water Purification Tablets",
         category: "Water Safety",
         content: "Learn the correct way to use water purification tablets to make sure your water is safe to drink. This video covers dosage, waiting times, and what to look for to ensure the tablets are effective.",
-        videoUrl: "https://www.youtube.com/embed/5a8b5h6j2e8"
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
     },
     {
         id: "module-2",
         title: "Recognizing Symptoms of Waterborne Diseases",
         category: "Health & Hygiene",
         content: "This module helps you identify the common symptoms of diseases like cholera, typhoid, and dysentery. Early recognition is key to seeking timely medical help.",
-        videoUrl: "https://www.youtube.com/embed/rk4s_m_l-aY"
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
     },
     {
         id: "module-3",
         title: "Proper Handwashing Techniques",
         category: "Health & Hygiene",
         content: "A step-by-step guide to effective handwashing. Following these simple steps can significantly reduce the risk of spreading germs and diseases.",
-        videoUrl: "https://www.youtube.com/embed/IisgnbMfKvI"
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
     },
     {
         id: "module-4",
         title: "Using Your Jal Jeevan IoT Monitor",
         category: "Kit Usage",
         content: "This video explains how to use the IoT water quality monitor from your Jal Jeevan kit. Learn to activate it, test water, and understand the readings.",
-        videoUrl: "https://www.youtube.com/embed/exb1_D-uPds"
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
     }
 ];
 
@@ -65,7 +65,7 @@ const educationalArticles: EducationalArticle[] = [
         title: "Why Boiling Water is a Lifesaver",
         category: "Water Safety",
         image: {
-            src: "https://watershopbd.com/wp-content/uploads/2021/03/Boiling-Water.jpg",
+            src: "https://picsum.photos/seed/boil/600/400",
             alt: "A pot of water boiling on a stove.",
             "data-ai-hint": "boiling water"
         },
@@ -76,7 +76,7 @@ const educationalArticles: EducationalArticle[] = [
         title: "Understanding Cholera: Causes and Prevention",
         category: "Disease Info",
         image: {
-            src: "https://blog.romegamart.com/wp-content/uploads/2024/07/Vibrio-cholerae-bacteria.webp",
+            src: "https://picsum.photos/seed/cholera/600/400",
             alt: "Microscopic view of Vibrio cholerae bacteria.",
             "data-ai-hint": "bacteria microscope"
         },
@@ -87,7 +87,7 @@ const educationalArticles: EducationalArticle[] = [
         title: "Creating a Safe Sanitation Zone at Home",
         category: "Health & Hygiene",
         image: {
-            src: "https://www.researchgate.net/publication/340579998/figure/fig1/AS:879261270224901@1586641855232/An-example-of-a-handwashing-station-or-tippy-tap.jpg",
+            src: "https://picsum.photos/seed/tippy/600/400",
             alt: "A 'tippy tap' handwashing station set up outdoors.",
             "data-ai-hint": "handwashing station"
         },
@@ -97,21 +97,21 @@ const educationalArticles: EducationalArticle[] = [
       id: "article-4",
       title: "First-Aid for Diarrhea and Dehydration",
       category: "First Aid",
-      image: { src: 'https://lunajaiswal.com/wp-content/uploads/2020/09/ORS-1-1024x768.jpg', alt: "A packet of ORS solution being prepared.", "data-ai-hint": "oral rehydration solution" },
+      image: { src: 'https://picsum.photos/seed/ors/600/400', alt: "A packet of ORS solution being prepared.", "data-ai-hint": "oral rehydration" },
       content: "Dehydration from diarrhea can be dangerous, especially for children. Learn how to prepare and use Oral Rehydration Salts (ORS) and other first-aid measures."
     },
     {
       id: "article-5",
       title: "The Dangers of Dysentery",
       category: "Disease Info",
-      image: { src: 'https://media.licdn.com/dms/image/D4D12AQF2x4f1bB-gWg/article-cover_image-shrink_600_2000/0/1683182885994?e=2147483647&v=beta&t=Ue882R3H7-kK-A6jI9rA0L-rT5r2Z2c9B0g6X2j4F0g', alt: "Illustration of dysentery symptoms affecting the gut.", "data-ai-hint": "stomach pain" },
+      image: { src: 'https://picsum.photos/seed/dysentery/600/400', alt: "Illustration of dysentery symptoms affecting the gut.", "data-ai-hint": "stomach pain" },
       content: "Dysentery is an intestinal inflammation that can cause severe bloody diarrhea. This guide explains its symptoms, transmission, and when to seek urgent medical care."
     },
     {
       id: "article-6",
       title: "Typhoid Fever: Symptoms and Treatment",
       category: "Disease Info",
-      image: { src: 'https://kj1bcdn.b-cdn.net/media/39567/fever.jpg', alt: "A person with a high fever being cared for.", "data-ai-hint": "fever illness" },
+      image: { src: 'https://picsum.photos/seed/fever/600/400', alt: "A person with a high fever being cared for.", "data-ai-hint": "fever illness" },
       content: "Typhoid fever is a serious bacterial infection. Learn to recognize its distinct symptoms, such as high fever and rash, and understand the importance of antibiotic treatment."
     }
 ];
@@ -255,7 +255,7 @@ export default function EducationPage() {
                             alt={article.image.alt}
                             fill
                             className="object-cover"
-                            {...(article.image['data-ai-hint'] && { 'data-ai-hint': article.image['data-ai-hint'] })}
+                            data-ai-hint={article.image['data-ai-hint']}
                         />
                     </div>
                     <CardHeader>

@@ -9,11 +9,11 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-8">
              <div className="flex flex-col items-center text-center">
-                <Image src="/images/logo-health.png" alt="Ministry of Health and Family Welfare Logo" width={60} height={60} className="h-16 w-auto"/>
+                <Image src="https://picsum.photos/seed/healthlogo/60" alt="Ministry of Health and Family Welfare Logo" width={60} height={60} className="h-16 w-auto" data-ai-hint="government logo" />
                 <p className="text-xs text-muted-foreground mt-2 max-w-40">Ministry of Health and Family Welfare</p>
              </div>
              <div className="flex flex-col items-center text-center">
-                <Image src="/images/logo-jal-shakti.png" alt="Ministry of Jal Shakti Logo" width={60} height={60} className="h-16 w-auto"/>
+                <Image src="https://picsum.photos/seed/jallogo/60" alt="Ministry of Jal Shakti Logo" width={60} height={60} className="h-16 w-auto" data-ai-hint="government logo" />
                 <p className="text-xs text-muted-foreground mt-2 max-w-40">Ministry of Jal Shakti</p>
             </div>
           </div>

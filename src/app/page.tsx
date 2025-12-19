@@ -21,8 +21,9 @@ const heroStories = [
     title: "Your Guide to the Aarogya jal Sanket Kit",
     description: "Discover the essential tools in your kit for water testing and handling minor medical emergencies.",
     image: {
-      src: "/images/hero-kit.jpeg",
-      alt: "A first aid kit sitting on a wooden table in a hut with rain visible outside."
+      src: "https://picsum.photos/seed/kit/1200/600",
+      alt: "A first aid kit sitting on a wooden table in a hut with rain visible outside.",
+      "data-ai-hint": "first aid"
     },
     href: "/kit"
   },
@@ -31,8 +32,9 @@ const heroStories = [
     title: "Boil Water Advisory: A Community Guide",
     description: "Recent tests have indicated potential contamination in local water sources. Learn why boiling water is crucial for your health and safety during an advisory.",
     image: {
-      src: "/images/hero-rain.jpeg",
-      alt: "Heavy rain falling on a lush green forest."
+      src: "https://picsum.photos/seed/rain/1200/600",
+      alt: "Heavy rain falling on a lush green forest.",
+      "data-ai-hint": "heavy rain"
     },
     href: "/education"
   },
@@ -41,8 +43,9 @@ const heroStories = [
     title: "How to Identify Contaminated Water Sources",
     description: "Learn the visual signs of unsafe water to protect yourself and your community from waterborne diseases.",
     image: {
-      src: "/images/hero-landscape.jpeg",
-      alt: "A person inspecting a stream in a rainy, green landscape."
+      src: "https://picsum.photos/seed/water/1200/600",
+      alt: "A person inspecting a stream in a rainy, green landscape.",
+      "data-ai-hint": "inspeacting stream"
     },
     href: "/report/water-source"
   }
@@ -52,24 +55,27 @@ const topStories = [
    {
     title: "How to Report Symptoms Anonymously",
     image: {
-      src: "/images/story-symptoms.jpg",
-      alt: "A person using a smartphone in a village during a monsoon."
+      src: "https://picsum.photos/seed/symptoms/600/400",
+      alt: "A person using a smartphone in a village during a monsoon.",
+      "data-ai-hint": "phone village"
     },
     href: "/report/symptoms"
   },
   {
     title: "Identifying Unsafe Water Sources",
      image: {
-      src: "/images/story-water-source.jpg",
-      alt: "A woman collecting water from a stream during light rain in a green valley."
+      src: "https://picsum.photos/seed/unsafe/600/400",
+      alt: "A woman collecting water from a stream during light rain in a green valley.",
+      "data-ai-hint": "collecting water"
     },
     href: "/report/water-source"
   },
   {
     title: "Your Guide to the Aarogya jal Sanket Kit",
      image: {
-      src: "/images/story-kit.jpg",
-      alt: "A display of a first-aid kit with lush green foliage in the background."
+      src: "https://picsum.photos/seed/guide/600/400",
+      alt: "A display of a first-aid kit with lush green foliage in the background.",
+      "data-ai-hint": "first-aid kit"
     },
     href: "/kit"
   }
@@ -154,6 +160,7 @@ export default function DashboardPage() {
                       alt={story.image.alt}
                       fill
                       className="object-cover transition-transform group-hover:scale-105"
+                      data-ai-hint={story.image['data-ai-hint']}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent" />
                      <div className="absolute inset-0 grid md:grid-cols-2 gap-8 items-end p-8 md:p-12">
@@ -237,6 +244,7 @@ export default function DashboardPage() {
                       alt={story.image.alt}
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      data-ai-hint={story.image['data-ai-hint']}
                       />
                   </div>
                    <CardHeader>
