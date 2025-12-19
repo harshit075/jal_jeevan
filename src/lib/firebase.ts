@@ -18,11 +18,13 @@ const getClientApp = () => {
     if (getApps().length) {
         return getApp();
     }
-    // Check for API key to prevent build errors
+    
+    // Check for API key to prevent build errors where env vars are not available
     if (firebaseConfig.apiKey) {
       return initializeApp(firebaseConfig);
     }
-    // This is a dummy app for build time, it will not be used
+    
+    // Return a dummy app for build-time rendering on server where env is not available
     return initializeApp({});
 }
 
