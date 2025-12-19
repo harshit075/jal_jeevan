@@ -21,7 +21,7 @@ const heroStories = [
     title: "Your Guide to the Aarogya jal Sanket Kit",
     description: "Discover the essential tools in your kit for water testing and handling minor medical emergencies.",
     image: {
-      src: "https://picsum.photos/seed/kit/1200/600",
+      src: "/images/hero-kit.jpeg",
       alt: "A first aid kit sitting on a wooden table in a hut with rain visible outside.",
       "data-ai-hint": "first aid"
     },
@@ -32,7 +32,7 @@ const heroStories = [
     title: "Boil Water Advisory: A Community Guide",
     description: "Recent tests have indicated potential contamination in local water sources. Learn why boiling water is crucial for your health and safety during an advisory.",
     image: {
-      src: "https://picsum.photos/seed/rain/1200/600",
+      src: "/images/hero-rain.jpeg",
       alt: "Heavy rain falling on a lush green forest.",
       "data-ai-hint": "heavy rain"
     },
@@ -43,7 +43,7 @@ const heroStories = [
     title: "How to Identify Contaminated Water Sources",
     description: "Learn the visual signs of unsafe water to protect yourself and your community from waterborne diseases.",
     image: {
-      src: "https://picsum.photos/seed/water/1200/600",
+      src: "/images/hero-landscape.jpeg",
       alt: "A person inspecting a stream in a rainy, green landscape.",
       "data-ai-hint": "inspeacting stream"
     },
@@ -55,7 +55,7 @@ const topStories = [
    {
     title: "How to Report Symptoms Anonymously",
     image: {
-      src: "https://picsum.photos/seed/symptoms/600/400",
+      src: "/images/story-symptoms.jpg",
       alt: "A person using a smartphone in a village during a monsoon.",
       "data-ai-hint": "phone village"
     },
@@ -64,7 +64,7 @@ const topStories = [
   {
     title: "Identifying Unsafe Water Sources",
      image: {
-      src: "https://picsum.photos/seed/unsafe/600/400",
+      src: "/images/story-water-source.jpg",
       alt: "A woman collecting water from a stream during light rain in a green valley.",
       "data-ai-hint": "collecting water"
     },
@@ -73,7 +73,7 @@ const topStories = [
   {
     title: "Your Guide to the Aarogya jal Sanket Kit",
      image: {
-      src: "https://picsum.photos/seed/guide/600/400",
+      src: "/images/story-kit.jpg",
       alt: "A display of a first-aid kit with lush green foliage in the background.",
       "data-ai-hint": "first-aid kit"
     },

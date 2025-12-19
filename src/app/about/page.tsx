@@ -7,32 +7,32 @@ const teamMembers = [
   {
     name: "Harshit Borana",
     role: "Team Lead",
-    avatar: "https://picsum.photos/seed/hb/200",
+    avatar: "/images/team-Harshit.jpeg",
   },
   {
     name: "Parth Sharma",
     role: "Co-Lead",
-    avatar: "https://picsum.photos/seed/ps/200",
+    avatar: "/images/team-Harshit.jpeg",
   },
   {
     name: "Nitin Purohit",
     role: "Member",
-    avatar: "https://picsum.photos/seed/np/200",
+    avatar: "/images/team-Harshit.jpeg",
   },
   {
     name: "Snigdha Gupta",
     role: "Member",
-    avatar: "https://picsum.photos/seed/sg/200",
+    avatar: "/images/team-Harshit.jpeg",
   },
   {
     name: "Umang Pahuja",
     role: "Member",
-    avatar: "https://picsum.photos/seed/up/200",
+    avatar: "/images/team-Harshit.jpeg",
   },
   {
     name: "Mohit Joshi",
     role: "Member",
-    avatar: "https://picsum.photos/seed/mj/200",
+    avatar: "/images/team-Harshit.jpeg",
   }
 ];
 
@@ -40,17 +40,17 @@ const mentors = [
   {
     name: "Dr. Mayank Patel",
     role: "HOD CSE",
-    avatar: "https://picsum.photos/seed/mp/200",
+    avatar: "/images/team-Harshit.jpeg",
   },
   {
     name: "Prof. ABC",
     role: "Environmental Scientist",
-    avatar: "https://picsum.photos/seed/ab/200",
+    avatar: "/images/team-Harshit.jpeg",
   },
   {
     name: "Mr. ABC",
     role: "Social Entrepreneurship Mentor",
-    avatar: "https://picsum.photos/seed/ma/200",
+    avatar: "/images/team-Harshit.jpeg",
   }
 ];
 
@@ -61,7 +61,7 @@ export default function AboutPage() {
       <Card className="overflow-hidden shadow-lg">
         <div className="relative h-64 w-full">
             <Image 
-                src="https://picsum.photos/seed/mission/1200/400"
+            src="/images/mission-hero.png"
                 alt="A lush green landscape in NorthEast India during monsoon."
                 fill
                 style={{ objectFit: "cover" }}

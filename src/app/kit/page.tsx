@@ -1,6 +1,6 @@
 
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -32,7 +32,7 @@ const kits: Kit[] = [
         name: "Asha Worker Kit",
         price: "1499",
         description: "A comprehensive kit designed for community health workers to monitor multiple water sources and serve larger groups.",
-        image: { src: 'https://picsum.photos/seed/ashakit/600/400', alt: "A basic first aid kit.", "data-ai-hint": "first aid kit" },
+    image: { src: '/images/kit-rakshak.jpg', alt: "A basic first aid kit.", "data-ai-hint": "first aid kit" },
         contents: [
             { name: "IoT Water Quality Monitor" },
             { name: "Manual Water Test Strips" },
@@ -45,7 +45,7 @@ const kits: Kit[] = [
         name: "Swasthya Kit",
         price: "899",
         description: "An essential starter kit for every household to monitor water quality and manage basic health needs.",
-        image: { src: 'https://picsum.photos/seed/swasthyakit/600/400', alt: "A larger community health kit.", "data-ai-hint": "community health" },
+    image: { src: '/images/hero-kit.jpeg', alt: "A larger community health kit.", "data-ai-hint": "community health" },
         contents: [
             
             { name: "Manual Water Test Strips (100 pack)" },
@@ -58,7 +58,7 @@ const kits: Kit[] = [
         name: "Parikshan Health Kit",
         price: "999",
         description: "An expanded kit for families, providing more supplies for health monitoring and emergency preparedness.",
-        image: { src: 'https://picsum.photos/seed/parikshankit/600/400', alt: "A family sized first aid and health kit.", "data-ai-hint": "family firstaid" },
+    image: { src: '/images/kit-parikshan.jpg', alt: "A family sized first aid and health kit.", "data-ai-hint": "family firstaid" },
         contents: [
             
             { name: "Manual Water Test Strips (50 pack)" },
@@ -113,10 +113,10 @@ export default function KitPage() {
   const [loading, setLoading] = useState(true);
 
   // Simulate loading
-  useState(() => {
+  useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 500);
     return () => clearTimeout(timer);
-  });
+  }, []);
 
   return (
     <div className="space-y-8">

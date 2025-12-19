@@ -65,7 +65,7 @@ const educationalArticles: EducationalArticle[] = [
         title: "Why Boiling Water is a Lifesaver",
         category: "Water Safety",
         image: {
-            src: "https://picsum.photos/seed/boil/600/400",
+            src: "/images/story-water-source.jpg",
             alt: "A pot of water boiling on a stove.",
             "data-ai-hint": "boiling water"
         },
@@ -76,7 +76,7 @@ const educationalArticles: EducationalArticle[] = [
         title: "Understanding Cholera: Causes and Prevention",
         category: "Disease Info",
         image: {
-            src: "https://picsum.photos/seed/cholera/600/400",
+            src: "/images/story-symptoms.jpg",
             alt: "Microscopic view of Vibrio cholerae bacteria.",
             "data-ai-hint": "bacteria microscope"
         },
@@ -87,7 +87,7 @@ const educationalArticles: EducationalArticle[] = [
         title: "Creating a Safe Sanitation Zone at Home",
         category: "Health & Hygiene",
         image: {
-            src: "https://picsum.photos/seed/tippy/600/400",
+            src: "/images/hero-rain.jpeg",
             alt: "A 'tippy tap' handwashing station set up outdoors.",
             "data-ai-hint": "handwashing station"
         },
@@ -97,21 +97,21 @@ const educationalArticles: EducationalArticle[] = [
       id: "article-4",
       title: "First-Aid for Diarrhea and Dehydration",
       category: "First Aid",
-      image: { src: 'https://picsum.photos/seed/ors/600/400', alt: "A packet of ORS solution being prepared.", "data-ai-hint": "oral rehydration" },
+      image: { src: '/images/story-kit.jpg', alt: "A packet of ORS solution being prepared.", "data-ai-hint": "oral rehydration" },
       content: "Dehydration from diarrhea can be dangerous, especially for children. Learn how to prepare and use Oral Rehydration Salts (ORS) and other first-aid measures."
     },
     {
       id: "article-5",
       title: "The Dangers of Dysentery",
       category: "Disease Info",
-      image: { src: 'https://picsum.photos/seed/dysentery/600/400', alt: "Illustration of dysentery symptoms affecting the gut.", "data-ai-hint": "stomach pain" },
+      image: { src: '/images/story-symptoms.jpg', alt: "Illustration of dysentery symptoms affecting the gut.", "data-ai-hint": "stomach pain" },
       content: "Dysentery is an intestinal inflammation that can cause severe bloody diarrhea. This guide explains its symptoms, transmission, and when to seek urgent medical care."
     },
     {
       id: "article-6",
       title: "Typhoid Fever: Symptoms and Treatment",
       category: "Disease Info",
-      image: { src: 'https://picsum.photos/seed/fever/600/400', alt: "A person with a high fever being cared for.", "data-ai-hint": "fever illness" },
+      image: { src: '/images/story-symptoms.jpg', alt: "A person with a high fever being cared for.", "data-ai-hint": "fever illness" },
       content: "Typhoid fever is a serious bacterial infection. Learn to recognize its distinct symptoms, such as high fever and rash, and understand the importance of antibiotic treatment."
     }
 ];

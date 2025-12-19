@@ -254,7 +254,7 @@ export default function AdminPage() {
             </CardHeader>
             <CardContent>
                <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center overflow-hidden">
-                   <Image src="https://www.q-files.com/media/article/3024/467ffe22-2ebc-4a9f-b709-460ceee7f3b9.jpg" alt="Map of Northeast India" width={1200} height={800} data-ai-hint="satellite map" className="object-cover w-full h-full" />
+                   <Image src="/images/hero-landscape.jpeg" alt="Map of Northeast India" width={1200} height={800} data-ai-hint="satellite map" className="object-cover w-full h-full" />
                </div>
             </CardContent>
           </Card>

@@ -227,7 +227,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="container flex h-16 items-center">
            <Link href="/" className="mr-4 flex items-center space-x-2">
             <Logo />
-            <span className="hidden font-bold sm:inline-block text-foreground font-headline text-lg">Aarogya jal Sanket Community Health</span>
+            <span className="hidden font-bold sm:inline-block text-foreground font-headline text-lg">Sanket Community Health</span>
           </Link>
           
           {!loading && <MainNav items={mainNavItems} role={role} />}
