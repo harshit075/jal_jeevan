@@ -2,8 +2,8 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth';
-import { auth } from '@/lib/firebase'; // We will create this file
+import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, type User, getAuth } from 'firebase/auth';
+import { app } from '@/lib/firebase'; // We will use the conditional app instance
 import { useRouter } from 'next/navigation';
 
 type AuthContextType = {
@@ -37,24 +37,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   
   const role = getRole(user);
+  const auth = app ? getAuth(app) : undefined;
 
   useEffect(() => {
+    if (!auth) {
+      setLoading(false); // If no firebase app, stop loading
+      return;
+    }
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
     });
     return () => unsubscribe();
-  }, []);
+  }, [auth]);
 
   const login = async (email: string, password: string) => {
+    if (!auth) throw new Error("Firebase not initialized");
     await signInWithEmailAndPassword(auth, email, password);
   };
 
   const signup = async (email: string, password: string) => {
+    if (!auth) throw new Error("Firebase not initialized");
     await createUserWithEmailAndPassword(auth, email, password);
   };
 
   const logout = async () => {
+    if (!auth) throw new Error("Firebase not initialized");
     await signOut(auth);
     router.push('/');
   };

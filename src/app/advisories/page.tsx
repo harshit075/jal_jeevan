@@ -8,8 +8,8 @@ import { useAuth } from '@/hooks/use-auth';
 import { PlusCircle, Siren } from 'lucide-react';
 import Link from 'next/link';
 import type { Advisory } from '@/lib/types';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { collection, getDocs, orderBy, query, getFirestore } from 'firebase/firestore';
+import { app } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 
 
@@ -21,6 +21,9 @@ export default function AdvisoriesPage() {
   const { toast } = useToast();
 
   useEffect(() => {
+    if (!app) return;
+    const db = getFirestore(app);
+
     const fetchAdvisories = async () => {
       setLoading(true);
       try {

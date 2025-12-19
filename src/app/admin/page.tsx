@@ -15,8 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { collection, getDocs, addDoc, deleteDoc, doc, writeBatch, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { collection, getDocs, addDoc, deleteDoc, doc, writeBatch, serverTimestamp, getFirestore } from "firebase/firestore";
+import { app } from "@/lib/firebase";
 import { useToast } from '@/hooks/use-toast';
 import type { AshaWorker, HighRiskHotspot } from '@/lib/types';
 import { mockHighRiskHotspots, mockAshaWorkers, mockAdvisories } from '@/lib/seed-data';
@@ -48,6 +48,8 @@ export default function AdminPage() {
   }, []);
 
   const fetchData = useCallback(async () => {
+      if (!app) return;
+      const db = getFirestore(app);
       setLoading(true);
       try {
           const hotspotsSnapshot = await getDocs(collection(db, "highRiskHotspots"));
@@ -69,6 +71,8 @@ export default function AdminPage() {
   }, [fetchData]);
 
   const handleSeedDatabase = async () => {
+    if (!app) return;
+    const db = getFirestore(app);
     const batch = writeBatch(db);
 
     const hotspotsRef = collection(db, "highRiskHotspots");
@@ -153,6 +157,8 @@ export default function AdminPage() {
 
   const handleAddWorker = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!app) return;
+    const db = getFirestore(app);
     if (newWorkerName && newWorkerLocation) {
         const newWorker = {
             name: newWorkerName,
@@ -173,6 +179,8 @@ export default function AdminPage() {
   };
 
   const handleRemoveWorker = async (id: string) => {
+      if (!app) return;
+      const db = getFirestore(app);
       try {
         await deleteDoc(doc(db, "ashaWorkers", id));
         setAshaWorkers(ashaWorkers.filter(worker => worker.id !== id));

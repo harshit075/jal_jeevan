@@ -1,13 +1,19 @@
+
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { app } from '@/lib/firebase';
 import { Advisory } from './types';
 
 
 export async function createAdvisoryAction(
   advisory: Omit<Advisory, 'id' | 'createdAt'>
 ): Promise<Advisory> {
+  if (!app) {
+    throw new Error("Firebase is not initialized.");
+  }
+  const db = getFirestore(app);
+
   try {
     const docRef = await addDoc(collection(db, "advisories"), {
       ...advisory,

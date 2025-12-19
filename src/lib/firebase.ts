@@ -13,24 +13,15 @@ const firebaseConfig: FirebaseOptions = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase for SSR and SSG, and prevent re-initialization on the client
-const getClientApp = () => {
-    if (getApps().length) {
-        return getApp();
-    }
-    
-    // Check for API key to prevent build errors where env vars are not available
-    if (firebaseConfig.apiKey) {
-      return initializeApp(firebaseConfig);
-    }
-    
-    // Return a dummy app for build-time rendering on server where env is not available
-    return initializeApp({});
-}
+// Initialize Firebase for client-side rendering only
+const app =
+  typeof window !== 'undefined' && firebaseConfig.apiKey
+    ? !getApps().length
+      ? initializeApp(firebaseConfig)
+      : getApp()
+    : undefined;
 
-
-const app = getClientApp();
-const auth = getAuth(app);
-const db = getFirestore(app);
+const auth = app ? getAuth(app) : undefined;
+const db = app ? getFirestore(app) : undefined;
 
 export { app, db, auth };

@@ -10,8 +10,8 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { AdvisoryCard } from "@/components/advisory-card";
 import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useState } from "react";
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { collection, getDocs, limit, orderBy, query, getFirestore } from "firebase/firestore";
+import { app } from "@/lib/firebase";
 import { Advisory } from "@/lib/types";
 
 
@@ -88,6 +88,9 @@ export default function DashboardPage() {
   const [latestAdvisories, setLatestAdvisories] = useState<Advisory[]>([]);
 
   useEffect(() => {
+    if (!app) return;
+    const db = getFirestore(app);
+
     const fetchAdvisories = async () => {
       const q = query(
         collection(db, "advisories"),
