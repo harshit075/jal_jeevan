@@ -20,6 +20,7 @@ import {
   UserPlus,
   Info,
   Phone,
+  Menu,
   Moon,
   Sun,
   Languages,
@@ -39,6 +40,14 @@ import { useTheme } from "next-themes";
 import { Footer } from "./footer";
 import { useTranslation } from "@/hooks/use-translation";
 import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
 
 const mainNavItems = [
   { href: "/education", labelKey: "nav_education", icon: BookOpen, roles: ["guest", "user", "admin"] },
@@ -108,7 +117,12 @@ function BottomNavBar() {
 
   return (
      <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background md:hidden">
-        <nav className={cn("grid items-center justify-center gap-2 p-2", gridColsClass())}>
+        <nav
+          className={cn(
+            "grid items-center justify-center gap-2 p-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]",
+            gridColsClass()
+          )}
+        >
           {navItemsToShow.map((item) => {
               const isActive = (item.href === "/" && pathname === "/") || (item.href !== "/" && pathname.startsWith(item.href));
               return (
@@ -146,6 +160,106 @@ function MainNav({ items, role }: { items: (typeof mainNavItems), role: 'admin' 
         </Link>
       ))}
     </nav>
+  );
+}
+
+function MobileMenu({
+  role,
+  isAuthed,
+  onLogout,
+}: {
+  role: "admin" | "user" | "guest";
+  isAuthed: boolean;
+  onLogout: () => void;
+}) {
+  const pathname = usePathname();
+  const { t } = useTranslation();
+
+  const navItemsToShow = mainNavItems.filter((item) => item.roles.includes(role));
+
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="ghost" size="icon" className="md:hidden" aria-label={t("toggle_menu") || "Menu"}>
+          <Menu className="h-5 w-5" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="right" className="w-[85vw] sm:max-w-sm">
+        <SheetHeader className="text-left">
+          <SheetTitle className="font-headline">{t("nav_menu") || "Menu"}</SheetTitle>
+        </SheetHeader>
+
+        <div className="mt-6 space-y-2">
+          {navItemsToShow.map((item) => {
+            const isActive =
+              (item.href === "/" && pathname === "/") ||
+              (item.href !== "/" && pathname.startsWith(item.href));
+
+            return (
+              <SheetClose asChild key={item.href}>
+                <Link
+                  href={item.href}
+                  className={cn(
+                    "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                    isActive
+                      ? "bg-primary/10 text-primary"
+                      : "text-foreground/80 hover:bg-primary/5 hover:text-foreground"
+                  )}
+                >
+                  <item.icon className="h-4 w-4" />
+                  <span>{t(item.labelKey)}</span>
+                </Link>
+              </SheetClose>
+            );
+          })}
+        </div>
+
+        <div className="mt-6 border-t pt-4">
+          {isAuthed ? (
+            <div className="space-y-2">
+              <SheetClose asChild>
+                <Link
+                  href="/settings"
+                  className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-foreground/80 hover:bg-primary/5 hover:text-foreground"
+                >
+                  <Settings className="h-4 w-4" />
+                  <span>{t("nav_settings")}</span>
+                </Link>
+              </SheetClose>
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => {
+                  onLogout();
+                }}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                {t("logout")}
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-2">
+              <SheetClose asChild>
+                <Button asChild variant="outline" className="w-full">
+                  <Link href="/login">
+                    <LogIn className="mr-2 h-4 w-4" />
+                    {t("login")}
+                  </Link>
+                </Button>
+              </SheetClose>
+              <SheetClose asChild>
+                <Button asChild className="w-full">
+                  <Link href="/signup">
+                    <UserPlus className="mr-2 h-4 w-4" />
+                    {t("signup")}
+                  </Link>
+                </Button>
+              </SheetClose>
+            </div>
+          )}
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }
 
@@ -224,19 +338,28 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background">
-        <div className="container flex h-16 items-center">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2 focus:text-sm focus:shadow"
+        >
+          {t("skip_to_content") || "Skip to content"}
+        </a>
+        <div className="container flex h-14 sm:h-16 items-center gap-2">
            <Link href="/" className="mr-4 flex items-center space-x-2">
             <Logo />
-            <span className="hidden font-bold sm:inline-block text-foreground font-headline text-lg">Sanket Community Health</span>
+            <span className="hidden font-bold sm:inline-block text-foreground font-headline text-lg">
+              Sanket Community Health
+            </span>
           </Link>
           
           {!loading && <MainNav items={mainNavItems} role={role} />}
 
-          <div className="flex flex-1 items-center justify-end space-x-2">
+          <div className="flex flex-1 items-center justify-end gap-1 sm:gap-2">
              {loading ? null : user ? (
               <div className="flex items-center gap-1">
                 <LanguageToggle />
                 <ThemeToggle />
+                <MobileMenu role={role} isAuthed={true} onLogout={logout} />
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-8 w-8 rounded-full text-foreground/80 hover:text-foreground">
@@ -270,14 +393,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </DropdownMenu>
               </div>
             ) : (
-              <div className="flex items-center space-x-1 sm:space-x-2">
+              <div className="flex items-center gap-1 sm:gap-2">
                  <LanguageToggle />
                  <ThemeToggle />
-                 <Button variant="ghost" asChild>
-                   <Link href="/login"><LogIn className="md:mr-2"/> <span className="hidden md:inline">{t('login')}</span></Link>
+                 <MobileMenu role={role} isAuthed={false} onLogout={logout} />
+                 <Button variant="ghost" asChild className="hidden sm:inline-flex">
+                   <Link href="/login"><LogIn className="mr-2"/> {t('login')}</Link>
                  </Button>
-                 <Button asChild>
-                   <Link href="/signup"><UserPlus className="md:mr-2"/> <span className="hidden md:inline">{t('signup')}</span></Link>
+                 <Button asChild className="hidden sm:inline-flex">
+                   <Link href="/signup"><UserPlus className="mr-2"/> {t('signup')}</Link>
                  </Button>
               </div>
             )}
@@ -285,8 +409,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         </div>
       </header>
-       <main className="flex-1 bg-secondary/50 pb-24 md:pb-8">
-         <div className="container py-8">
+       <main id="main-content" className="flex-1 bg-secondary/50 pb-[calc(6rem+env(safe-area-inset-bottom))] md:pb-8">
+         <div className="container py-6 md:py-8">
             {children}
          </div>
         </main>

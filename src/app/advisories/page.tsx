@@ -1,27 +1,40 @@
 
 'use client';
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AdvisoryCard } from '@/components/advisory-card';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useAuth } from '@/hooks/use-auth';
-import { PlusCircle, Siren } from 'lucide-react';
-import Link from 'next/link';
+import { Siren } from 'lucide-react';
 import type { Advisory } from '@/lib/types';
 import { collection, getDocs, orderBy, query, getFirestore } from 'firebase/firestore';
 import { app } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
+import { mockAdvisories } from '@/lib/seed-data';
 
 
 export default function AdvisoriesPage() {
-  const { role, loading: authLoading } = useAuth();
-  const isAdmin = role === 'admin';
   const [advisories, setAdvisories] = useState<Advisory[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const hasShownFirebaseToast = useRef(false);
 
   useEffect(() => {
-    if (!app) return;
+    if (!app) {
+      const fallback = mockAdvisories.map((advisory, index) => ({
+        ...advisory,
+        id: `mock-${index}`,
+      }));
+      setAdvisories(fallback);
+      setLoading(false);
+      if (!hasShownFirebaseToast.current) {
+        hasShownFirebaseToast.current = true;
+        toast({
+          title: 'Showing sample advisories',
+          description:
+            'Firebase is not configured (missing NEXT_PUBLIC_FIREBASE_*). Displaying sample data.',
+        });
+      }
+      return;
+    }
     const db = getFirestore(app);
 
     const fetchAdvisories = async () => {
@@ -30,14 +43,31 @@ export default function AdvisoriesPage() {
         const q = query(collection(db, "advisories"), orderBy("createdAt", "desc"));
         const querySnapshot = await getDocs(q);
         const advisoriesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Advisory));
-        setAdvisories(advisoriesData);
+        if (advisoriesData.length > 0) {
+          setAdvisories(advisoriesData);
+        } else {
+          const fallback = mockAdvisories.map((advisory, index) => ({
+            ...advisory,
+            id: `mock-${index}`,
+          }));
+          setAdvisories(fallback);
+          toast({
+            title: 'No advisories found',
+            description: 'Firestore returned no advisories; showing sample data.',
+          });
+        }
       } catch (error) {
         console.error("Error fetching advisories: ", error);
         toast({
           variant: "destructive",
           title: "Failed to fetch advisories",
-          description: "Could not load advisories from the database.",
+          description: "Could not load advisories from the database. Showing sample data.",
         });
+        const fallback = mockAdvisories.map((advisory, index) => ({
+          ...advisory,
+          id: `mock-${index}`,
+        }));
+        setAdvisories(fallback);
       }
       setLoading(false);
     };

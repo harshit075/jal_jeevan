@@ -13,6 +13,9 @@ interface AdvisoryCardProps {
 export function AdvisoryCard({ advisory }: AdvisoryCardProps) {
   const isHighRisk = advisory.riskLevel === 'High';
   const isMediumRisk = advisory.riskLevel === 'Medium';
+  const recommendedActions = Array.isArray(advisory.recommendedActions)
+    ? advisory.recommendedActions
+    : [];
 
   const riskStyles = {
     High: {
@@ -63,7 +66,7 @@ export function AdvisoryCard({ advisory }: AdvisoryCardProps) {
         <div className="flex-grow">
           <h3 className="font-semibold mb-3">Recommended Actions:</h3>
           <ul className="space-y-2">
-            {advisory.recommendedActions.map((action, index) => (
+            {recommendedActions.map((action, index) => (
               <li key={index} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 mt-0.5 text-green-600 shrink-0" />
                 <span>{action}</span>

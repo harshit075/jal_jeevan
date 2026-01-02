@@ -1,57 +1,25 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
-import { Users, BookUser } from "lucide-react";
+import { Users } from "lucide-react";
 
 const teamMembers = [
   {
     name: "Harshit Borana",
-    role: "Team Lead",
-    avatar: "/images/team-Harshit.jpeg",
-  },
-  {
-    name: "Parth Sharma",
-    role: "Co-Lead",
+    role: "Founder & CEO",
     avatar: "/images/team-Harshit.jpeg",
   },
   {
     name: "Nitin Purohit",
-    role: "Member",
-    avatar: "/images/team-Harshit.jpeg",
-  },
-  {
-    name: "Snigdha Gupta",
-    role: "Member",
+    role: "Co Founder",
     avatar: "/images/team-Harshit.jpeg",
   },
   {
     name: "Umang Pahuja",
     role: "Member",
     avatar: "/images/team-Harshit.jpeg",
-  },
-  {
-    name: "Mohit Joshi",
-    role: "Member",
-    avatar: "/images/team-Harshit.jpeg",
   }
-];
-
-const mentors = [
-  {
-    name: "Dr. Mayank Patel",
-    role: "HOD CSE",
-    avatar: "/images/team-Harshit.jpeg",
-  },
-  {
-    name: "Prof. ABC",
-    role: "Environmental Scientist",
-    avatar: "/images/team-Harshit.jpeg",
-  },
-  {
-    name: "Mr. ABC",
-    role: "Social Entrepreneurship Mentor",
-    avatar: "/images/team-Harshit.jpeg",
-  }
+ 
 ];
 
 
@@ -98,32 +66,6 @@ export default function AboutPage() {
               </Avatar>
               <h3 className="mt-4 text-xl font-bold">{member.name}</h3>
               <p className="text-primary">{member.role}</p>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-      
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10">
-                <BookUser className="h-6 w-6 text-accent" />
-              </div>
-              <CardTitle className="font-headline text-3xl">Our Mentors</CardTitle>
-          </div>
-          <CardDescription className="text-base pt-2">
-            We are grateful for the guidance and support of our experienced mentors.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {mentors.map((mentor) => (
-            <div key={mentor.name} className="flex flex-col items-center text-center">
-              <Avatar className="h-32 w-32 border-4 border-accent/20 transition-transform hover:scale-105">
-                <AvatarImage src={mentor.avatar} alt={mentor.name} />
-                <AvatarFallback>{mentor.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <h3 className="mt-4 text-xl font-bold">{mentor.name}</h3>
-              <p className="text-accent">{mentor.role}</p>
             </div>
           ))}
         </CardContent>
